@@ -18,6 +18,15 @@
   ],
   "artikel": [
     {
+      "id": "id_i18gvfr",
+      "judul": "Enzo seorang filosofis",
+      "deskripsi": "anjay gataulah anjay coba coba doang",
+      "gambar": "https://google.com",
+      "kategori_id": "k2",
+      "tanggal": "2026-05-19",
+      "featured": true
+    },
+    {
       "id": "id_7rl5yr6",
       "judul": "Dimas Gagal Move On",
       "deskripsi": "Dimas merupakan seorang alumni SMAN 1 Namang",
