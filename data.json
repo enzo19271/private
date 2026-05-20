@@ -1,19 +1,14 @@
 {
   "kategori": [
     {
-      "id": "k1",
-      "nama": "Teknologi",
+      "id": "id_0bdwwqs",
+      "nama": "Prompt Foto",
       "warna": "#3b82f6"
     },
     {
-      "id": "k2",
-      "nama": "Gaya Hidup",
-      "warna": "#10b981"
-    },
-    {
-      "id": "k3",
-      "nama": "Bisnis",
-      "warna": "#f59e0b"
+      "id": "id_dsvakfb",
+      "nama": "Prompt Makalah",
+      "warna": "#00ff00"
     }
   ],
   "artikel": []
