@@ -31,7 +31,7 @@
   --shadow-md:0 4px 12px rgba(0,0,0,.08),0 12px 32px rgba(0,0,0,.08);
 }
 body{font-family:'Sora',sans-serif;background:var(--bg);color:var(--ink);min-height:100vh;display:flex;font-size:14px}
-
+ 
 /* ── SIDEBAR ── */
 #sidebar{
   width:var(--sidebar-w);min-height:100vh;background:var(--surface);
@@ -61,10 +61,10 @@ body{font-family:'Sora',sans-serif;background:var(--bg);color:var(--ink);min-hei
   color:var(--ink3);font-size:12px;text-decoration:none;transition:all .18s;
 }
 .sidebar-footer a:hover{background:var(--bg);color:var(--ink)}
-
+ 
 /* ── WRAPPER ── */
 #wrapper{margin-left:var(--sidebar-w);flex:1;min-height:100vh;display:flex;flex-direction:column}
-
+ 
 /* ── TOPBAR ── */
 #topbar{
   height:var(--header-h);background:var(--surface);border-bottom:1px solid var(--border);
@@ -88,10 +88,10 @@ body{font-family:'Sora',sans-serif;background:var(--bg);color:var(--ink);min-hei
 .btn-danger:hover{background:#dc2626}
 .btn-success{background:var(--success);color:#fff}
 .btn-success:hover{background:#059669}
-
+ 
 /* ── MAIN ── */
 #main{padding:24px;flex:1}
-
+ 
 /* ── TABS ── */
 .tabs{display:flex;gap:4px;margin-bottom:24px;background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:4px;width:fit-content}
 .tab-btn{
@@ -101,12 +101,12 @@ body{font-family:'Sora',sans-serif;background:var(--bg);color:var(--ink);min-hei
 }
 .tab-btn.active{background:var(--primary);color:#fff;box-shadow:0 2px 8px rgba(37,99,235,.25)}
 .tab-btn:hover:not(.active){background:var(--bg);color:var(--ink)}
-
+ 
 /* ── PANEL ── */
 .panel{display:none}
 .panel.active{display:block;animation:fadeUp .3s ease}
 @keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
-
+ 
 /* ── FORM CARD ── */
 .form-card{
   background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);
@@ -134,7 +134,7 @@ textarea.form-control{resize:vertical;min-height:110px;line-height:1.6}
 select.form-control{cursor:pointer}
 .form-hint{font-size:11px;color:var(--ink4);margin-top:2px}
 .form-actions{display:flex;align-items:center;gap:10px;padding:14px 20px;border-top:1px solid var(--border);background:var(--surface2)}
-
+ 
 /* ── TOGGLE SWITCH ── */
 .toggle-wrap{display:flex;align-items:center;gap:10px}
 .toggle{position:relative;display:inline-block;width:40px;height:22px}
@@ -151,7 +151,7 @@ select.form-control{cursor:pointer}
 .toggle input:checked + .toggle-slider{background:var(--primary)}
 .toggle input:checked + .toggle-slider:before{transform:translateX(18px)}
 .toggle-label{font-size:13px;font-weight:500;color:var(--ink2)}
-
+ 
 /* ── IMAGE PREVIEW ── */
 .img-preview-wrap{
   border:2px dashed var(--border);border-radius:8px;overflow:hidden;
@@ -162,7 +162,7 @@ select.form-control{cursor:pointer}
 .img-preview-wrap img{width:100%;height:100%;object-fit:cover}
 .img-preview-ph{color:var(--ink4);font-size:13px;text-align:center;padding:16px}
 .img-preview-ph .icon{font-size:32px;margin-bottom:6px;opacity:.4}
-
+ 
 /* ── TABLE ── */
 .table-wrap{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden}
 .table-toolbar{
@@ -200,10 +200,10 @@ tbody td{padding:11px 14px;font-size:13px;color:var(--ink2)}
 .badge-feat{background:#fff7ed;color:var(--accent)}
 .badge-norm{background:var(--surface2);color:var(--ink3)}
 .featured-dot{width:7px;height:7px;border-radius:50%;background:var(--accent);display:inline-block;margin-right:4px}
-
+ 
 /* ── KAT TABLE ── */
 .kat-color-dot{width:12px;height:12px;border-radius:50%;display:inline-block;margin-right:6px;vertical-align:middle}
-
+ 
 /* ── STATS ROW ── */
 .stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:24px}
 .stat-card{
@@ -213,7 +213,7 @@ tbody td{padding:11px 14px;font-size:13px;color:var(--ink2)}
 .stat-icon{width:44px;height:44px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
 .stat-val{font-size:22px;font-weight:700;color:var(--ink);line-height:1}
 .stat-label{font-size:11px;color:var(--ink3);margin-top:3px;font-weight:500}
-
+ 
 /* ── MODAL ── */
 .modal-overlay{
   display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:200;
@@ -237,7 +237,7 @@ tbody td{padding:11px 14px;font-size:13px;color:var(--ink2)}
 .modal-footer{padding:14px 20px;border-top:1px solid var(--border);display:flex;gap:8px;justify-content:flex-end}
 .color-picker-wrap{display:flex;align-items:center;gap:10px}
 .color-picker-wrap input[type=color]{width:40px;height:34px;border:1.5px solid var(--border);border-radius:7px;cursor:pointer;padding:2px}
-
+ 
 /* ── TOAST ── */
 #toast{
   position:fixed;bottom:24px;right:24px;background:var(--ink);color:#fff;
@@ -248,10 +248,10 @@ tbody td{padding:11px 14px;font-size:13px;color:var(--ink2)}
 @keyframes toastIn{from{transform:translateX(16px);opacity:0}to{transform:translateX(0);opacity:1}}
 #toast.show{display:block}
 #toast.err{border-left-color:var(--danger)}
-
+ 
 /* ── EMPTY ── */
 .empty-row td{text-align:center;padding:40px;color:var(--ink4)}
-
+ 
 /* ── MOBILE ── */
 #sidebar-toggle{display:none;background:transparent;border:none;font-size:22px;cursor:pointer;color:var(--ink);padding:4px}
 #sidebar-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.35);z-index:49}
@@ -268,7 +268,7 @@ tbody td{padding:11px 14px;font-size:13px;color:var(--ink2)}
 </style>
 </head>
 <body>
-
+ 
 <!-- SIDEBAR -->
 <nav id="sidebar">
   <div class="sidebar-logo">
@@ -290,7 +290,7 @@ tbody td{padding:11px 14px;font-size:13px;color:var(--ink2)}
   </div>
 </nav>
 <div id="sidebar-overlay"></div>
-
+ 
 <!-- WRAPPER -->
 <div id="wrapper">
   <!-- TOPBAR -->
@@ -307,10 +307,10 @@ tbody td{padding:11px 14px;font-size:13px;color:var(--ink2)}
       <button class="topbar-btn btn-primary" id="btn-save-gh">☁ Simpan ke GitHub</button>
     </div>
   </div>
-
+ 
   <!-- MAIN -->
   <div id="main">
-
+ 
     <!-- STATS -->
     <div class="stats-row">
       <div class="stat-card">
@@ -330,14 +330,14 @@ tbody td{padding:11px 14px;font-size:13px;color:var(--ink2)}
         <div><div class="stat-val" id="s-draft">0</div><div class="stat-label">Belum Disimpan</div></div>
       </div>
     </div>
-
+ 
     <!-- TABS -->
     <div class="tabs">
       <button class="tab-btn active" data-tab="tab-artikel">📝 Artikel</button>
       <button class="tab-btn" data-tab="tab-tambah">＋ Tambah Artikel</button>
       <button class="tab-btn" data-tab="tab-kategori">🏷 Kategori</button>
     </div>
-
+ 
     <!-- PANEL: ARTIKEL LIST -->
     <div class="panel active" id="tab-artikel">
       <div class="table-wrap">
@@ -364,7 +364,7 @@ tbody td{padding:11px 14px;font-size:13px;color:var(--ink2)}
         </div>
       </div>
     </div>
-
+ 
     <!-- PANEL: TAMBAH ARTIKEL -->
     <div class="panel" id="tab-tambah">
       <div class="form-card">
@@ -429,7 +429,7 @@ tbody td{padding:11px 14px;font-size:13px;color:var(--ink2)}
         </div>
       </div>
     </div>
-
+ 
     <!-- PANEL: KATEGORI -->
     <div class="panel" id="tab-kategori">
       <div class="form-card" style="max-width:520px;margin-bottom:20px">
@@ -455,7 +455,7 @@ tbody td{padding:11px 14px;font-size:13px;color:var(--ink2)}
           <button class="topbar-btn btn-primary" id="btn-add-kat">＋ Tambah Kategori</button>
         </div>
       </div>
-
+ 
       <div class="table-wrap">
         <div class="table-toolbar">
           <span style="font-size:14px;font-weight:600;color:var(--ink)">Daftar Kategori</span>
@@ -473,10 +473,10 @@ tbody td{padding:11px 14px;font-size:13px;color:var(--ink2)}
         </table>
       </div>
     </div>
-
+ 
   </div>
 </div>
-
+ 
 <!-- MODAL KONFIRMASI HAPUS -->
 <div class="modal-overlay" id="del-modal">
   <div class="modal">
@@ -493,46 +493,54 @@ tbody td{padding:11px 14px;font-size:13px;color:var(--ink2)}
     </div>
   </div>
 </div>
-
+ 
 <!-- TOAST -->
 <div id="toast"></div>
-
+ 
 <script>
 /* ── DATA LAYER — semua via Vercel API (PAT tidak pernah terekspos ke browser) ── */
 let DB = { kategori:[], artikel:[], _sha:null };
 let pendingChanges = 0;
-
+ 
 async function loadData(){
   try {
     const res = await fetch('/api/get-data');
-    if(!res.ok) throw new Error('HTTP '+res.status);
-    DB = await res.json();
+    if(!res.ok){
+      const err = await res.json().catch(()=>({}));
+      throw new Error(err.message || 'HTTP '+res.status);
+    }
+    const data = await res.json();
+    // Pastikan _sha tersimpan — diperlukan untuk save ke GitHub (mencegah 422)
+    DB.kategori = data.kategori || [];
+    DB.artikel  = data.artikel  || [];
+    DB._sha     = data._sha     || null;
   } catch(e) {
     showToast('Gagal memuat data: '+e.message, true);
   }
   render();
 }
-
+ 
 async function saveToServer(){
   const res = await fetch('/api/save-data', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ kategori: DB.kategori, artikel: DB.artikel, _sha: DB._sha })
+    body: JSON.stringify({
+      kategori: DB.kategori,
+      artikel:  DB.artikel,
+      _sha:     DB._sha   // kirim SHA supaya backend tidak perlu fetch ulang
+    })
   });
-  if(!res.ok){
-    const err = await res.json().catch(()=>({}));
-    throw new Error(err.message || 'HTTP '+res.status);
-  }
-  const j = await res.json();
-  return j.sha; // SHA baru dari GitHub dikembalikan backend
+  const j = await res.json().catch(()=>({}));
+  if(!res.ok) throw new Error(j.message || 'HTTP '+res.status);
+  return j.sha; // SHA terbaru dari GitHub
 }
-
+ 
 function esc(s){ return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;') }
 function uid(){ return 'id_'+Math.random().toString(36).slice(2,9) }
 function getKat(id){ return DB.kategori.find(k=>k.id===id)||{nama:'—',warna:'#9ca3af'} }
 function fmtDate(s){ if(!s) return ''; return new Date(s).toLocaleDateString('id-ID',{day:'numeric',month:'short',year:'numeric'}) }
 function markDirty(){ pendingChanges++; document.getElementById('s-draft').textContent = pendingChanges; }
-
+ 
 function render(){
   document.getElementById('s-total').textContent = DB.artikel.length;
   document.getElementById('s-feat').textContent = DB.artikel.filter(a=>a.featured).length;
@@ -542,7 +550,7 @@ function render(){
   renderKatTable();
   renderKatSelect();
 }
-
+ 
 let artSearch = '';
 function renderArtTable(){
   const tbody = document.getElementById('art-tbody');
@@ -566,7 +574,7 @@ function renderArtTable(){
     </tr>`;
   }).join('');
 }
-
+ 
 function renderKatTable(){
   const tbody = document.getElementById('kat-tbody');
   if(!DB.kategori.length){
@@ -585,7 +593,7 @@ function renderKatTable(){
     </tr>`;
   }).join('');
 }
-
+ 
 function renderKatSelect(){
   const sel = document.getElementById('f-kategori');
   const cur = sel.value;
@@ -594,7 +602,7 @@ function renderKatSelect(){
     sel.innerHTML += `<option value="${esc(k.id)}" ${cur===k.id?'selected':''}>${esc(k.nama)}</option>`;
   });
 }
-
+ 
 /* ── ARTIKEL FORM ── */
 let editMode = false;
 function resetForm(){
@@ -611,7 +619,7 @@ function resetForm(){
   document.getElementById('img-preview').style.display='none';
   document.getElementById('img-ph').style.display='';
 }
-
+ 
 function editArtikel(id){
   const a = DB.artikel.find(x=>x.id===id);
   if(!a) return;
@@ -632,7 +640,7 @@ function editArtikel(id){
   document.querySelector('[data-tab="tab-tambah"]').classList.add('active');
   document.getElementById('tab-tambah').classList.add('active');
 }
-
+ 
 function previewImage(){
   const url = document.getElementById('f-gambar').value.trim();
   const img = document.getElementById('img-preview');
@@ -640,7 +648,7 @@ function previewImage(){
   if(url){ img.src=url; img.style.display='block'; ph.style.display='none'; }
   else { img.style.display='none'; ph.style.display=''; }
 }
-
+ 
 document.getElementById('btn-submit-art').addEventListener('click',()=>{
   const judul = document.getElementById('f-judul').value.trim();
   const katId = document.getElementById('f-kategori').value;
@@ -673,10 +681,10 @@ document.getElementById('btn-submit-art').addEventListener('click',()=>{
   document.querySelector('[data-tab="tab-artikel"]').classList.add('active');
   document.getElementById('tab-artikel').classList.add('active');
 });
-
+ 
 document.getElementById('btn-reset-form').addEventListener('click', resetForm);
 document.getElementById('btn-cancel-edit').addEventListener('click', resetForm);
-
+ 
 /* ── KATEGORI ── */
 document.getElementById('btn-add-kat').addEventListener('click',()=>{
   const nama = document.getElementById('kat-nama').value.trim();
@@ -688,7 +696,7 @@ document.getElementById('btn-add-kat').addEventListener('click',()=>{
   render();
   showToast('Kategori berhasil ditambahkan!');
 });
-
+ 
 /* ── DELETE MODAL ── */
 let _delType='', _delId='';
 function openDelModal(type,id,name){
@@ -711,13 +719,14 @@ document.getElementById('del-confirm-btn').addEventListener('click',()=>{
   closeDelModal();
   render();
 });
-
+ 
 /* ── SIMPAN KE GITHUB (via Vercel backend) ── */
 document.getElementById('btn-save-gh').addEventListener('click', async()=>{
   const btn = document.getElementById('btn-save-gh');
   btn.textContent='⏳ Menyimpan…'; btn.disabled=true;
   try{
     const sha = await saveToServer();
+    // Update SHA di memori — penting agar save berikutnya tidak 422
     if(sha) DB._sha = sha;
     pendingChanges = 0;
     document.getElementById('s-draft').textContent = 0;
@@ -728,12 +737,12 @@ document.getElementById('btn-save-gh').addEventListener('click', async()=>{
     btn.textContent='☁ Simpan ke GitHub'; btn.disabled=false;
   }
 });
-
+ 
 /* ── SEARCH ── */
 document.getElementById('art-search').addEventListener('input', e=>{
   artSearch = e.target.value.toLowerCase().trim(); renderArtTable();
 });
-
+ 
 /* ── TABS ── */
 document.querySelectorAll('.tab-btn').forEach(btn=>{
   btn.addEventListener('click',()=>{
@@ -743,7 +752,7 @@ document.querySelectorAll('.tab-btn').forEach(btn=>{
     document.getElementById(btn.dataset.tab).classList.add('active');
   });
 });
-
+ 
 /* ── SIDEBAR MOBILE ── */
 document.getElementById('sidebar-toggle').addEventListener('click',()=>{
   document.getElementById('sidebar').classList.toggle('open');
@@ -753,7 +762,7 @@ document.getElementById('sidebar-overlay').addEventListener('click',()=>{
   document.getElementById('sidebar').classList.remove('open');
   document.getElementById('sidebar-overlay').classList.remove('open');
 });
-
+ 
 /* ── TOAST ── */
 let _tt;
 function showToast(msg,err=false){
@@ -761,7 +770,7 @@ function showToast(msg,err=false){
   t.textContent=msg; t.className='show'+(err?' err':'');
   clearTimeout(_tt); _tt=setTimeout(()=>t.classList.remove('show'),3000);
 }
-
+ 
 /* ── INIT ── */
 loadData();
 </script>
