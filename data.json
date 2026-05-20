@@ -6,14 +6,24 @@
       "warna": "#3b82f6"
     },
     {
-      "id": "id_dsvakfb",
-      "nama": "Prompt Makalah",
-      "warna": "#00ff00"
-    },
-    {
       "id": "id_tnr4rxv",
       "nama": "Prompt Desain Grafis",
       "warna": "#eaf73b"
+    },
+    {
+      "id": "id_vlr2ug9",
+      "nama": "Prompt Makalah",
+      "warna": "#3ef73b"
+    },
+    {
+      "id": "id_j31kp6e",
+      "nama": "Materi",
+      "warna": "#f73b3b"
+    },
+    {
+      "id": "id_yv3a2aw",
+      "nama": "Artikel",
+      "warna": "#3bf7c8"
     }
   ],
   "artikel": [
