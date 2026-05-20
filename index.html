@@ -414,7 +414,7 @@ let DB = { kategori:[], artikel:[], _sha:null };
 
 // GANTI ini di index.html
 async function loadData() {
-  const res = await fetch('/.netlify/functions/get-data');
+  const res = await fetch('/api/get-data');
   if (!res.ok) { /* tampilkan error */ return; }
   DB = await res.json();
   render();
