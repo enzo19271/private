@@ -421,36 +421,11 @@ async function loadFromGitHub(){
 
 let DB = { kategori:[], artikel:[], _sha:null };
 
-async function loadData(){
-  if(isConfigured){
-    try{
-      DB = await loadFromGitHub();
-      setCachedData(DB);
-    }catch(e){
-      const cached = getCachedData();
-      if(cached) DB = cached;
-      showToast('Gagal ambil data GitHub, pakai cache.', true);
-    }
-  } else {
-    const cached = getCachedData();
-    if(cached){ DB = cached; }
-    else {
-      DB = {
-        kategori:[
-          {id:'k1',nama:'Teknologi',warna:'#3b82f6'},
-          {id:'k2',nama:'Gaya Hidup',warna:'#10b981'},
-          {id:'k3',nama:'Bisnis',warna:'#f59e0b'}
-        ],
-        artikel:[
-          {id:'a1',judul:'Membangun Kebiasaan Digital yang Sehat',deskripsi:'Panduan praktis untuk mengelola waktu layar dan menjaga keseimbangan antara dunia digital dan kehidupan nyata.',gambar:'https://images.unsplash.com/photo-1499750310107-5fef28a66643?w=800&q=80',kategori_id:'k1',tanggal:'2026-05-15',featured:true},
-          {id:'a2',judul:'Seni Berpikir Lambat di Era Serba Cepat',deskripsi:'Mengapa memperlambat ritme berpikir justru menghasilkan keputusan yang lebih baik dan hidup yang lebih bermakna.',gambar:'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&q=80',kategori_id:'k2',tanggal:'2026-05-10',featured:false},
-          {id:'a3',judul:'Modal Kecil, Ide Besar',deskripsi:'Kisah nyata para wirausaha yang memulai dari nol dan membuktikan bahwa kreativitas adalah modal utama.',gambar:'https://images.unsplash.com/photo-1664575602554-2087b04935a5?w=800&q=80',kategori_id:'k3',tanggal:'2026-05-05',featured:false}
-        ],
-        _sha:null
-      };
-      setCachedData(DB);
-    }
-  }
+// GANTI ini di index.html
+async function loadData() {
+  const res = await fetch('/.netlify/functions/get-data');
+  if (!res.ok) { /* tampilkan error */ return; }
+  DB = await res.json();
   render();
 }
 
