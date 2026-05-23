@@ -31,7 +31,7 @@
       "id": "id_13o6378",
       "judul": "Ganti Baju 1 Orang",
       "deskripsi": "Change the clothes on the main photo\nwith the outfit from the reference picture. Make sure fabric texture, pleats and shadows follow the light direction of the original photo. The skin color of the face and hands should remain exactly the same as the original photo without changing the tone.\n\nThe background of the wall should be naturally colored (not flat, still original gradation). Adjust the shadows on the body and clothes to be consistent with the room lighting. Don't change your pose, body size or perspective of the camera.\n\nThe result should be as seamless and realistic as the original photo, not illustrated.",
-      "gambar": "https://google.com",
+      "gambar": "https://raw.githubusercontent.com/enzo19271/private/main/images/128768-1779519438945.jpg",
       "kategori_id": "id_0bdwwqs",
       "tanggal": "2026-05-22",
       "featured": false
