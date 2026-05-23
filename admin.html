@@ -719,33 +719,38 @@ const DUMMY_DATA = {
 
 async function loadData(){
   try {
+    // Fungsi ini tetap mengambil data dari backend Anda
     const res = await fetch('/api/get-data');
     if(!res.ok) throw new Error('API tidak ditemukan');
     const data = await res.json();
     DB = data;
+    render();
   } catch(e) {
-    DB.kategori = DUMMY_DATA.kategori;
-    DB.artikel = DUMMY_DATA.artikel;
+    console.error("Gagal memuat data dari API:", e);
+    showToast("Gagal memuat data dari server.", true);
   }
-  render();
 }
 
 async function saveToServer(){
-  showToast("Menyimpan data...");
+  showToast("Menyimpan data ke server...");
   try {
+    // Fungsi ini tetap mengirim data ke backend Anda
     const res = await fetch('/api/save-data', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ kategori: DB.kategori, artikel: DB.artikel, _sha: DB._sha })
+      body: JSON.stringify({ 
+        kategori: DB.kategori, 
+        artikel: DB.artikel, 
+        _sha: DB._sha 
+      })
     });
     if(!res.ok) throw new Error('Gagal menyimpan');
     const j = await res.json();
     DB._sha = j.sha;
     clearDirty();
-    showToast("Data berhasil disimpan ke Server!");
+    showToast("Data berhasil tersimpan!");
   } catch(e) {
-    showToast("Simulasi Simpan Sukses (API Lokal offline).", false);
-    clearDirty();
+    showToast("Gagal menyimpan ke server.", true);
   }
 }
 
