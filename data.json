@@ -33,6 +33,15 @@
   ],
   "artikel": [
     {
+      "id": "id_inf2p8o",
+      "judul": "anjayy",
+      "deskripsi": "ghugfhuhg",
+      "gambar": "https://raw.githubusercontent.com/enzo19271/private/main/images/129484-1779579337404.jpg",
+      "kategori_id": "id_j31kp6e",
+      "tanggal": "2026-05-24",
+      "featured": false
+    },
+    {
       "id": "id_ptxxzsz",
       "judul": "Test Doang",
       "deskripsi": "Anjay",
