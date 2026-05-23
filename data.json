@@ -33,6 +33,15 @@
   ],
   "artikel": [
     {
+      "id": "id_utk20v0",
+      "judul": "Latar Pantai",
+      "deskripsi": "change the picture background into A vast tranquil ocean at low tide during \ngolden hour, shallow reflective water stretching toward the horizon like a natural mirror. The wet sand reflects the sky’s colors with soft ripples and subtle texture. A dramatic sunset fills the sky with layered gradients of warm orange, deep amber, soft peach, and fading pink near the horizon, smoothly transitioning into cooler blue tones higher in the sky. Thin, wispy clouds are gently scattered, catching warm sunset light with delicate highlights. The horizon line is calm and distant, with faint silhouettes of rocks and tidal formations emerging from the shallow water. The ocean surface is smooth and glassy, reflecting the sky’s colors naturally with realistic lighting and balanced contrast. Cinematic atmosphere, peaceful and moody, natural color grading, high dynamic range, ultra-realistic detail, photorealistic ocean landscape, wide-angle composition, soft ambient light, serene coastal sunset",
+      "gambar": "https://raw.githubusercontent.com/enzo19271/private/main/images/129572-1779543804711.jpg",
+      "kategori_id": "id_0bdwwqs",
+      "tanggal": "2026-05-23",
+      "featured": false
+    },
+    {
       "id": "id_mkaqu5o",
       "judul": "Miror Bersih",
       "deskripsi": "Remove all dirt, smudges, fingerprints, dust, water stains, and haze from the mirror surface while keeping the reflection, person, pose, lighting, background, angle, facial features, outfit, and composition exactly the same. Make the mirror look perfectly clean and crystal clear with realistic reflections and natural lighting. Do not alter skin tone, body shape, hairstyle, accessories, or any objects in the scene. Only clean and restore the mirror quality while preserving the original photo’s realism and details.",
