@@ -1,0 +1,809 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sistem Login — GitHub Auth</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    /* ═══════════════════════════════════════════════════════
+       VARIABLES & RESET
+    ═══════════════════════════════════════════════════════ */
+    :root {
+      --bg:        #0a0d14;
+      --surface:   #111620;
+      --border:    #1e2636;
+      --border-hi: #2e3f58;
+      --text:      #e2e8f0;
+      --muted:     #64748b;
+      --accent:    #38bdf8;
+      --accent-dim:#0ea5e9;
+      --green:     #22d3ee;
+      --red:       #f87171;
+      --amber:     #fbbf24;
+      --glow:      rgba(56,189,248,.18);
+      --radius:    12px;
+      --font:      'Sora', sans-serif;
+      --mono:      'JetBrains Mono', monospace;
+      --session-duration: 28800; /* 8 jam dalam detik, sync dengan backend */
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: var(--font);
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* ═══════════════════════════════════════════════════════
+       BACKGROUND GRID EFFECT
+    ═══════════════════════════════════════════════════════ */
+    .bg-grid {
+      position: fixed; inset: 0; z-index: 0; pointer-events: none;
+      background-image:
+        linear-gradient(rgba(56,189,248,.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(56,189,248,.04) 1px, transparent 1px);
+      background-size: 40px 40px;
+      mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 30%, transparent 100%);
+    }
+    .bg-glow {
+      position: fixed; width: 600px; height: 600px;
+      border-radius: 50%; z-index: 0; pointer-events: none;
+      background: radial-gradient(circle, rgba(56,189,248,.07) 0%, transparent 70%);
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+    }
+
+    /* ═══════════════════════════════════════════════════════
+       PAGES
+    ═══════════════════════════════════════════════════════ */
+    .page {
+      position: relative; z-index: 1;
+      display: none; min-height: 100vh;
+    }
+    .page.active { display: flex; }
+
+    /* ═══════════════════════════════════════════════════════
+       LOGIN PAGE
+    ═══════════════════════════════════════════════════════ */
+    #page-login {
+      align-items: center; justify-content: center;
+      padding: 24px;
+    }
+    .login-card {
+      width: 100%; max-width: 420px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 40px 36px;
+      box-shadow: 0 0 60px rgba(0,0,0,.5), 0 0 0 1px rgba(56,189,248,.05);
+      animation: cardIn .5s cubic-bezier(.16,1,.3,1) both;
+    }
+    @keyframes cardIn {
+      from { opacity:0; transform: translateY(20px) scale(.97); }
+      to   { opacity:1; transform: translateY(0) scale(1); }
+    }
+    .login-logo {
+      display: flex; align-items: center; gap: 10px;
+      margin-bottom: 32px;
+    }
+    .login-logo-icon {
+      width: 38px; height: 38px; border-radius: 10px;
+      background: linear-gradient(135deg, #1e3a5f, #0ea5e9);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 18px;
+      box-shadow: 0 0 20px rgba(14,165,233,.3);
+    }
+    .login-logo-text { font-size: 17px; font-weight: 600; letter-spacing: -.3px; }
+    .login-logo-sub  { font-size: 11px; color: var(--muted); font-family: var(--mono); }
+
+    h1.login-title {
+      font-size: 22px; font-weight: 700;
+      letter-spacing: -.4px; margin-bottom: 6px;
+    }
+    .login-subtitle { font-size: 13px; color: var(--muted); margin-bottom: 28px; }
+
+    .field { margin-bottom: 16px; }
+    .field label {
+      display: block; font-size: 12px; font-weight: 500;
+      color: var(--muted); margin-bottom: 7px;
+      text-transform: uppercase; letter-spacing: .8px;
+    }
+    .field-wrap { position: relative; }
+    .field input {
+      width: 100%; background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 9px; padding: 11px 14px;
+      font-family: var(--font); font-size: 14px; color: var(--text);
+      outline: none; transition: border .2s, box-shadow .2s;
+    }
+    .field input:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(56,189,248,.12);
+    }
+    .field input.has-toggle { padding-right: 44px; }
+    .toggle-pw {
+      position: absolute; right: 12px; top: 50%; transform: translateY(-50%);
+      background: none; border: none; cursor: pointer;
+      color: var(--muted); font-size: 15px; transition: color .2s;
+      padding: 4px;
+    }
+    .toggle-pw:hover { color: var(--accent); }
+
+    .btn-login {
+      width: 100%; padding: 13px;
+      background: linear-gradient(135deg, #0369a1, #0ea5e9);
+      border: none; border-radius: 9px;
+      font-family: var(--font); font-size: 14px; font-weight: 600;
+      color: #fff; cursor: pointer;
+      transition: opacity .2s, transform .1s, box-shadow .2s;
+      margin-top: 8px;
+      box-shadow: 0 4px 20px rgba(14,165,233,.3);
+      position: relative; overflow: hidden;
+    }
+    .btn-login:hover { opacity:.9; box-shadow: 0 6px 28px rgba(14,165,233,.4); }
+    .btn-login:active { transform: scale(.98); }
+    .btn-login:disabled { opacity:.6; cursor: not-allowed; }
+    .btn-login .spinner {
+      display: inline-block; width: 14px; height: 14px;
+      border: 2px solid rgba(255,255,255,.3); border-top-color: #fff;
+      border-radius: 50%; animation: spin .7s linear infinite;
+      vertical-align: middle; margin-right: 6px;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    .alert {
+      padding: 11px 14px; border-radius: 8px;
+      font-size: 13px; margin-top: 16px;
+      display: none; animation: fadeIn .3s;
+    }
+    @keyframes fadeIn { from { opacity:0; transform: translateY(-4px); } to { opacity:1; transform: none; } }
+    .alert.error   { background: rgba(248,113,113,.1); border: 1px solid rgba(248,113,113,.3); color: #fca5a5; }
+    .alert.warning { background: rgba(251,191,36,.1);  border: 1px solid rgba(251,191,36,.3);  color: #fcd34d; }
+    .alert.show { display: flex; align-items: flex-start; gap: 8px; }
+    .alert-icon { flex-shrink: 0; }
+
+    .divider { border: none; border-top: 1px solid var(--border); margin: 20px 0; }
+    .demo-hint {
+      font-size: 11.5px; color: var(--muted);
+      font-family: var(--mono);
+      background: rgba(255,255,255,.03);
+      border: 1px solid var(--border);
+      border-radius: 7px; padding: 10px 12px;
+    }
+    .demo-hint span { color: var(--accent); }
+
+    /* ═══════════════════════════════════════════════════════
+       DASHBOARD PAGE
+    ═══════════════════════════════════════════════════════ */
+    #page-dashboard {
+      flex-direction: column;
+    }
+    .topbar {
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      padding: 0 28px;
+      height: 60px;
+      display: flex; align-items: center; justify-content: space-between;
+      position: sticky; top: 0; z-index: 10;
+      backdrop-filter: blur(12px);
+    }
+    .topbar-left { display: flex; align-items: center; gap: 14px; }
+    .topbar-brand { font-weight: 600; font-size: 15px; }
+    .topbar-badge {
+      font-size: 10px; font-family: var(--mono); font-weight: 500;
+      padding: 3px 8px; border-radius: 100px;
+      background: rgba(56,189,248,.12); color: var(--accent);
+      border: 1px solid rgba(56,189,248,.25);
+      text-transform: uppercase; letter-spacing: .5px;
+    }
+    .topbar-badge.admin { background: rgba(251,191,36,.12); color: var(--amber); border-color: rgba(251,191,36,.25); }
+
+    .topbar-right { display: flex; align-items: center; gap: 16px; }
+    .session-timer {
+      display: flex; align-items: center; gap: 7px;
+      font-size: 12px; font-family: var(--mono);
+      color: var(--muted);
+      background: var(--bg); border: 1px solid var(--border);
+      border-radius: 7px; padding: 5px 10px;
+      transition: color .3s, border-color .3s;
+    }
+    .session-timer.warning { color: var(--amber); border-color: rgba(251,191,36,.3); }
+    .session-timer.danger  { color: var(--red);   border-color: rgba(248,113,113,.3); animation: pulse 1s infinite; }
+    .session-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--green); animation: blink 2s infinite; }
+    .session-dot.warning { background: var(--amber); }
+    .session-dot.danger  { background: var(--red); }
+    @keyframes blink { 0%,100%{opacity:1} 50%{opacity:.3} }
+    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.6} }
+
+    .btn-logout {
+      background: none; border: 1px solid var(--border);
+      border-radius: 7px; padding: 6px 13px;
+      font-family: var(--font); font-size: 12px; font-weight: 500;
+      color: var(--muted); cursor: pointer;
+      transition: all .2s;
+    }
+    .btn-logout:hover { border-color: var(--red); color: var(--red); background: rgba(248,113,113,.07); }
+
+    .dashboard-body {
+      flex: 1; padding: 32px 28px;
+      max-width: 1000px; margin: 0 auto; width: 100%;
+    }
+    .welcome-text {
+      margin-bottom: 28px;
+    }
+    .welcome-text h2 {
+      font-size: 26px; font-weight: 700; letter-spacing: -.4px;
+      margin-bottom: 4px;
+    }
+    .welcome-text p { font-size: 14px; color: var(--muted); }
+
+    .stat-grid {
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 16px; margin-bottom: 28px;
+    }
+    .stat-card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 20px;
+      animation: cardIn .4s both;
+      transition: border-color .2s;
+    }
+    .stat-card:hover { border-color: var(--border-hi); }
+    .stat-label { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: .8px; margin-bottom: 8px; }
+    .stat-value { font-size: 22px; font-weight: 700; font-family: var(--mono); }
+    .stat-value.green  { color: var(--green); }
+    .stat-value.amber  { color: var(--amber); }
+    .stat-value.accent { color: var(--accent); }
+
+    .info-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 16px;
+    }
+    @media (max-width: 600px) { .info-grid { grid-template-columns: 1fr; } }
+
+    .info-card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 22px;
+    }
+    .info-card h3 { font-size: 13px; font-weight: 600; margin-bottom: 16px; color: var(--muted); text-transform: uppercase; letter-spacing: .6px; }
+
+    .info-row {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 9px 0; border-bottom: 1px solid var(--border);
+      font-size: 13px;
+    }
+    .info-row:last-child { border-bottom: none; }
+    .info-row .key { color: var(--muted); }
+    .info-row .val { font-family: var(--mono); font-size: 12px; }
+    .badge-active   { color: var(--green); }
+    .badge-expired  { color: var(--red); }
+    .badge-admin    { color: var(--amber); }
+
+    /* Expired warning banner */
+    .account-warning {
+      background: rgba(251,191,36,.08); border: 1px solid rgba(251,191,36,.25);
+      border-radius: var(--radius); padding: 14px 18px;
+      font-size: 13px; color: var(--amber);
+      margin-bottom: 20px; display: none;
+      align-items: center; gap: 10px;
+    }
+    .account-warning.show { display: flex; }
+
+    /* ═══════════════════════════════════════════════════════
+       SESSION EXPIRED OVERLAY
+    ═══════════════════════════════════════════════════════ */
+    .overlay {
+      position: fixed; inset: 0; z-index: 100;
+      background: rgba(10,13,20,.85);
+      backdrop-filter: blur(8px);
+      display: none; align-items: center; justify-content: center;
+      animation: fadeIn .3s;
+    }
+    .overlay.show { display: flex; }
+    .overlay-card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 18px; padding: 40px; text-align: center; max-width: 360px;
+      box-shadow: 0 0 80px rgba(0,0,0,.6);
+    }
+    .overlay-icon { font-size: 42px; margin-bottom: 16px; }
+    .overlay-card h3 { font-size: 20px; font-weight: 700; margin-bottom: 8px; }
+    .overlay-card p  { font-size: 13px; color: var(--muted); margin-bottom: 24px; }
+    .btn-relogin {
+      padding: 12px 28px;
+      background: linear-gradient(135deg, #0369a1, #0ea5e9);
+      border: none; border-radius: 9px;
+      font-family: var(--font); font-size: 14px; font-weight: 600;
+      color: #fff; cursor: pointer; transition: opacity .2s;
+      box-shadow: 0 4px 20px rgba(14,165,233,.3);
+    }
+    .btn-relogin:hover { opacity: .9; }
+
+    /* Config mode banner */
+    .config-banner {
+      background: rgba(251,191,36,.08);
+      border: 1px solid rgba(251,191,36,.25);
+      border-radius: 9px; padding: 10px 14px;
+      font-size: 12px; color: var(--amber);
+      font-family: var(--mono); margin-bottom: 20px;
+      display: flex; align-items: center; gap: 8px;
+    }
+  </style>
+</head>
+<body>
+
+<div class="bg-grid"></div>
+<div class="bg-glow"></div>
+
+<!-- ═══════════════════ LOGIN PAGE ═══════════════════ -->
+<section class="page active" id="page-login">
+  <div class="login-card">
+    <div class="login-logo">
+      <div class="login-logo-icon">⬡</div>
+      <div>
+        <div class="login-logo-text">SecureApp</div>
+        <div class="login-logo-sub">GitHub Auth System</div>
+      </div>
+    </div>
+
+    <h1 class="login-title">Masuk ke akun</h1>
+    <p class="login-subtitle">Data akun diverifikasi langsung dari GitHub</p>
+
+    <!-- Config warning -->
+    <div class="config-banner" id="config-warn">
+      ⚠ Mode Demo — ganti <code>API_URL</code> di script dengan URL Vercel kamu
+    </div>
+
+    <div class="field">
+      <label>Username</label>
+      <input type="text" id="inp-user" placeholder="contoh: budi" autocomplete="username" />
+    </div>
+    <div class="field">
+      <label>Password</label>
+      <div class="field-wrap">
+        <input type="password" id="inp-pass" class="has-toggle" placeholder="••••••••" autocomplete="current-password" />
+        <button class="toggle-pw" id="toggle-pw" title="Tampilkan password">👁</button>
+      </div>
+    </div>
+
+    <button class="btn-login" id="btn-login">Masuk</button>
+
+    <div class="alert error" id="alert-error">
+      <span class="alert-icon">✕</span>
+      <span id="alert-msg"></span>
+    </div>
+    <div class="alert warning" id="alert-warn">
+      <span class="alert-icon">⚠</span>
+      <span id="warn-msg"></span>
+    </div>
+
+    <hr class="divider" />
+
+    <div class="demo-hint">
+      <strong>Akun demo:</strong><br/>
+      <span>admin</span> / admin &nbsp;·&nbsp;
+      <span>budi</span> / password &nbsp;·&nbsp;
+      <span>demo</span> / 123456 (expired)
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════ DASHBOARD PAGE ═══════════════════ -->
+<section class="page" id="page-dashboard">
+  <header class="topbar">
+    <div class="topbar-left">
+      <span class="topbar-brand">⬡ SecureApp</span>
+      <span class="topbar-badge" id="role-badge">user</span>
+    </div>
+    <div class="topbar-right">
+      <div class="session-timer" id="session-timer">
+        <span class="session-dot" id="session-dot"></span>
+        <span id="timer-text">--:--:--</span>
+      </div>
+      <button class="btn-logout" id="btn-logout">Keluar</button>
+    </div>
+  </header>
+
+  <main class="dashboard-body">
+    <div class="account-warning" id="acc-warn">
+      ⚠ <span id="acc-warn-text"></span>
+    </div>
+
+    <div class="welcome-text">
+      <h2>Selamat datang, <span id="user-name">—</span> 👋</h2>
+      <p>Kamu berhasil login. Sesi aktif dan terautentikasi.</p>
+    </div>
+
+    <div class="stat-grid">
+      <div class="stat-card" style="animation-delay:.05s">
+        <div class="stat-label">Status Akun</div>
+        <div class="stat-value green" id="stat-status">Aktif</div>
+      </div>
+      <div class="stat-card" style="animation-delay:.1s">
+        <div class="stat-label">Sisa Sesi</div>
+        <div class="stat-value accent" id="stat-session">—</div>
+      </div>
+      <div class="stat-card" style="animation-delay:.15s">
+        <div class="stat-label">Akun Expired</div>
+        <div class="stat-value amber" id="stat-expired">—</div>
+      </div>
+      <div class="stat-card" style="animation-delay:.2s">
+        <div class="stat-label">Role</div>
+        <div class="stat-value accent" id="stat-role">—</div>
+      </div>
+    </div>
+
+    <div class="info-grid">
+      <div class="info-card">
+        <h3>Info Akun</h3>
+        <div class="info-row"><span class="key">Username</span><span class="val" id="d-username">—</span></div>
+        <div class="info-row"><span class="key">Nama</span><span class="val" id="d-name">—</span></div>
+        <div class="info-row"><span class="key">Role</span><span class="val" id="d-role">—</span></div>
+        <div class="info-row"><span class="key">Expired pada</span><span class="val" id="d-expired">—</span></div>
+        <div class="info-row"><span class="key">Status</span><span class="val" id="d-status">—</span></div>
+      </div>
+      <div class="info-card">
+        <h3>Info Sesi</h3>
+        <div class="info-row"><span class="key">Login pukul</span><span class="val" id="d-loginat">—</span></div>
+        <div class="info-row"><span class="key">Sesi berakhir</span><span class="val" id="d-sesexp">—</span></div>
+        <div class="info-row"><span class="key">Sisa waktu</span><span class="val" id="d-remain">—</span></div>
+        <div class="info-row"><span class="key">Sumber data</span><span class="val">GitHub Repo</span></div>
+        <div class="info-row"><span class="key">Backend</span><span class="val">Vercel Serverless</span></div>
+      </div>
+    </div>
+  </main>
+</section>
+
+<!-- ═══════════════════ SESSION EXPIRED OVERLAY ═══════════════════ -->
+<div class="overlay" id="overlay-expired">
+  <div class="overlay-card">
+    <div class="overlay-icon">⏰</div>
+    <h3 id="overlay-title">Sesi Berakhir</h3>
+    <p id="overlay-msg">Sesi login kamu sudah berakhir. Silakan login ulang untuk melanjutkan.</p>
+    <button class="btn-relogin" onclick="goToLogin()">Login Ulang</button>
+  </div>
+</div>
+
+<script>
+// ═══════════════════════════════════════════════════════════════
+//  KONFIGURASI — GANTI INI SETELAH DEPLOY KE VERCEL
+// ═══════════════════════════════════════════════════════════════
+const CONFIG = {
+  // Ganti dengan URL Vercel kamu, contoh:
+  // API_URL: "https://nama-project.vercel.app"
+  API_URL: "",   // ← kosong = mode demo (simulasi login lokal)
+  DEMO_MODE: true,  // akan otomatis false jika API_URL diisi
+};
+
+if (CONFIG.API_URL) {
+  CONFIG.DEMO_MODE = false;
+  document.getElementById("config-warn").style.display = "none";
+}
+
+// ═══════════════════════════════════════════════════════════════
+//  DEMO DATA — hanya aktif jika API_URL kosong
+// ═══════════════════════════════════════════════════════════════
+const DEMO_USERS = [
+  {
+    username: "admin", password: "admin",
+    name: "Administrator", role: "admin",
+    active: true, expired_at: "2026-12-31T23:59:59Z"
+  },
+  {
+    username: "budi", password: "password",
+    name: "Budi Santoso", role: "user",
+    active: true, expired_at: "2026-06-30T23:59:59Z"
+  },
+  {
+    username: "siti", password: "password",
+    name: "Siti Rahayu", role: "user",
+    active: false, expired_at: "2026-12-31T23:59:59Z"
+  },
+  {
+    username: "demo", password: "123456",
+    name: "Demo User", role: "user",
+    active: true, expired_at: "2025-01-01T00:00:00Z"
+  },
+];
+
+// ═══════════════════════════════════════════════════════════════
+//  UTILITIES
+// ═══════════════════════════════════════════════════════════════
+function showPage(id) {
+  document.querySelectorAll(".page").forEach(p => p.classList.remove("active"));
+  document.getElementById(id).classList.add("active");
+}
+
+function showError(msg) {
+  const el = document.getElementById("alert-error");
+  document.getElementById("alert-msg").textContent = msg;
+  el.classList.add("show");
+  document.getElementById("alert-warn").classList.remove("show");
+}
+function showWarn(msg) {
+  const el = document.getElementById("alert-warn");
+  document.getElementById("warn-msg").textContent = msg;
+  el.classList.add("show");
+  document.getElementById("alert-error").classList.remove("show");
+}
+function clearAlerts() {
+  document.getElementById("alert-error").classList.remove("show");
+  document.getElementById("alert-warn").classList.remove("show");
+}
+
+function fmtDate(iso) {
+  if (!iso) return "—";
+  return new Date(iso).toLocaleDateString("id-ID", {
+    day: "2-digit", month: "long", year: "numeric",
+    hour: "2-digit", minute: "2-digit"
+  });
+}
+function fmtDuration(sec) {
+  if (sec <= 0) return "00:00:00";
+  const h = Math.floor(sec / 3600);
+  const m = Math.floor((sec % 3600) / 60);
+  const s = sec % 60;
+  return [h, m, s].map(v => String(v).padStart(2, "0")).join(":");
+}
+
+// ═══════════════════════════════════════════════════════════════
+//  SESSION MANAGEMENT
+// ═══════════════════════════════════════════════════════════════
+const SESSION_KEY = "gh_auth_session";
+
+function saveSession(data) {
+  localStorage.setItem(SESSION_KEY, JSON.stringify(data));
+}
+function loadSession() {
+  try {
+    return JSON.parse(localStorage.getItem(SESSION_KEY));
+  } catch { return null; }
+}
+function clearSession() {
+  localStorage.removeItem(SESSION_KEY);
+}
+
+let sessionTimer = null;
+let sessionEndTime = null;
+
+function startSessionCountdown(expiresAt) {
+  sessionEndTime = expiresAt;
+  if (sessionTimer) clearInterval(sessionTimer);
+
+  sessionTimer = setInterval(() => {
+    const now = Date.now();
+    const remaining = Math.max(0, Math.floor((sessionEndTime - now) / 1000));
+
+    // Update UI
+    const timerEl  = document.getElementById("session-timer");
+    const dotEl    = document.getElementById("session-dot");
+    const textEl   = document.getElementById("timer-text");
+    const statEl   = document.getElementById("stat-session");
+    const remEl    = document.getElementById("d-remain");
+    const fmtd     = fmtDuration(remaining);
+
+    textEl.textContent = fmtd;
+    statEl.textContent = fmtd;
+    remEl.textContent  = fmtd;
+
+    if (remaining <= 0) {
+      clearInterval(sessionTimer);
+      showExpiredOverlay("Sesi Berakhir", "Sesi login kamu sudah berakhir. Silakan login ulang.");
+      return;
+    }
+
+    // Color states
+    if (remaining < 300) {
+      timerEl.className = "session-timer danger";
+      dotEl.className = "session-dot danger";
+    } else if (remaining < 900) {
+      timerEl.className = "session-timer warning";
+      dotEl.className = "session-dot warning";
+    } else {
+      timerEl.className = "session-timer";
+      dotEl.className = "session-dot";
+    }
+  }, 1000);
+}
+
+function showExpiredOverlay(title, msg) {
+  document.getElementById("overlay-title").textContent = title;
+  document.getElementById("overlay-msg").textContent   = msg;
+  document.getElementById("overlay-expired").classList.add("show");
+  clearSession();
+  if (sessionTimer) clearInterval(sessionTimer);
+}
+
+function goToLogin() {
+  document.getElementById("overlay-expired").classList.remove("show");
+  showPage("page-login");
+}
+
+// ═══════════════════════════════════════════════════════════════
+//  RENDER DASHBOARD
+// ═══════════════════════════════════════════════════════════════
+function renderDashboard(session) {
+  const { user, token_expires_at, login_at } = session;
+
+  // Header
+  document.getElementById("user-name").textContent = user.name;
+  const badge = document.getElementById("role-badge");
+  badge.textContent = user.role;
+  badge.className   = "topbar-badge" + (user.role === "admin" ? " admin" : "");
+
+  // Stats
+  document.getElementById("stat-role").textContent = user.role;
+  document.getElementById("stat-status").textContent = "Aktif";
+
+  // Expired date
+  const expDate  = new Date(user.expired_at);
+  const now      = new Date();
+  const daysLeft = Math.ceil((expDate - now) / 86400000);
+  const expStr   = fmtDate(user.expired_at);
+
+  document.getElementById("stat-expired").textContent = daysLeft > 0
+    ? daysLeft + " hari lagi" : "EXPIRED";
+  document.getElementById("stat-expired").className = "stat-value " + (daysLeft > 30 ? "green" : daysLeft > 0 ? "amber" : "red");
+
+  // Account warn
+  if (daysLeft <= 7 && daysLeft > 0) {
+    document.getElementById("acc-warn").classList.add("show");
+    document.getElementById("acc-warn-text").textContent =
+      `Akun kamu akan expired dalam ${daysLeft} hari (${expStr}). Segera hubungi admin.`;
+  }
+
+  // Info akun
+  document.getElementById("d-username").textContent = user.username;
+  document.getElementById("d-name").textContent      = user.name;
+  document.getElementById("d-role").textContent      = user.role;
+  document.getElementById("d-expired").textContent   = expStr;
+  document.getElementById("d-status").innerHTML      =
+    `<span class="${daysLeft > 0 ? 'badge-active' : 'badge-expired'}">${daysLeft > 0 ? '● Aktif' : '● Expired'}</span>`;
+
+  // Info sesi
+  document.getElementById("d-loginat").textContent = fmtDate(login_at);
+  document.getElementById("d-sesexp").textContent  = fmtDate(new Date(token_expires_at).toISOString());
+
+  // Mulai countdown
+  startSessionCountdown(token_expires_at);
+  showPage("page-dashboard");
+}
+
+// ═══════════════════════════════════════════════════════════════
+//  LOGIN — REAL API
+// ═══════════════════════════════════════════════════════════════
+async function loginReal(username, password) {
+  const res = await fetch(`${CONFIG.API_URL}/api/login`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ username, password }),
+  });
+
+  const data = await res.json();
+
+  if (!res.ok) {
+    if (res.status === 403 && data.expired_at) {
+      throw { type: "expired", msg: `Akun expired sejak ${fmtDate(data.expired_at)}` };
+    }
+    throw { type: "error", msg: data.error || "Login gagal" };
+  }
+
+  const tokenExpiresAt = Date.now() + (data.session_expires_in * 1000);
+  const session = {
+    token: data.token,
+    user: data.user,
+    login_at: new Date().toISOString(),
+    token_expires_at: tokenExpiresAt,
+  };
+  saveSession(session);
+  renderDashboard(session);
+}
+
+// ═══════════════════════════════════════════════════════════════
+//  LOGIN — DEMO MODE (simulasi tanpa backend)
+// ═══════════════════════════════════════════════════════════════
+function loginDemo(username, password) {
+  const u = DEMO_USERS.find(x => x.username.toLowerCase() === username.toLowerCase());
+  if (!u || u.password !== password) throw { type: "error", msg: "Username atau password salah" };
+  if (!u.active) throw { type: "error", msg: "Akun dinonaktifkan oleh admin" };
+
+  const now = new Date();
+  const exp = new Date(u.expired_at);
+  if (now > exp) throw { type: "expired", msg: `Akun expired sejak ${fmtDate(u.expired_at)}` };
+
+  const SESSION_HOURS = 8;
+  const tokenExpiresAt = Date.now() + (SESSION_HOURS * 3600 * 1000);
+
+  const session = {
+    token: "demo-token-" + Date.now(),
+    user: { username: u.username, name: u.name, role: u.role, expired_at: u.expired_at },
+    login_at: new Date().toISOString(),
+    token_expires_at: tokenExpiresAt,
+  };
+  saveSession(session);
+  renderDashboard(session);
+}
+
+// ═══════════════════════════════════════════════════════════════
+//  EVENT LISTENERS
+// ═══════════════════════════════════════════════════════════════
+document.getElementById("btn-login").addEventListener("click", async () => {
+  const username = document.getElementById("inp-user").value.trim();
+  const password = document.getElementById("inp-pass").value;
+  clearAlerts();
+
+  if (!username || !password) {
+    showError("Username dan password tidak boleh kosong");
+    return;
+  }
+
+  const btn = document.getElementById("btn-login");
+  btn.disabled = true;
+  btn.innerHTML = `<span class="spinner"></span> Memverifikasi...`;
+
+  try {
+    if (CONFIG.DEMO_MODE) {
+      await new Promise(r => setTimeout(r, 900)); // simulasi delay network
+      loginDemo(username, password);
+    } else {
+      await loginReal(username, password);
+    }
+  } catch (err) {
+    btn.disabled = false;
+    btn.textContent = "Masuk";
+    if (err.type === "expired") showWarn(err.msg || "Akun sudah expired");
+    else showError(err.msg || "Terjadi kesalahan");
+  }
+});
+
+// Enter key
+document.getElementById("inp-pass").addEventListener("keydown", e => {
+  if (e.key === "Enter") document.getElementById("btn-login").click();
+});
+document.getElementById("inp-user").addEventListener("keydown", e => {
+  if (e.key === "Enter") document.getElementById("inp-pass").focus();
+});
+
+// Toggle password
+document.getElementById("toggle-pw").addEventListener("click", () => {
+  const inp = document.getElementById("inp-pass");
+  inp.type = inp.type === "password" ? "text" : "password";
+});
+
+// Logout
+document.getElementById("btn-logout").addEventListener("click", () => {
+  if (sessionTimer) clearInterval(sessionTimer);
+  clearSession();
+  showPage("page-login");
+  document.getElementById("inp-pass").value = "";
+  clearAlerts();
+});
+
+// ═══════════════════════════════════════════════════════════════
+//  AUTO-RESTORE SESSION SAAT HALAMAN DIBUKA
+// ═══════════════════════════════════════════════════════════════
+(function restoreSession() {
+  const session = loadSession();
+  if (!session) return;
+
+  const now = Date.now();
+  if (session.token_expires_at <= now) {
+    clearSession();
+    return; // biarkan di halaman login
+  }
+
+  // Cek expired akun
+  const accExp = new Date(session.user.expired_at);
+  if (now > accExp) {
+    clearSession();
+    showExpiredOverlay("Akun Expired", `Akun ${session.user.username} sudah tidak aktif. Hubungi admin.`);
+    showPage("page-dashboard");
+    return;
+  }
+
+  renderDashboard(session);
+})();
+</script>
+</body>
+</html>
