@@ -1,0 +1,59 @@
+[
+  {
+    "username": "admin",
+    "name": "Administrator",
+    "password_hash": "8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918",
+    "role": "admin",
+    "active": true,
+    "expired_at": "2026-12-31T23:59:59Z",
+    "created_at": "2026-01-01T00:00:00Z",
+    "note": "Password: admin"
+  },
+  {
+    "username": "budi",
+    "name": "Budi Santoso",
+    "password_hash": "5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8",
+    "role": "user",
+    "active": true,
+    "expired_at": "2026-06-30T23:59:59Z",
+    "created_at": "2026-01-15T00:00:00Z",
+    "note": "Password: password"
+  },
+  {
+    "username": "siti",
+    "name": "Siti Rahayu",
+    "password_hash": "5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8",
+    "role": "user",
+    "active": false,
+    "expired_at": "2026-12-31T23:59:59Z",
+    "created_at": "2026-02-01T00:00:00Z",
+    "note": "Akun dinonaktifkan — password: password"
+  },
+  {
+    "username": "demo",
+    "name": "Demo User (Expired)",
+    "password_hash": "2a97516c354b68848cdbd8f54a226a0a55b21ed138e207ad6c5cbb9c00aa5aea",
+    "role": "user",
+    "active": true,
+    "expired_at": "2025-01-01T00:00:00Z",
+    "created_at": "2024-06-01T00:00:00Z",
+    "note": "Sengaja dibuat expired — password: 123456"
+  }
+]
+
+// ============================================================
+// CARA GENERATE PASSWORD HASH:
+//   Buka browser console → ketik:
+//   
+//   async function sha256(msg) {
+//     const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(msg));
+//     return [...new Uint8Array(buf)].map(b=>b.toString(16).padStart(2,'0')).join('');
+//   }
+//   sha256('password_kamu').then(console.log)
+//
+// AKUN DEMO:
+//   admin / admin     → role admin, aktif s.d. Des 2026
+//   budi  / password  → role user,  aktif s.d. Jun 2026
+//   siti  / password  → NONAKTIF
+//   demo  / 123456    → EXPIRED
+// ============================================================
