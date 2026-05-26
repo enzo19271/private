@@ -1,1 +1,398 @@
-
+{
+  "tes": "toefl",
+  "judul": "TOEFL Simulation Test",
+  "durasiMenit": 60,
+  "skorMaksimal": 677,
+  "soal": [
+    {
+      "id": 1,
+      "kategori": "structure",
+      "pertanyaan": "The professor ____ the lecture before the students arrived.",
+      "opsi": {
+        "A": "begin",
+        "B": "began",
+        "C": "begins",
+        "D": "beginning"
+      },
+      "jawaban": "B",
+      "pembahasan": "Kalimat menggunakan past tense."
+    },
+    {
+      "id": 2,
+      "kategori": "structure",
+      "pertanyaan": "She ____ to the library every afternoon.",
+      "opsi": {
+        "A": "go",
+        "B": "goes",
+        "C": "gone",
+        "D": "going"
+      },
+      "jawaban": "B",
+      "pembahasan": "Subject singular menggunakan verb + s."
+    },
+    {
+      "id": 3,
+      "kategori": "structure",
+      "pertanyaan": "If I ____ enough money, I would travel abroad.",
+      "opsi": {
+        "A": "have",
+        "B": "had",
+        "C": "has",
+        "D": "having"
+      },
+      "jawaban": "B",
+      "pembahasan": "Conditional type 2 menggunakan past form."
+    },
+    {
+      "id": 4,
+      "kategori": "vocabulary",
+      "pertanyaan": "The word 'ancient' is closest in meaning to ____.",
+      "opsi": {
+        "A": "modern",
+        "B": "old",
+        "C": "young",
+        "D": "future"
+      },
+      "jawaban": "B",
+      "pembahasan": "'Ancient' berarti kuno atau tua."
+    },
+    {
+      "id": 5,
+      "kategori": "reading",
+      "pertanyaan": "What is the synonym of 'rapid'?",
+      "opsi": {
+        "A": "slow",
+        "B": "quick",
+        "C": "weak",
+        "D": "small"
+      },
+      "jawaban": "B",
+      "pembahasan": "'Rapid' berarti cepat."
+    },
+    {
+      "id": 6,
+      "kategori": "structure",
+      "pertanyaan": "Neither the students nor the teacher ____ ready.",
+      "opsi": {
+        "A": "are",
+        "B": "were",
+        "C": "is",
+        "D": "be"
+      },
+      "jawaban": "C",
+      "pembahasan": "Verb mengikuti subject terdekat yaitu 'teacher'."
+    },
+    {
+      "id": 7,
+      "kategori": "structure",
+      "pertanyaan": "The book ____ on the table yesterday.",
+      "opsi": {
+        "A": "is",
+        "B": "was",
+        "C": "were",
+        "D": "be"
+      },
+      "jawaban": "B",
+      "pembahasan": "Past tense singular menggunakan 'was'."
+    },
+    {
+      "id": 8,
+      "kategori": "vocabulary",
+      "pertanyaan": "The opposite of 'expand' is ____.",
+      "opsi": {
+        "A": "increase",
+        "B": "grow",
+        "C": "shrink",
+        "D": "develop"
+      },
+      "jawaban": "C",
+      "pembahasan": "'Shrink' adalah lawan kata dari expand."
+    },
+    {
+      "id": 9,
+      "kategori": "reading",
+      "pertanyaan": "What does 'fragile' mean?",
+      "opsi": {
+        "A": "strong",
+        "B": "breakable",
+        "C": "heavy",
+        "D": "safe"
+      },
+      "jawaban": "B",
+      "pembahasan": "'Fragile' berarti mudah pecah."
+    },
+    {
+      "id": 10,
+      "kategori": "structure",
+      "pertanyaan": "By the time we arrived, the movie ____.",
+      "opsi": {
+        "A": "starts",
+        "B": "started",
+        "C": "had started",
+        "D": "starting"
+      },
+      "jawaban": "C",
+      "pembahasan": "Past perfect digunakan untuk aksi yang terjadi lebih dahulu."
+    },
+    {
+      "id": 11,
+      "kategori": "structure",
+      "pertanyaan": "He is interested ____ learning Japanese.",
+      "opsi": {
+        "A": "at",
+        "B": "in",
+        "C": "on",
+        "D": "to"
+      },
+      "jawaban": "B",
+      "pembahasan": "Interested in adalah pasangan yang benar."
+    },
+    {
+      "id": 12,
+      "kategori": "structure",
+      "pertanyaan": "The students ____ studying when the teacher entered.",
+      "opsi": {
+        "A": "is",
+        "B": "was",
+        "C": "were",
+        "D": "be"
+      },
+      "jawaban": "C",
+      "pembahasan": "Plural subject menggunakan were."
+    },
+    {
+      "id": 13,
+      "kategori": "vocabulary",
+      "pertanyaan": "The word 'purchase' is closest in meaning to ____.",
+      "opsi": {
+        "A": "sell",
+        "B": "buy",
+        "C": "borrow",
+        "D": "rent"
+      },
+      "jawaban": "B",
+      "pembahasan": "'Purchase' berarti membeli."
+    },
+    {
+      "id": 14,
+      "kategori": "reading",
+      "pertanyaan": "Which word means 'not common'?",
+      "opsi": {
+        "A": "usual",
+        "B": "rare",
+        "C": "daily",
+        "D": "normal"
+      },
+      "jawaban": "B",
+      "pembahasan": "'Rare' berarti jarang atau tidak umum."
+    },
+    {
+      "id": 15,
+      "kategori": "structure",
+      "pertanyaan": "She ____ television when I called her.",
+      "opsi": {
+        "A": "watch",
+        "B": "watched",
+        "C": "was watching",
+        "D": "watching"
+      },
+      "jawaban": "C",
+      "pembahasan": "Past continuous digunakan untuk aksi yang sedang berlangsung."
+    },
+    {
+      "id": 16,
+      "kategori": "structure",
+      "pertanyaan": "Many people ____ to the concert last night.",
+      "opsi": {
+        "A": "go",
+        "B": "goes",
+        "C": "went",
+        "D": "gone"
+      },
+      "jawaban": "C",
+      "pembahasan": "Last night menunjukkan past tense."
+    },
+    {
+      "id": 17,
+      "kategori": "vocabulary",
+      "pertanyaan": "The opposite of 'increase' is ____.",
+      "opsi": {
+        "A": "expand",
+        "B": "reduce",
+        "C": "improve",
+        "D": "develop"
+      },
+      "jawaban": "B",
+      "pembahasan": "'Reduce' adalah lawan kata increase."
+    },
+    {
+      "id": 18,
+      "kategori": "reading",
+      "pertanyaan": "What is the synonym of 'difficult'?",
+      "opsi": {
+        "A": "easy",
+        "B": "hard",
+        "C": "simple",
+        "D": "light"
+      },
+      "jawaban": "B",
+      "pembahasan": "'Hard' sinonim dari difficult."
+    },
+    {
+      "id": 19,
+      "kategori": "structure",
+      "pertanyaan": "I have lived here ____ 2018.",
+      "opsi": {
+        "A": "for",
+        "B": "since",
+        "C": "during",
+        "D": "from"
+      },
+      "jawaban": "B",
+      "pembahasan": "Since digunakan untuk titik waktu."
+    },
+    {
+      "id": 20,
+      "kategori": "structure",
+      "pertanyaan": "The homework ____ by the students yesterday.",
+      "opsi": {
+        "A": "completed",
+        "B": "was completed",
+        "C": "completing",
+        "D": "completes"
+      },
+      "jawaban": "B",
+      "pembahasan": "Passive voice past tense."
+    },
+    {
+      "id": 21,
+      "kategori": "vocabulary",
+      "pertanyaan": "The word 'tiny' is closest in meaning to ____.",
+      "opsi": {
+        "A": "huge",
+        "B": "small",
+        "C": "wide",
+        "D": "long"
+      },
+      "jawaban": "B",
+      "pembahasan": "'Tiny' berarti kecil."
+    },
+    {
+      "id": 22,
+      "kategori": "reading",
+      "pertanyaan": "What does 'generous' mean?",
+      "opsi": {
+        "A": "kind and giving",
+        "B": "angry",
+        "C": "selfish",
+        "D": "lazy"
+      },
+      "jawaban": "A",
+      "pembahasan": "'Generous' berarti dermawan."
+    },
+    {
+      "id": 23,
+      "kategori": "structure",
+      "pertanyaan": "He can ____ very fast.",
+      "opsi": {
+        "A": "runs",
+        "B": "ran",
+        "C": "run",
+        "D": "running"
+      },
+      "jawaban": "C",
+      "pembahasan": "Modal verb diikuti verb 1."
+    },
+    {
+      "id": 24,
+      "kategori": "structure",
+      "pertanyaan": "There ____ many books on the shelf.",
+      "opsi": {
+        "A": "is",
+        "B": "are",
+        "C": "was",
+        "D": "be"
+      },
+      "jawaban": "B",
+      "pembahasan": "Plural noun menggunakan are."
+    },
+    {
+      "id": 25,
+      "kategori": "vocabulary",
+      "pertanyaan": "The opposite of 'success' is ____.",
+      "opsi": {
+        "A": "victory",
+        "B": "failure",
+        "C": "progress",
+        "D": "achievement"
+      },
+      "jawaban": "B",
+      "pembahasan": "'Failure' adalah lawan kata success."
+    },
+    {
+      "id": 26,
+      "kategori": "reading",
+      "pertanyaan": "What is the synonym of 'silent'?",
+      "opsi": {
+        "A": "quiet",
+        "B": "loud",
+        "C": "bright",
+        "D": "happy"
+      },
+      "jawaban": "A",
+      "pembahasan": "'Quiet' sinonim dari silent."
+    },
+    {
+      "id": 27,
+      "kategori": "structure",
+      "pertanyaan": "She has ____ her assignment already.",
+      "opsi": {
+        "A": "finish",
+        "B": "finished",
+        "C": "finishing",
+        "D": "finishes"
+      },
+      "jawaban": "B",
+      "pembahasan": "Present perfect menggunakan V3."
+    },
+    {
+      "id": 28,
+      "kategori": "structure",
+      "pertanyaan": "The car ____ by my father every week.",
+      "opsi": {
+        "A": "wash",
+        "B": "washed",
+        "C": "is washed",
+        "D": "washing"
+      },
+      "jawaban": "C",
+      "pembahasan": "Passive voice simple present."
+    },
+    {
+      "id": 29,
+      "kategori": "vocabulary",
+      "pertanyaan": "The word 'assist' is closest in meaning to ____.",
+      "opsi": {
+        "A": "help",
+        "B": "ignore",
+        "C": "fight",
+        "D": "leave"
+      },
+      "jawaban": "A",
+      "pembahasan": "'Assist' berarti membantu."
+    },
+    {
+      "id": 30,
+      "kategori": "reading",
+      "pertanyaan": "What does 'honest' mean?",
+      "opsi": {
+        "A": "truthful",
+        "B": "dishonest",
+        "C": "angry",
+        "D": "rude"
+      },
+      "jawaban": "A",
+      "pembahasan": "'Honest' berarti jujur."
+    }
+  ]
+}
