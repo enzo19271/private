@@ -185,7 +185,68 @@ body {
 .section-head h2 i { color: var(--primary); }
 .section-sub { font-size: 13px; color: var(--ink3); margin-top: 4px; }
 
-/* ── TEST CARDS GRID ── */
+/* ── LEADERBOARD ── */
+.lb-wrap {
+  background: var(--surface); border: 1px solid var(--border); border-radius: 16px;
+  overflow: hidden; box-shadow: var(--shadow-sm); margin-bottom: 36px;
+}
+.lb-header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 18px 24px; border-bottom: 1px solid var(--border);
+  background: var(--surface2);
+}
+.lb-title { font-size: 15px; font-weight: 700; color: var(--ink); display: flex; align-items: center; gap: 10px; }
+.lb-title i { color: var(--warn); font-size: 20px; }
+.lb-filter { display: flex; gap: 8px; flex-wrap: wrap; }
+.lb-tab {
+  padding: 6px 14px; border-radius: 20px; font-size: 12px; font-weight: 600;
+  border: 1.5px solid var(--border); background: var(--surface); color: var(--ink3);
+  cursor: pointer; transition: var(--transition);
+}
+.lb-tab:hover { border-color: var(--primary); color: var(--primary); }
+.lb-tab.active { background: var(--primary); border-color: var(--primary); color: #fff; }
+.lb-scroll { overflow-x: auto; }
+.lb-table { width: 100%; border-collapse: collapse; }
+.lb-table th {
+  padding: 10px 16px; font-size: 11px; font-weight: 600; text-transform: uppercase;
+  letter-spacing: 0.06em; color: var(--ink4); text-align: left;
+  border-bottom: 1px solid var(--border); background: var(--surface2);
+  white-space: nowrap;
+}
+.lb-table td {
+  padding: 12px 16px; font-size: 13px; color: var(--ink2);
+  border-bottom: 1px solid var(--border); vertical-align: middle;
+}
+.lb-table tr:last-child td { border-bottom: none; }
+.lb-table tr:hover td { background: var(--surface2); }
+.lb-rank { font-weight: 700; font-size: 15px; color: var(--ink3); }
+.lb-rank-1 { color: #f59e0b; }
+.lb-rank-2 { color: #94a3b8; }
+.lb-rank-3 { color: #cd7c3f; }
+.lb-medal { font-size: 18px; }
+.lb-nama { font-weight: 600; color: var(--ink); }
+.lb-tes-badge {
+  display: inline-flex; align-items: center; gap: 4px; padding: 3px 9px;
+  border-radius: 12px; font-size: 11px; font-weight: 600;
+}
+.lb-badge-toefl { background: #eff6ff; color: #2563eb; }
+.lb-badge-iq { background: #f5f3ff; color: #7c3aed; }
+.lb-badge-ukbi { background: #ecfdf5; color: #059669; }
+.lb-badge-reading { background: #fff7ed; color: #ea580c; }
+[data-theme="dark"] .lb-badge-toefl { background: #1e3a8a; }
+[data-theme="dark"] .lb-badge-iq { background: #2e1065; color: #c4b5fd; }
+[data-theme="dark"] .lb-badge-ukbi { background: #064e3b; color: #6ee7b7; }
+[data-theme="dark"] .lb-badge-reading { background: #431407; color: #fdba74; }
+.lb-skor { font-weight: 700; color: var(--primary); font-size: 15px; }
+.lb-waktu { color: var(--ink3); font-size: 12px; }
+.lb-empty {
+  padding: 40px; text-align: center; color: var(--ink4);
+}
+.lb-empty i { font-size: 40px; margin-bottom: 10px; display: block; }
+.lb-loading {
+  padding: 32px; text-align: center; color: var(--ink3);
+}
+
 .test-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 24px; margin-bottom: 40px; }
 
 .test-card {
@@ -345,6 +406,7 @@ body {
     <a class="nav-item" href="../config.html"><i class='bx bx-info-circle nav-icon'></i> Tentang Kami</a>
     <div class="sidebar-section" style="margin-top: 15px;">Manajemen</div>
     <a class="nav-item" href="../admin.html"><i class='bx bx-user-pin nav-icon'></i> Admin Panel</a>
+    <a class="nav-item" href="admin-soal.html"><i class='bx bx-edit-alt nav-icon'></i> Kelola Soal</a>
     <div class="sidebar-section" style="margin-top: 15px;">Analitik</div>
     <a class="nav-item" href="../analytics.html"><i class='bx bx-bar-chart-alt-2 nav-icon'></i> Traffic Klik</a>
   </div>
@@ -401,6 +463,32 @@ body {
       </div>
       <div class="hero-icon-wrap">
         <i class='bx bx-trophy'></i>
+      </div>
+    </div>
+
+    <!-- Leaderboard -->
+    <div class="section-head">
+      <div>
+        <h2><i class='bx bx-trophy'></i> Leaderboard</h2>
+        <p class="section-sub">Ranking peserta terbaik berdasarkan skor dan waktu pengerjaan</p>
+      </div>
+    </div>
+    <div class="lb-wrap">
+      <div class="lb-header">
+        <div class="lb-title"><i class='bx bxs-crown'></i> Top Scorer</div>
+        <div class="lb-filter">
+          <button class="lb-tab active" onclick="loadLeaderboard(null, this)">Semua</button>
+          <button class="lb-tab" onclick="loadLeaderboard('toefl', this)">TOEFL</button>
+          <button class="lb-tab" onclick="loadLeaderboard('iq', this)">IQ</button>
+          <button class="lb-tab" onclick="loadLeaderboard('ukbi', this)">UKBI</button>
+          <button class="lb-tab" onclick="loadLeaderboard('reading', this)">Reading</button>
+        </div>
+      </div>
+      <div class="lb-scroll">
+        <div id="lb-content" class="lb-loading">
+          <i class='bx bx-loader-alt bx-spin' style="font-size:32px;display:block;margin-bottom:10px;color:var(--primary)"></i>
+          Memuat leaderboard...
+        </div>
       </div>
     </div>
 
@@ -599,6 +687,87 @@ overlay.addEventListener('click', () => {
   sidebar.classList.remove('open');
   overlay.classList.remove('open');
 });
+
+// ── LEADERBOARD ──
+const tesBadgeMap = {
+  toefl: '<span class="lb-tes-badge lb-badge-toefl"><i class="bx bx-world"></i> TOEFL</span>',
+  iq:    '<span class="lb-tes-badge lb-badge-iq"><i class="bx bx-brain"></i> IQ</span>',
+  ukbi:  '<span class="lb-tes-badge lb-badge-ukbi"><i class="bx bx-flag"></i> UKBI</span>',
+  reading:'<span class="lb-tes-badge lb-badge-reading"><i class="bx bx-book-open"></i> Reading</span>',
+};
+
+function formatWaktu(detik) {
+  if (!detik) return '—';
+  const m = Math.floor(detik / 60);
+  const s = detik % 60;
+  return m > 0 ? `${m}m ${s}s` : `${s}s`;
+}
+
+function renderMedal(rank) {
+  if (rank === 1) return '<span class="lb-medal">🥇</span>';
+  if (rank === 2) return '<span class="lb-medal">🥈</span>';
+  if (rank === 3) return '<span class="lb-medal">🥉</span>';
+  return `<span class="lb-rank">${rank}</span>`;
+}
+
+async function loadLeaderboard(tesFilter, tabEl) {
+  // Update active tab
+  if (tabEl) {
+    document.querySelectorAll('.lb-tab').forEach(t => t.classList.remove('active'));
+    tabEl.classList.add('active');
+  }
+
+  const lbContent = document.getElementById('lb-content');
+  lbContent.innerHTML = `<div class="lb-loading"><i class='bx bx-loader-alt bx-spin' style="font-size:32px;display:block;margin-bottom:10px;color:var(--primary)"></i>Memuat...</div>`;
+
+  try {
+    const url = tesFilter ? `/api/ujicoba/get-hasil?tes=${tesFilter}` : '/api/ujicoba/get-hasil';
+    const res = await fetch(url);
+    if (!res.ok) throw new Error('API error');
+    const data = await res.json();
+    const list = data.hasil || [];
+
+    if (list.length === 0) {
+      lbContent.innerHTML = `<div class="lb-empty"><i class='bx bx-data'></i>Belum ada peserta. Jadilah yang pertama!</div>`;
+      return;
+    }
+
+    const rows = list.map((item, i) => `
+      <tr>
+        <td>${renderMedal(i + 1)}</td>
+        <td class="lb-nama">${escHtml(item.nama || 'Anonim')}</td>
+        <td>${tesBadgeMap[item.tesKey] || item.tesKey}</td>
+        <td class="lb-skor">${item.skorPersen ?? item.benar ?? '—'}%</td>
+        <td class="lb-waktu"><i class='bx bx-time-five'></i> ${formatWaktu(item.waktuDipakai)}</td>
+        <td class="lb-waktu">${item.timestamp ? new Date(item.timestamp).toLocaleDateString('id-ID') : '—'}</td>
+      </tr>
+    `).join('');
+
+    lbContent.innerHTML = `
+      <table class="lb-table">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Nama</th>
+            <th>Tes</th>
+            <th>Skor</th>
+            <th>Waktu</th>
+            <th>Tanggal</th>
+          </tr>
+        </thead>
+        <tbody>${rows}</tbody>
+      </table>`;
+  } catch(e) {
+    lbContent.innerHTML = `<div class="lb-empty"><i class='bx bx-wifi-off'></i>Leaderboard tidak tersedia (offline atau server error).</div>`;
+  }
+}
+
+function escHtml(str) {
+  return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+// Load leaderboard on page load
+loadLeaderboard(null);
 </script>
 </body>
 </html>
