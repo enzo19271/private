@@ -157,7 +157,33 @@ body { font-family:'Sora',sans-serif; background:var(--bg); color:var(--ink); mi
 .score-chip-val { font-size:20px;font-weight:700;color:var(--primary); }
 .score-chip-label { font-size:11px;color:var(--ink3);margin-top:2px; }
 
-.ic-footer {
+.nama-section {
+  margin-bottom: 28px;
+  padding: 24px;
+  background: var(--surface2);
+  border: 1.5px solid var(--border);
+  border-radius: 14px;
+  transition: border-color 0.3s;
+}
+.nama-section.error { border-color: var(--danger); background: #fef2f2; }
+[data-theme="dark"] .nama-section.error { background: #1a0808; }
+.nama-title { font-size: 15px; font-weight: 700; color: var(--ink); margin-bottom: 6px; display: flex; align-items: center; gap: 8px; }
+.nama-title i { color: var(--primary); }
+.nama-desc { font-size: 13px; color: var(--ink3); margin-bottom: 16px; line-height: 1.5; }
+.nama-input-wrap { position: relative; }
+.nama-input-icon { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); font-size: 20px; color: var(--ink4); pointer-events: none; }
+.nama-input {
+  width: 100%; padding: 12px 16px 12px 44px;
+  border: 1.5px solid var(--border); border-radius: 10px;
+  background: var(--surface); color: var(--ink);
+  font-family: 'Sora', sans-serif; font-size: 14px;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  outline: none;
+}
+.nama-input:focus { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(37,99,235,0.1); }
+.nama-input::placeholder { color: var(--ink4); }
+.nama-error { display: none; font-size: 12px; color: var(--danger); margin-top: 8px; font-weight: 500; }
+.nama-section.error .nama-error { display: block; }
   display:flex;align-items:center;justify-content:space-between;
   padding:24px 40px;
   border-top:1px solid var(--border);
@@ -279,11 +305,22 @@ body { font-family:'Sora',sans-serif; background:var(--bg); color:var(--ink); mi
           </div>
         </div>
 
+        <!-- Input Nama -->
+        <div class="nama-section" id="nama-section">
+          <div class="nama-title"><i class='bx bx-user-pin'></i> Identitas Peserta</div>
+          <p class="nama-desc">Masukkan nama kamu sebelum memulai tes. Nama ini akan tampil di leaderboard.</p>
+          <div class="nama-input-wrap">
+            <i class='bx bx-user nama-input-icon'></i>
+            <input type="text" id="input-nama" class="nama-input" placeholder="Nama lengkap kamu..." maxlength="50" autocomplete="off"/>
+          </div>
+          <div class="nama-error" id="nama-error">⚠️ Nama wajib diisi sebelum memulai tes.</div>
+        </div>
+
         <div class="ic-footer">
           <a href="index.html" class="btn btn-outline"><i class='bx bx-x'></i> Batal</a>
-          <a href="#" class="btn btn-primary" id="btn-mulai">
+          <button class="btn btn-primary" id="btn-mulai" onclick="mulaiTes()">
             <i class='bx bx-play-circle'></i> Mulai Tes Sekarang
-          </a>
+          </button>
         </div>
       </div>
     </div>
@@ -456,6 +493,31 @@ document.getElementById('score-grid').innerHTML = tes.scores.map(s => `
 `).join('');
 
 document.getElementById('btn-mulai').href = `tes.html?tes=${tesKey}`;
+
+// ── INPUT NAMA & MULAI TES ──
+function mulaiTes() {
+  const nama = document.getElementById('input-nama').value.trim();
+  const namaSection = document.getElementById('nama-section');
+  if (!nama) {
+    namaSection.classList.add('error');
+    document.getElementById('input-nama').focus();
+    return;
+  }
+  namaSection.classList.remove('error');
+  sessionStorage.setItem('peserta_nama', nama);
+  sessionStorage.setItem('peserta_tes', tesKey);
+  window.location.href = `tes.html?tes=${tesKey}`;
+}
+document.getElementById('input-nama').addEventListener('keydown', (e) => {
+  if (e.key === 'Enter') mulaiTes();
+});
+document.getElementById('input-nama').addEventListener('input', () => {
+  document.getElementById('nama-section').classList.remove('error');
+});
+
+// Pre-fill nama jika sudah pernah isi
+const savedNama = sessionStorage.getItem('peserta_nama');
+if (savedNama) document.getElementById('input-nama').value = savedNama;
 </script>
 </body>
 </html>
