@@ -437,15 +437,20 @@ themeToggle.addEventListener('click', () => {
   }
 });
 
-// ── CEK NAMA PESERTA ──
-const pesertaNama = sessionStorage.getItem('peserta_nama');
-const pesertaTes  = sessionStorage.getItem('peserta_tes');
+// ── BACA QUERY PARAMS ──
 const params = new URLSearchParams(window.location.search);
 const tesKey = params.get('tes') || 'toefl';
 
-// Redirect ke instruksi kalau nama belum diisi
-if (!pesertaNama || pesertaTes !== tesKey) {
+// ── NAMA PESERTA — pakai localStorage agar tidak hilang saat navigasi ──
+// instruksi.html menyimpan: localStorage.setItem('peserta_nama', nama)
+//                           localStorage.setItem('peserta_tes', tesKey)
+const pesertaNama = localStorage.getItem('peserta_nama') || sessionStorage.getItem('peserta_nama') || '';
+
+// Kalau nama benar-benar kosong, redirect ke instruksi (tapi TIDAK jika sudah ada nama)
+if (!pesertaNama.trim()) {
   window.location.href = `instruksi.html?tes=${tesKey}`;
+  // stop execution
+  throw new Error('redirect');
 }
 
 // ── NORMALISASI SOAL dari format API GitHub (soal-toefl.json) ke format internal ──
@@ -912,11 +917,13 @@ async function submitTes() {
 
   const waktuDipakai = tes.durasi - state.timeLeft;
   const skorPersen = Math.round((benar / tes.soal.length) * 100);
+  // Baca nama fresh dari storage
+  const namaPeserta = localStorage.getItem('peserta_nama') || sessionStorage.getItem('peserta_nama') || 'Anonim';
 
   const hasil = {
     tesKey,
     tesNama: tes.nama,
-    nama: pesertaNama || 'Anonim',
+    nama: namaPeserta,
     totalSoal: tes.soal.length,
     dijawab: Object.keys(state.jawaban).length,
     benar,
@@ -937,7 +944,7 @@ async function submitTes() {
     const payload = {
       tesKey,
       tesNama: tes.nama,
-      nama: pesertaNama || 'Anonim',
+      nama: namaPeserta,
       totalSoal: tes.soal.length,
       dijawab: Object.keys(state.jawaban).length,
       benar,
@@ -953,7 +960,6 @@ async function submitTes() {
     });
   } catch(e) {
     console.warn('Gagal kirim hasil ke server:', e.message);
-    // Tidak apa-apa, hasil tetap ada di localStorage
   }
 
   window.location.href = `hasil.html?tes=${tesKey}`;
