@@ -7,5 +7,14 @@
     "totalSoal": 20,
     "waktuDipakai": 69,
     "timestamp": "2026-05-26T10:54:27.824Z"
+  },
+  {
+    "tesKey": "iq",
+    "tesNama": "Tes IQ",
+    "pesertaNama": "Admin Eji",
+    "skor": 19,
+    "totalSoal": 25,
+    "waktuDipakai": 581,
+    "timestamp": "2026-05-26T11:30:30.874Z"
   }
 ]
