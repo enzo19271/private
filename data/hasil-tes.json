@@ -16,5 +16,14 @@
     "totalSoal": 25,
     "waktuDipakai": 581,
     "timestamp": "2026-05-26T11:30:30.874Z"
+  },
+  {
+    "tesKey": "iq",
+    "tesNama": "Tes IQ",
+    "pesertaNama": "ENGGAR",
+    "skor": 13,
+    "totalSoal": 25,
+    "waktuDipakai": 396,
+    "timestamp": "2026-05-26T11:56:23.158Z"
   }
 ]
