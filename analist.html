@@ -110,4 +110,490 @@ body { font-family:'Sora',sans-serif; background:var(--bg); color:var(--ink); mi
 /* ================= UTILITIES ================= */
 .empty-state { display:flex; flex-direction:column; align-items:center; justify-content:center; padding:60px 20px; color:var(--ink4); gap:16px; text-align: center; }
 .empty-state i { font-size:64px; opacity:0.3; color: var(--primary); }
-.empty-
+.empty-state p { font-size:14px; font-weight: 500; }
+
+.spinner { width:40px; height:40px; border:3px solid var(--surface2); border-top-color:var(--primary); border-radius:50%; animation:spin 0.8s linear infinite; margin:40px auto; }
+@keyframes spin { to{transform:rotate(360deg)} }
+
+/* Buttons */
+.btn-refresh { display:inline-flex; align-items:center; gap:8px; padding:10px 20px; background:var(--primary); color:#fff; border:none; border-radius:12px; font-family:'Sora',sans-serif; font-size:13px; font-weight:600; cursor:pointer; transition:var(--transition); box-shadow: 0 4px 10px rgba(37,99,235,0.2); }
+.btn-refresh:hover { background:var(--primary-dark); transform:translateY(-2px); box-shadow: 0 6px 15px rgba(37,99,235,0.3); }
+.btn-refresh.loading i { animation:spin 0.8s linear infinite; }
+
+/* ================= MOBILE RESPONSIVE (ANDROID/iOS) ================= */
+#sidebar-toggle { display:none; background:transparent; border:none; font-size:28px; cursor:pointer; color:var(--ink); padding: 4px; border-radius: 8px; transition: var(--transition); }
+#sidebar-toggle:hover { background: var(--surface2); }
+#sidebar-overlay { display:none; position:fixed; inset:0; background:rgba(15,23,42,0.6); backdrop-filter: blur(2px); z-index:49; opacity: 0; transition: opacity 0.3s; }
+
+@media(max-width:992px) {
+  #sidebar { transform:translateX(-100%); } 
+  #sidebar.open { transform:translateX(0); }
+  #sidebar-overlay.open { display:block; opacity: 1; } 
+  #wrapper { width: 100%; margin-left: 0; } 
+  #sidebar-toggle { display:block; }
+}
+
+@media(max-width:768px) { 
+  .grid-2 { grid-template-columns:1fr; } 
+}
+
+@media(max-width:480px) { 
+  #main { padding: 16px; } 
+  #topbar { padding: 0 16px; }
+  .card, .card-full { padding: 16px; }
+  /* Card Stat menjadi 2 kolom dan ke tengah di layar HP */
+  .stats-row { grid-template-columns: 1fr 1fr; gap: 12px; }
+  .stat-card { flex-direction: column; text-align: center; padding: 16px; gap: 10px; justify-content: center; }
+  .stat-label { font-size: 10px; margin-top: 0;}
+  .stat-val { font-size: 20px; }
+  .stat-icon { width: 44px; height: 44px; font-size: 20px; }
+  /* Menyembunyikan breadcrumb agar topbar tidak penuh */
+  .breadcrumb { display: none; }
+  .page-title { font-size: 16px; }
+}
+</style>
+</head>
+<body>
+
+<nav id="sidebar">
+  <div class="sidebar-logo">
+    <div class="logo-icon"><i class='bx bxs-graduation'></i></div>
+    <div class="logo-text">Academy<span>Eji.</span></div>
+  </div>
+  <div class="sidebar-scroll">
+    <div class="sidebar-section">Menu Utama</div>
+    <a class="nav-item" href="index.html"><i class='bx bx-grid-alt nav-icon'></i> Dashboard</a>
+    <div class="sidebar-section" style="margin-top:15px;">Manajemen</div>
+    <a class="nav-item" href="admin.html"><i class='bx bx-user-pin nav-icon'></i> Tambahkan Artikel</a>
+    <a class="nav-item" href="config.html"><i class='bx bx-cog nav-icon'></i> Pengaturan</a>
+    <div class="sidebar-section" style="margin-top:15px;">Analitik</div>
+    <a class="nav-item active" href="analytics.html"><i class='bx bx-bar-chart-alt-2 nav-icon'></i> Traffic Klik</a>
+  </div>
+  <div class="sidebar-footer">
+    <div class="user-profile">
+      <div class="user-avatar"><i class='bx bxs-user'></i></div>
+      <div>
+        <span class="user-name" style="display:block">Admin Eji</span>
+        <span class="user-role">Super Admin</span>
+      </div>
+    </div>
+  </div>
+</nav>
+<div id="sidebar-overlay"></div>
+
+<div id="wrapper">
+  <div id="topbar">
+    <div style="display:flex; align-items:center; gap:12px;">
+      <button id="sidebar-toggle"><i class='bx bx-menu-alt-left'></i></button>
+      <div>
+        <div class="page-title">Traffic Klik Artikel</div>
+        <div class="breadcrumb">Beranda <i class='bx bx-chevron-right'></i> Analitik <i class='bx bx-chevron-right'></i> Traffic Klik</div>
+      </div>
+    </div>
+    <div class="topbar-right">
+      <button class="btn-refresh" id="refresh-btn" onclick="loadData()">
+        <i class='bx bx-refresh'></i> <span class="hide-mobile">Refresh</span>
+      </button>
+      <button class="icon-btn" id="theme-toggle" title="Toggle Dark Mode">
+        <i class='bx bx-moon'></i>
+      </button>
+    </div>
+  </div>
+
+  <div id="main">
+    <div class="stats-row">
+      <div class="stat-card">
+        <div class="stat-icon" style="background:rgba(37,99,235,0.1); color:var(--primary)"><i class='bx bx-pointer'></i></div>
+        <div><div class="stat-val" id="s-total">-</div><div class="stat-label">Total Klik</div></div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon" style="background:rgba(16,185,129,0.1); color:var(--success)"><i class='bx bx-calendar'></i></div>
+        <div><div class="stat-val" id="s-today">-</div><div class="stat-label">Klik Hari Ini</div></div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon" style="background:rgba(249,115,22,0.1); color:var(--accent)"><i class='bx bx-trophy'></i></div>
+        <div><div class="stat-val" id="s-top" style="font-size:15px; margin-top:4px;">-</div><div class="stat-label">Terpopuler</div></div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon" style="background:rgba(245,158,11,0.1); color:var(--warn)"><i class='bx bx-trending-up'></i></div>
+        <div><div class="stat-val" id="s-days">-</div><div class="stat-label">Hari Aktif</div></div>
+      </div>
+    </div>
+
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-title"><i class='bx bx-line-chart'></i> Klik 30 Hari Terakhir</div>
+        <div id="chart-wrap" style="position:relative; height:300px;">
+          <div class="spinner" id="chart-spinner"></div>
+          <canvas id="chart-daily" style="display:none;"></canvas>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title"><i class='bx bx-pie-chart-alt-2'></i> Klik per Kategori</div>
+        <div id="kat-chart-wrap" style="position:relative; height:300px;">
+          <div class="spinner" id="kat-spinner"></div>
+          <canvas id="chart-kat" style="display:none;"></canvas>
+        </div>
+      </div>
+    </div>
+
+    <div class="card-full">
+      <div class="card-title"><i class='bx bx-bar-chart-alt-2'></i> Leaderboard Paling Banyak Diklik</div>
+      <div id="leaderboard-wrap">
+        <div class="spinner"></div>
+      </div>
+    </div>
+
+    <div class="card-full">
+      <div class="card-title"><i class='bx bx-history'></i> Log Klik Terbaru</div>
+      <div id="log-wrap">
+        <div class="spinner"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// ── TEMA ──
+const themeToggle = document.getElementById('theme-toggle');
+const htmlEl = document.documentElement;
+if (localStorage.getItem('theme') === 'dark') {
+  htmlEl.setAttribute('data-theme', 'dark');
+  themeToggle.innerHTML = "<i class='bx bx-sun'></i>";
+}
+themeToggle.addEventListener('click', () => {
+  const isDark = htmlEl.getAttribute('data-theme') === 'dark';
+  htmlEl.setAttribute('data-theme', isDark ? 'light' : 'dark');
+  themeToggle.innerHTML = isDark ? "<i class='bx bx-moon'></i>" : "<i class='bx bx-sun'></i>";
+  localStorage.setItem('theme', isDark ? 'light' : 'dark');
+  if (dailyChart) { dailyChart.destroy(); dailyChart = null; }
+  if (katChart) { katChart.destroy(); katChart = null; }
+  renderCharts(lastData);
+});
+
+// ── HIDE TEXT ON MOBILE BUTTON ──
+function adjustMobileView() {
+  const btnText = document.querySelector('.hide-mobile');
+  if(window.innerWidth <= 480 && btnText) {
+      btnText.style.display = 'none';
+  } else if(btnText) {
+      btnText.style.display = 'inline';
+  }
+}
+window.addEventListener('resize', adjustMobileView);
+adjustMobileView();
+
+// ── STATE ──
+let dailyChart = null;
+let katChart = null;
+let lastData = null;
+let artikelNames = {}; // id -> nama dari data.json
+
+// ── FETCH DATA ARTIKEL ──
+async function loadArtikelData() {
+  try {
+    const r = await fetch('/api/get-data');
+    if (!r.ok) return;
+    const d = await r.json();
+    (d.kategori || []).forEach(k => { artikelNames['kat_' + k.id] = k.nama; });
+  } catch(e) {}
+}
+
+// ── LOAD CLICK DATA ──
+async function loadData() {
+  const btn = document.getElementById('refresh-btn');
+  const btnIcon = btn.querySelector('i');
+  btn.classList.add('loading');
+
+  try {
+    await loadArtikelData();
+    const r = await fetch('/api/get-clicks');
+    if (!r.ok) throw new Error('API error');
+    const data = await r.json();
+    lastData = data;
+    renderAll(data);
+  } catch(e) {
+    document.getElementById('leaderboard-wrap').innerHTML = `
+      <div class="empty-state">
+        <i class='bx bx-error-circle'></i>
+        <p>Gagal memuat data. Pastikan API sudah dikonfigurasi di Vercel.</p>
+      </div>`;
+    document.getElementById('log-wrap').innerHTML = '';
+    updateStats(null);
+  } finally {
+    btn.classList.remove('loading');
+  }
+}
+
+function renderAll(data) {
+  updateStats(data);
+  renderLeaderboard(data);
+  renderLog(data);
+  renderCharts(data);
+}
+
+// ── STATS ──
+function updateStats(data) {
+  if (!data) {
+    ['s-total','s-today','s-top','s-days'].forEach(id => document.getElementById(id).textContent = '-');
+    return;
+  }
+  const clicks = data.clicks || [];
+  const today = new Date().toISOString().slice(0,10);
+  const todayCount = clicks.filter(c => c.date === today).length;
+
+  document.getElementById('s-total').textContent = clicks.length.toLocaleString('id-ID');
+  document.getElementById('s-today').textContent = todayCount.toLocaleString('id-ID');
+
+  const byArt = data.summary?.by_article || {};
+  const sortedArts = Object.values(byArt).sort((a,b) => b.count - a.count);
+  const topArt = sortedArts[0];
+  const topEl = document.getElementById('s-top');
+  if (topArt) {
+    topEl.textContent = topArt.judul ? (topArt.judul.length > 20 ? topArt.judul.slice(0,20)+'…' : topArt.judul) : topArt.artikel_id;
+    topEl.title = topArt.judul || topArt.artikel_id;
+  } else {
+    topEl.textContent = '-';
+  }
+
+  const daysCount = Object.keys(data.summary?.by_date || {}).length;
+  document.getElementById('s-days').textContent = daysCount;
+}
+
+// ── LEADERBOARD ──
+function renderLeaderboard(data) {
+  const wrap = document.getElementById('leaderboard-wrap');
+  const byArt = data.summary?.by_article || {};
+  const sorted = Object.values(byArt).sort((a,b) => b.count - a.count);
+
+  if (!sorted.length) {
+    wrap.innerHTML = `<div class="empty-state"><i class='bx bx-mouse-alt'></i><p>Belum ada klik yang tercatat.</p></div>`;
+    return;
+  }
+
+  const maxCount = sorted[0].count;
+  // Ditambahkan <div class="table-responsive">
+  wrap.innerHTML = `
+    <div class="table-responsive">
+      <table class="lb-table">
+        <thead>
+          <tr>
+            <th style="width:60px; text-align:center;">Rank</th>
+            <th>Judul Artikel</th>
+            <th style="width:120px; text-align:center">Total Klik</th>
+            <th style="width:35%">Proporsi</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${sorted.map((art, i) => {
+            const pct = Math.round((art.count / maxCount) * 100);
+            const rankClass = i === 0 ? 'rank-1' : i === 1 ? 'rank-2' : i === 2 ? 'rank-3' : 'rank-other';
+            const judul = art.judul || art.artikel_id;
+            return `<tr>
+              <td style="text-align:center;"><span class="rank-badge ${rankClass}">#${i+1}</span></td>
+              <td style="font-weight:600; color:var(--ink); min-width:200px; max-width:350px; word-break:break-word;">${judul}</td>
+              <td style="text-align:center; font-weight:700; color:var(--primary); font-size:15px;">${art.count.toLocaleString('id-ID')}</td>
+              <td style="min-width:150px;">
+                <div class="bar-wrap">
+                  <div class="bar-track"><div class="bar-fill" style="width:${pct}%"></div></div>
+                  <span style="font-size:12px; font-weight:600; color:var(--ink4); width:35px; text-align:right">${pct}%</span>
+                </div>
+              </td>
+            </tr>`;
+          }).join('')}
+        </tbody>
+      </table>
+    </div>`;
+}
+
+// ── LOG TERBARU ──
+function renderLog(data) {
+  const wrap = document.getElementById('log-wrap');
+  const clicks = [...(data.clicks || [])].reverse().slice(0, 50); 
+
+  if (!clicks.length) {
+    wrap.innerHTML = `<div class="empty-state"><i class='bx bx-history'></i><p>Belum ada aktivitas klik.</p></div>`;
+    return;
+  }
+
+  // Ditambahkan <div class="table-responsive">
+  wrap.innerHTML = `
+    <div class="table-responsive">
+      <table class="lb-table">
+        <thead>
+          <tr>
+            <th style="width:180px;">Waktu</th>
+            <th>Artikel</th>
+            <th style="width:150px;">ID Artikel</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${clicks.map(c => {
+            const dt = new Date(c.timestamp);
+            const timeStr = dt.toLocaleString('id-ID', {day:'numeric', month:'short', year:'numeric', hour:'2-digit', minute:'2-digit'});
+            return `<tr>
+              <td style="white-space:nowrap; color:var(--ink3); font-size:12px; font-weight:500;">
+                <span class="log-dot"></span>${timeStr}
+              </td>
+              <td style="min-width:200px; max-width:400px; font-weight:500; word-break:break-word;">${c.artikel_judul || '-'}</td>
+              <td style="font-family:monospace; font-size:12px; background:var(--surface2); padding: 4px 8px; border-radius:6px; display:inline-block; margin-top:8px;">${c.artikel_id}</td>
+            </tr>`;
+          }).join('')}
+        </tbody>
+      </table>
+    </div>`;
+}
+
+// ── CHARTS ──
+function getChartColors() {
+  const isDark = htmlEl.getAttribute('data-theme') === 'dark';
+  return {
+    grid: isDark ? 'rgba(255,255,255,0.06)' : 'rgba(0,0,0,0.04)',
+    text: isDark ? '#94a3b8' : '#64748b',
+    bg: isDark ? '#1e293b' : '#ffffff',
+  };
+}
+
+function renderCharts(data) {
+  renderDailyChart(data);
+  renderKatChart(data);
+}
+
+function renderDailyChart(data) {
+  document.getElementById('chart-spinner').style.display = 'none';
+  const canvas = document.getElementById('chart-daily');
+  canvas.style.display = 'block';
+
+  const byDate = data.summary?.by_date || {};
+  const days = [];
+  for (let i = 29; i >= 0; i--) {
+    const d = new Date();
+    d.setDate(d.getDate() - i);
+    days.push(d.toISOString().slice(0,10));
+  }
+  const labels = days.map(d => {
+    const dt = new Date(d);
+    return dt.toLocaleDateString('id-ID', {day:'numeric', month:'short'});
+  });
+  const values = days.map(d => byDate[d] || 0);
+
+  const colors = getChartColors();
+  if (dailyChart) dailyChart.destroy();
+  
+  // Custom gradient for Bar Chart
+  const ctx = canvas.getContext('2d');
+  const gradient = ctx.createLinearGradient(0, 0, 0, 300);
+  gradient.addColorStop(0, 'rgba(37,99,235,0.8)');
+  gradient.addColorStop(1, 'rgba(96,165,250,0.4)');
+
+  dailyChart = new Chart(canvas, {
+    type: 'bar',
+    data: {
+      labels,
+      datasets: [{
+        label: 'Total Klik',
+        data: values,
+        backgroundColor: gradient,
+        hoverBackgroundColor: 'rgba(37,99,235,1)',
+        borderRadius: 4,
+        borderSkipped: false,
+      }]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: { 
+        legend: { display: false },
+        tooltip: {
+            backgroundColor: getChartColors().bg,
+            titleColor: getChartColors().text,
+            bodyColor: getChartColors().text,
+            borderColor: colors.grid,
+            borderWidth: 1,
+            padding: 10,
+            boxPadding: 4
+        }
+      },
+      scales: {
+        x: {
+          grid: { display: false },
+          ticks: { color: colors.text, maxTicksLimit: 8, font: { size: 11, family: 'Sora' } }
+        },
+        y: {
+          grid: { color: colors.grid, drawBorder: false },
+          ticks: { color: colors.text, precision: 0, font: { size: 11, family: 'Sora' }, padding: 10 },
+          beginAtZero: true
+        }
+      }
+    }
+  });
+}
+
+function renderKatChart(data) {
+  document.getElementById('kat-spinner').style.display = 'none';
+  const canvas = document.getElementById('chart-kat');
+  canvas.style.display = 'block';
+
+  const byKat = data.summary?.by_kategori || {};
+  const labels = Object.keys(byKat).map(id => artikelNames['kat_' + id] || id);
+  const values = Object.values(byKat);
+
+  if (!labels.length) {
+    canvas.style.display = 'none';
+    document.getElementById('kat-chart-wrap').innerHTML = `<div class="empty-state"><i class='bx bx-category'></i><p>Belum ada data per kategori.</p></div>`;
+    return;
+  }
+
+  const COLORS = ['#2563eb','#f97316','#10b981','#8b5cf6','#ef4444','#06b6d4','#f59e0b','#ec4899'];
+  if (katChart) katChart.destroy();
+  katChart = new Chart(canvas, {
+    type: 'doughnut',
+    data: {
+      labels,
+      datasets: [{
+        data: values,
+        backgroundColor: COLORS.slice(0, labels.length),
+        borderWidth: 3,
+        borderColor: getChartColors().bg,
+        hoverOffset: 4
+      }]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      cutout: '65%',
+      plugins: {
+        legend: {
+          position: 'bottom',
+          labels: { color: getChartColors().text, font: { size: 12, family: 'Sora' }, padding: 20, usePointStyle: true }
+        },
+        tooltip: {
+            backgroundColor: getChartColors().bg,
+            titleColor: getChartColors().text,
+            bodyColor: getChartColors().text,
+            borderColor: getChartColors().grid,
+            borderWidth: 1,
+            padding: 12
+        }
+      }
+    }
+  });
+}
+
+// ── SIDEBAR MOBILE ──
+document.getElementById('sidebar-toggle').addEventListener('click', () => {
+  document.getElementById('sidebar').classList.add('open');
+  document.getElementById('sidebar-overlay').classList.add('open');
+});
+document.getElementById('sidebar-overlay').addEventListener('click', () => {
+  document.getElementById('sidebar').classList.remove('open');
+  document.getElementById('sidebar-overlay').classList.remove('open');
+});
+
+// ── START ──
+loadData();
+
+// Auto-refresh setiap 60 detik
+setInterval(loadData, 60000);
+</script>
+</body>
+</html>
