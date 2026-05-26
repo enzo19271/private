@@ -437,7 +437,63 @@ themeToggle.addEventListener('click', () => {
   }
 });
 
-// ── BANK SOAL (contoh 3 soal per tes) ──
+// ── CEK NAMA PESERTA ──
+const pesertaNama = sessionStorage.getItem('peserta_nama');
+const pesertaTes  = sessionStorage.getItem('peserta_tes');
+const params = new URLSearchParams(window.location.search);
+const tesKey = params.get('tes') || 'toefl';
+
+// Redirect ke instruksi kalau nama belum diisi
+if (!pesertaNama || pesertaTes !== tesKey) {
+  window.location.href = `instruksi.html?tes=${tesKey}`;
+}
+
+// ── NORMALISASI SOAL dari format API GitHub (soal-toefl.json) ke format internal ──
+// Format GitHub: { pertanyaan, opsi:{A,B,C,D}, jawaban:"B", kategori, pembahasan }
+// Format internal: { id, teks, opsi:[], jawaban:number, kategori, hint }
+function normalisasiSoal(apiData) {
+  const soal = (apiData.soal || []).map((s, idx) => {
+    let opsiArr, jawabanIdx;
+    if (Array.isArray(s.opsi)) {
+      opsiArr = s.opsi;
+      // jawaban bisa number (index) atau huruf "A"-"D"
+      if (typeof s.jawaban === 'number') {
+        jawabanIdx = s.jawaban;
+      } else if (typeof s.jawaban === 'string' && s.jawaban.match(/^[A-D]$/)) {
+        jawabanIdx = s.jawaban.charCodeAt(0) - 65;
+      } else {
+        jawabanIdx = 0;
+      }
+    } else if (s.opsi && typeof s.opsi === 'object') {
+      opsiArr = ['A','B','C','D'].map(k => s.opsi[k]).filter(Boolean);
+      const jawStr = String(s.jawaban || 'A').toUpperCase();
+      jawabanIdx = jawStr.match(/^[A-D]$/) ? jawStr.charCodeAt(0) - 65 : 0;
+    } else {
+      opsiArr = [];
+      jawabanIdx = 0;
+    }
+    return {
+      id: s.id || (idx + 1),
+      kategori: s.kategori || s.section || 'Umum',
+      teks: s.pertanyaan || s.teks || s.soal || '',
+      hint: s.hint || s.pembahasan || null,
+      opsi: opsiArr,
+      jawaban: jawabanIdx
+    };
+  });
+
+  // Durasi dari API (menit) → detik
+  const durasiDetik = (apiData.durasiMenit || 60) * 60;
+
+  return {
+    nama: apiData.judul || tesKey.toUpperCase(),
+    durasi: durasiDetik,
+    soal
+  };
+}
+
+// ── FALLBACK BANK SOAL (dipakai jika API gagal) ──
+const bankSoalFallback = {
 const bankSoal = {
   toefl: {
     nama: 'TOEFL',
@@ -591,32 +647,83 @@ const bankSoal = {
   }
 };
 
-// ── STATE ──
-const params = new URLSearchParams(window.location.search);
-const tesKey = params.get('tes') || 'toefl';
-const tes = bankSoal[tesKey] || bankSoal.toefl;
+// ── STATE & INISIALISASI ──
+let tes = null;
 
 let state = {
   soalIdx: 0,
-  jawaban: {}, // { soalId: opsiIdx }
+  jawaban: {},
   ditandai: new Set(),
   dilewati: new Set(),
-  timeLeft: tes.durasi,
+  timeLeft: 0,
   timerInterval: null,
   submitted: false
 };
 
-// Load saved state
-const saved = localStorage.getItem(`tes_state_${tesKey}`);
-if (saved) {
-  try {
-    const s = JSON.parse(saved);
-    state.jawaban = s.jawaban || {};
-    state.ditandai = new Set(s.ditandai || []);
-    state.dilewati = new Set(s.dilewati || []);
-    state.timeLeft = s.timeLeft || tes.durasi;
-  } catch(e) {}
+function showLoading(msg) {
+  document.getElementById('soal-text').textContent = msg || 'Memuat soal...';
+  document.getElementById('options-list').innerHTML = `
+    <div style="text-align:center;padding:32px;color:var(--ink3)">
+      <i class='bx bx-loader-alt bx-spin' style="font-size:36px;margin-bottom:12px;display:block"></i>
+      Mengambil soal dari server...
+    </div>`;
 }
+
+function showError(msg) {
+  document.getElementById('soal-text').textContent = 'Gagal memuat soal';
+  document.getElementById('options-list').innerHTML = `
+    <div style="text-align:center;padding:32px;color:var(--danger)">
+      <i class='bx bx-error-circle' style="font-size:36px;margin-bottom:12px;display:block"></i>
+      ${msg}<br><br>
+      <button class="btn btn-primary" onclick="location.reload()">
+        <i class='bx bx-refresh'></i> Coba Lagi
+      </button>
+    </div>`;
+}
+
+async function initTes() {
+  showLoading();
+  try {
+    const res = await fetch(`/api/ujicoba/get-soal?tes=${tesKey}`);
+    if (res.ok) {
+      const apiData = await res.json();
+      tes = normalisasiSoal(apiData);
+    } else {
+      throw new Error(`API error ${res.status}`);
+    }
+  } catch(err) {
+    // Fallback ke bank soal lokal
+    console.warn('Fetch API gagal, pakai fallback:', err.message);
+    if (bankSoalFallback[tesKey]) {
+      tes = bankSoalFallback[tesKey];
+    } else {
+      showError('Soal tidak tersedia. ' + err.message);
+      return;
+    }
+  }
+
+  state.timeLeft = tes.durasi;
+
+  // Load saved state (jika ada)
+  const saved = localStorage.getItem(`tes_state_${tesKey}`);
+  if (saved) {
+    try {
+      const s = JSON.parse(saved);
+      state.jawaban = s.jawaban || {};
+      state.ditandai = new Set(s.ditandai || []);
+      state.dilewati = new Set(s.dilewati || []);
+      if (s.timeLeft && s.timeLeft > 0) state.timeLeft = s.timeLeft;
+    } catch(e) {}
+  }
+
+  document.getElementById('tes-name-label').textContent = tes.nama;
+  document.getElementById('soal-total').textContent = tes.soal.length;
+
+  renderSoal();
+  startTimer();
+}
+
+
 
 function saveState() {
   localStorage.setItem(`tes_state_${tesKey}`, JSON.stringify({
@@ -626,10 +733,6 @@ function saveState() {
     timeLeft: state.timeLeft
   }));
 }
-
-// ── INIT UI ──
-document.getElementById('tes-name-label').textContent = tes.nama;
-document.getElementById('soal-total').textContent = tes.soal.length;
 
 // ── RENDER SOAL ──
 function renderSoal() {
@@ -795,7 +898,7 @@ function closeModal() {
 }
 
 // ── SUBMIT ──
-function submitTes() {
+async function submitTes() {
   if (state.submitted) return;
   state.submitted = true;
   clearInterval(state.timerInterval);
@@ -807,26 +910,57 @@ function submitTes() {
     if (state.jawaban[s.id] === s.jawaban) benar++;
   });
 
+  const waktuDipakai = tes.durasi - state.timeLeft;
+  const skorPersen = Math.round((benar / tes.soal.length) * 100);
+
   const hasil = {
     tesKey,
     tesNama: tes.nama,
+    nama: pesertaNama || 'Anonim',
     totalSoal: tes.soal.length,
     dijawab: Object.keys(state.jawaban).length,
     benar,
-    waktuDipakai: tes.durasi - state.timeLeft,
+    skor: benar,
+    skorPersen,
+    waktuDipakai,
     jawaban: state.jawaban,
     soal: tes.soal,
     timestamp: new Date().toISOString()
   };
+
+  // Simpan ke localStorage untuk halaman hasil
   localStorage.setItem(`hasil_${tesKey}`, JSON.stringify(hasil));
   localStorage.removeItem(`tes_state_${tesKey}`);
+
+  // Kirim ke GitHub via API (background, tidak block redirect)
+  try {
+    const payload = {
+      tesKey,
+      tesNama: tes.nama,
+      nama: pesertaNama || 'Anonim',
+      totalSoal: tes.soal.length,
+      dijawab: Object.keys(state.jawaban).length,
+      benar,
+      skor: benar,
+      skorPersen,
+      waktuDipakai,
+      timestamp: new Date().toISOString()
+    };
+    await fetch('/api/ujicoba/simpan-hasil', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    });
+  } catch(e) {
+    console.warn('Gagal kirim hasil ke server:', e.message);
+    // Tidak apa-apa, hasil tetap ada di localStorage
+  }
 
   window.location.href = `hasil.html?tes=${tesKey}`;
 }
 
 // ── START ──
-renderSoal();
-startTimer();
+initTes();
 </script>
 </body>
 </html>
