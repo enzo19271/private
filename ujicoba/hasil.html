@@ -344,7 +344,9 @@ if (!hasilRaw) {
 
   document.getElementById('score-grade').textContent = grade;
   document.getElementById('score-pct').innerHTML = `${pct}<span>%</span>`;
-  document.getElementById('score-label').textContent = `Skor tes ${hasil.tesNama}`;
+  // Show nama peserta in label
+  const namaLabel = hasil.nama ? ` — ${hasil.nama}` : '';
+  document.getElementById('score-label').textContent = `Skor tes ${hasil.tesNama}${namaLabel}`;
   document.getElementById('score-predikat').textContent = predikat;
   document.getElementById('ss-benar').textContent = hasil.benar;
   document.getElementById('ss-salah').textContent = salah;
@@ -361,10 +363,21 @@ if (!hasilRaw) {
   };
   document.getElementById('score-banner').style.background = bannerColors[grade] || bannerColors.B;
 
-  // Pembahasan
+  // Pembahasan — normalisasi opsi (bisa array atau object {A,B,C,D})
   document.getElementById('review-list').innerHTML = hasil.soal.map((s, i) => {
     const userAns = hasil.jawaban[s.id];
-    const isBenar = userAns === s.jawaban;
+
+    // Normalisasi jawaban benar ke index
+    let jawabanIdx;
+    if (typeof s.jawaban === 'number') {
+      jawabanIdx = s.jawaban;
+    } else if (typeof s.jawaban === 'string' && s.jawaban.match(/^[A-D]$/)) {
+      jawabanIdx = s.jawaban.charCodeAt(0) - 65;
+    } else {
+      jawabanIdx = 0;
+    }
+
+    const isBenar = userAns === jawabanIdx;
     const isSkip = userAns === undefined;
 
     let statusHTML = '';
@@ -372,8 +385,18 @@ if (!hasilRaw) {
     else if (isBenar) statusHTML = `<span class="ri-status rs-benar"><i class='bx bx-check-circle'></i> Benar</span>`;
     else statusHTML = `<span class="ri-status rs-salah"><i class='bx bx-x-circle'></i> Salah</span>`;
 
-    const opsiHTML = s.opsi.map((o, j) => {
-      const isBenarOpsi = j === s.jawaban;
+    // Normalisasi opsi ke array
+    let opsiArr;
+    if (Array.isArray(s.opsi)) {
+      opsiArr = s.opsi;
+    } else if (s.opsi && typeof s.opsi === 'object') {
+      opsiArr = ['A','B','C','D'].map(k => s.opsi[k]).filter(Boolean);
+    } else {
+      opsiArr = [];
+    }
+
+    const opsiHTML = opsiArr.map((o, j) => {
+      const isBenarOpsi = j === jawabanIdx;
       const isPilihan = j === userAns;
       let cls = 'ro-item';
       if (isBenarOpsi) cls += ' jawaban-benar';
@@ -388,14 +411,18 @@ if (!hasilRaw) {
       `;
     }).join('');
 
+    const teksDisplay = s.pertanyaan || s.teks || s.soal || '';
+    const katDisplay = s.kategori || s.section || '';
+
     return `
       <div class="review-item">
         <div class="ri-top">
-          <div class="ri-num">Soal ${i + 1} &middot; ${s.kategori}</div>
+          <div class="ri-num">Soal ${i + 1}${katDisplay ? ' &middot; ' + katDisplay : ''}</div>
           ${statusHTML}
         </div>
-        <div class="ri-teks">${s.teks}</div>
+        <div class="ri-teks">${teksDisplay}</div>
         <div class="ri-opsi">${opsiHTML}</div>
+        ${s.pembahasan ? `<div style="margin-top:10px;font-size:12px;color:var(--ink3);padding:10px 14px;background:var(--surface2);border-radius:8px;border-left:3px solid var(--success)">💡 ${s.pembahasan}</div>` : ''}
       </div>
     `;
   }).join('');
