@@ -1,602 +1,371 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="id" data-theme="light">
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-<title>Konfigurasi – Catatan.</title>
+<title>Academy Eji - Tentang Kami</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700&family=Lora:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-:root{
-  --bg:#f0f2f5;
-  --surface:#ffffff;
-  --surface2:#f8f9fb;
-  --border:#e4e7ec;
-  --ink:#111827;
-  --ink2:#374151;
-  --ink3:#6b7280;
-  --ink4:#9ca3af;
-  --primary:#2563eb;
-  --primary-light:#eff6ff;
-  --primary-dark:#1d4ed8;
-  --accent:#f97316;
-  --success:#10b981;
-  --warn:#f59e0b;
-  --danger:#ef4444;
-  --sidebar-w:240px;
-  --header-h:60px;
-  --radius:10px;
-  --shadow:0 1px 4px rgba(0,0,0,.06),0 4px 16px rgba(0,0,0,.06);
-  --shadow-md:0 4px 12px rgba(0,0,0,.08),0 12px 32px rgba(0,0,0,.08);
+
+/* ── COLOR PALETTE & VARIABLES ── */
+:root {
+  --primary: #2563eb;
+  --primary-light: #eff6ff;
+  --primary-dark: #1d4ed8;
+  --accent: #f97316;
+  --success: #10b981;
+  --warn: #f59e0b;
+  --danger: #ef4444;
+  --sidebar-w: 260px;
+  --header-h: 70px;
+  --radius: 12px;
+  --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  
+  /* Light Theme */
+  --bg: #f3f4f6;
+  --surface: #ffffff;
+  --surface2: #f8fafc;
+  --border: #e2e8f0;
+  --ink: #0f172a;
+  --ink2: #334155;
+  --ink3: #64748b;
+  --ink4: #94a3b8;
+  --shadow-sm: 0 1px 3px rgba(0,0,0,0.05), 0 1px 2px rgba(0,0,0,0.03);
+  --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.05), 0 2px 4px -1px rgba(0,0,0,0.03);
+  --shadow-lg: 0 10px 25px -3px rgba(0,0,0,0.08), 0 4px 6px -2px rgba(0,0,0,0.04);
 }
-body{font-family:'Sora',sans-serif;background:var(--bg);color:var(--ink);min-height:100vh;display:flex;font-size:14px}
+
+[data-theme="dark"] {
+  --bg: #0f172a;
+  --surface: #1e293b;
+  --surface2: #334155;
+  --border: #334155;
+  --ink: #f8fafc;
+  --ink2: #cbd5e1;
+  --ink3: #94a3b8;
+  --ink4: #64748b;
+  --primary-light: #1e3a8a;
+  --shadow-sm: 0 1px 3px rgba(0,0,0,0.3);
+  --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.4);
+  --shadow-lg: 0 10px 25px -3px rgba(0,0,0,0.5);
+}
+
+body {
+  font-family: 'Sora', sans-serif;
+  background: var(--bg);
+  color: var(--ink);
+  min-height: 100vh;
+  display: flex;
+  font-size: 14px;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
 
 /* ── SIDEBAR ── */
-#sidebar{
-  width:var(--sidebar-w);min-height:100vh;background:var(--surface);
-  border-right:1px solid var(--border);display:flex;flex-direction:column;
-  position:fixed;top:0;left:0;z-index:50;transition:transform .25s;
+#sidebar {
+  width: var(--sidebar-w); min-height: 100vh; background: var(--surface);
+  border-right: 1px solid var(--border); display: flex; flex-direction: column;
+  position: fixed; top: 0; left: 0; z-index: 50; transition: transform 0.3s ease, background 0.3s;
 }
-.sidebar-logo{
-  height:var(--header-h);display:flex;align-items:center;gap:10px;
-  padding:0 20px;border-bottom:1px solid var(--border);
+.sidebar-logo {
+  height: var(--header-h); display: flex; align-items: center; gap: 12px;
+  padding: 0 24px; border-bottom: 1px solid var(--border);
 }
-.logo-icon{width:32px;height:32px;background:var(--primary);border-radius:8px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:16px;flex-shrink:0}
-.logo-text{font-size:15px;font-weight:700;color:var(--ink)}
-.logo-text span{color:var(--primary)}
-.sidebar-section{padding:16px 12px 8px;font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--ink4)}
-.nav-item{
-  display:flex;align-items:center;gap:10px;padding:9px 14px;border-radius:8px;
-  cursor:pointer;color:var(--ink2);font-size:13px;font-weight:500;
-  transition:all .18s;margin:1px 8px;text-decoration:none;
+.logo-icon {
+  width: 36px; height: 36px; background: linear-gradient(135deg, var(--primary), #60a5fa);
+  border-radius: 10px; display: flex; align-items: center; justify-content: center;
+  color: #fff; font-size: 20px; flex-shrink: 0; box-shadow: 0 4px 10px rgba(37,99,235,0.3);
 }
-.nav-item:hover{background:var(--bg);color:var(--ink)}
-.nav-item.active{background:var(--primary-light);color:var(--primary);font-weight:600}
-.nav-item .nav-icon{font-size:16px;width:20px;text-align:center;flex-shrink:0}
-.sidebar-footer{margin-top:auto;padding:16px;border-top:1px solid var(--border)}
-.sidebar-footer a{
-  display:flex;align-items:center;gap:8px;padding:8px 10px;border-radius:8px;
-  color:var(--ink3);font-size:12px;text-decoration:none;transition:all .18s;
-}
-.sidebar-footer a:hover{background:var(--bg);color:var(--ink)}
+.logo-text { font-size: 18px; font-weight: 700; color: var(--ink); letter-spacing: -0.5px; }
+.logo-text span { color: var(--primary); }
 
-/* ── WRAPPER ── */
-#wrapper{margin-left:var(--sidebar-w);flex:1;min-height:100vh;display:flex;flex-direction:column}
+.sidebar-scroll { flex: 1; overflow-y: auto; padding-top: 10px; }
+.sidebar-scroll::-webkit-scrollbar { width: 6px; }
+.sidebar-scroll::-webkit-scrollbar-thumb { background: var(--border); border-radius: 10px; }
 
-/* ── TOPBAR ── */
-#topbar{
-  height:var(--header-h);background:var(--surface);border-bottom:1px solid var(--border);
-  display:flex;align-items:center;justify-content:space-between;
-  padding:0 24px;position:sticky;top:0;z-index:40;
+.sidebar-section { padding: 16px 24px 8px; font-size: 11px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink4); }
+.nav-item {
+  display: flex; align-items: center; gap: 12px; padding: 10px 16px; border-radius: 10px;
+  cursor: pointer; color: var(--ink2); font-size: 14px; font-weight: 500;
+  transition: var(--transition); margin: 4px 12px; text-decoration: none;
 }
-.topbar-left{display:flex;align-items:center;gap:12px}
-.page-title{font-size:16px;font-weight:600;color:var(--ink)}
-.breadcrumb{font-size:12px;color:var(--ink4)}
-.topbar-right{display:flex;align-items:center;gap:8px}
-.topbar-btn{
-  display:flex;align-items:center;gap:6px;padding:7px 14px;border-radius:8px;
-  font-family:'Sora',sans-serif;font-size:13px;font-weight:500;cursor:pointer;
-  border:none;transition:all .18s;text-decoration:none;
+.nav-item:hover { background: var(--surface2); color: var(--ink); transform: translateX(4px); }
+.nav-item.active { background: var(--primary-light); color: var(--primary); font-weight: 600; }
+.nav-item .nav-icon { font-size: 20px; flex-shrink: 0; }
+
+.sidebar-footer { padding: 20px; border-top: 1px solid var(--border); }
+.user-profile { display: flex; align-items: center; gap: 12px; }
+.user-avatar { width: 40px; height: 40px; border-radius: 50%; background: var(--surface2); display: flex; align-items: center; justify-content: center; font-size: 20px; color: var(--primary); }
+.user-info { display: flex; flex-direction: column; }
+.user-name { font-size: 13px; font-weight: 600; color: var(--ink); }
+.user-role { font-size: 11px; color: var(--ink3); }
+
+/* ── WRAPPER & TOPBAR ── */
+#wrapper { margin-left: var(--sidebar-w); flex: 1; min-height: 100vh; display: flex; flex-direction: column; transition: margin 0.3s ease; }
+
+#topbar {
+  height: var(--header-h); background: rgba(var(--surface), 0.8); backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between;
+  padding: 0 30px; position: sticky; top: 0; z-index: 40; transition: background 0.3s;
 }
-.btn-ghost{background:transparent;color:var(--ink2);border:1px solid var(--border)}
-.btn-ghost:hover{background:var(--bg)}
-.btn-primary{background:var(--primary);color:#fff}
-.btn-primary:hover{background:var(--primary-dark)}
-.btn-danger{background:var(--danger);color:#fff}
-.btn-danger:hover{background:#dc2626}
-.btn-warn{background:var(--warn);color:#fff}
-.btn-warn:hover{background:#d97706}
+.topbar-left { display: flex; align-items: center; gap: 16px; }
+.page-title { font-size: 18px; font-weight: 600; color: var(--ink); }
+.breadcrumb { font-size: 13px; color: var(--ink4); display: flex; align-items: center; gap: 6px; }
 
-/* ── MAIN ── */
-#main{padding:24px;flex:1;max-width:900px}
-
-/* ── SECTION TITLE ── */
-.sec-title{font-size:13px;font-weight:700;color:var(--ink);margin-bottom:16px;display:flex;align-items:center;gap:8px}
-.sec-title::after{content:'';flex:1;height:1px;background:var(--border)}
-
-/* ── CONFIG CARD ── */
-.config-card{
-  background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);
-  box-shadow:var(--shadow);margin-bottom:24px;overflow:hidden;
-  animation:fadeUp .3s ease;
+.topbar-right { display: flex; align-items: center; gap: 16px; }
+.search-box {
+  display: flex; align-items: center; gap: 10px; background: var(--bg);
+  border: 1px solid var(--border); border-radius: 20px; padding: 8px 16px;
+  transition: var(--transition); width: 250px;
 }
-@keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
-.config-card-header{
-  padding:16px 20px;border-bottom:1px solid var(--border);
-  display:flex;align-items:center;gap:12px;
-}
-.config-card-icon{width:36px;height:36px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0}
-.config-card-info{}
-.config-card-info h3{font-size:14px;font-weight:600;color:var(--ink)}
-.config-card-info p{font-size:12px;color:var(--ink3);margin-top:2px}
-.config-card-body{padding:20px}
-.config-card-footer{padding:14px 20px;border-top:1px solid var(--border);background:var(--surface2);display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.search-box:focus-within { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(37,99,235,0.1); width: 280px; }
+.search-box input { border: none; background: transparent; font-family: 'Sora', sans-serif; font-size: 13px; color: var(--ink); outline: none; width: 100%; }
+.search-box i { color: var(--ink4); font-size: 18px; }
 
-/* ── FORM ── */
-.form-group{display:flex;flex-direction:column;gap:5px;margin-bottom:14px}
-.form-group:last-child{margin-bottom:0}
-.form-label{font-size:12px;font-weight:600;color:var(--ink2)}
-.form-label .req{color:var(--danger)}
-.form-control{
-  padding:9px 12px;border:1.5px solid var(--border);border-radius:8px;
-  font-family:'Sora',sans-serif;font-size:13px;color:var(--ink);
-  background:var(--surface);outline:none;transition:all .18s;
+.icon-btn {
+  width: 40px; height: 40px; border-radius: 50%; border: 1px solid var(--border);
+  background: var(--surface); color: var(--ink2); display: flex; align-items: center; justify-content: center;
+  font-size: 20px; cursor: pointer; transition: var(--transition);
 }
-.form-control:focus{border-color:var(--primary);box-shadow:0 0 0 3px rgba(37,99,235,.1)}
-.form-control::placeholder{color:var(--ink4)}
-.form-hint{font-size:11px;color:var(--ink4);line-height:1.5}
-.form-row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
-.input-group{display:flex;gap:0}
-.input-group .form-control{border-radius:8px 0 0 8px;flex:1}
-.input-group .ig-btn{
-  padding:0 14px;border:1.5px solid var(--border);border-left:none;border-radius:0 8px 8px 0;
-  background:var(--surface2);cursor:pointer;font-size:14px;color:var(--ink3);
-  transition:all .18s;font-family:'Sora',sans-serif;
+.icon-btn:hover { background: var(--bg); color: var(--primary); transform: translateY(-2px); }
+
+/* ── MAIN CONTENT (TENTANG KAMI) ── */
+#main { padding: 30px; flex: 1; max-width: 1200px; margin: 0 auto; width: 100%; }
+
+/* ANIMATION */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
 }
-.input-group .ig-btn:hover{background:var(--bg);color:var(--ink)}
+.animate-up { animation: fadeUp 0.5s ease forwards; opacity: 0; }
+.delay-1 { animation-delay: 0.1s; }
+.delay-2 { animation-delay: 0.2s; }
+.delay-3 { animation-delay: 0.3s; }
+.delay-4 { animation-delay: 0.4s; }
 
-/* ── STATUS BADGE ── */
-.status-badge{display:inline-flex;align-items:center;gap:5px;padding:4px 10px;border-radius:99px;font-size:11px;font-weight:600}
-.status-ok{background:#f0fdf4;color:var(--success)}
-.status-warn{background:#fff7ed;color:var(--accent)}
-.status-err{background:#fef2f2;color:var(--danger)}
-.status-dot{width:6px;height:6px;border-radius:50%}
-.status-ok .status-dot{background:var(--success)}
-.status-warn .status-dot{background:var(--accent)}
-.status-err .status-dot{background:var(--danger)}
-
-/* ── INFO BOX ── */
-.info-box{
-  padding:12px 14px;border-radius:8px;font-size:12px;line-height:1.6;
-  display:flex;gap:10px;
+/* HERO BANNER */
+.about-hero {
+  background: linear-gradient(135deg, var(--primary), #60a5fa);
+  border-radius: var(--radius);
+  padding: 40px;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  box-shadow: var(--shadow-md);
+  margin-bottom: 40px;
+  position: relative;
+  overflow: hidden;
 }
-.info-box.info{background:#eff6ff;border:1px solid #bfdbfe;color:#1d4ed8}
-.info-box.warn{background:#fff7ed;border:1px solid #fed7aa;color:#c2410c}
-.info-box.success{background:#f0fdf4;border:1px solid #bbf7d0;color:#065f46}
-.info-box.danger{background:#fef2f2;border:1px solid #fecaca;color:#991b1b}
-.info-icon{font-size:16px;flex-shrink:0;margin-top:1px}
-
-/* ── STEPS ── */
-.steps{display:flex;flex-direction:column;gap:10px;margin-top:2px}
-.step{display:flex;gap:12px;align-items:flex-start}
-.step-num{
-  width:22px;height:22px;border-radius:50%;background:var(--primary-light);color:var(--primary);
-  font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;
+.about-hero::after {
+  content: ''; position: absolute; top: -50%; right: -10%; width: 300px; height: 300px;
+  background: rgba(255,255,255,0.1); border-radius: 50%; blur: 20px;
 }
-.step-text{font-size:12px;color:var(--ink2);line-height:1.6}
-.step-text code{background:var(--bg);border:1px solid var(--border);border-radius:4px;padding:1px 5px;font-size:11px;color:var(--primary)}
-
-/* ── TEST RESULT ── */
-#test-result{margin-top:14px;display:none}
-
-/* ── DATA ACTIONS ── */
-.data-action-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
-.data-action-card{
-  border:1px solid var(--border);border-radius:9px;padding:16px;
-  background:var(--surface2);text-align:center;cursor:pointer;
-  transition:all .18s;
+.about-hero-title { font-family: 'Lora', serif; font-size: 32px; font-weight: 700; margin-bottom: 12px; z-index: 1; }
+.about-hero-subtitle { font-size: 16px; opacity: 0.9; margin-bottom: 20px; max-width: 600px; line-height: 1.6; z-index: 1; }
+.version-badge {
+  background: rgba(0,0,0,0.2); backdrop-filter: blur(5px); padding: 6px 16px;
+  border-radius: 20px; font-size: 12px; font-weight: 600; letter-spacing: 1px; z-index: 1;
 }
-.data-action-card:hover{background:var(--surface);border-color:var(--primary);box-shadow:var(--shadow)}
-.data-action-card .da-icon{font-size:26px;margin-bottom:8px}
-.data-action-card .da-label{font-size:12px;font-weight:600;color:var(--ink2)}
-.data-action-card .da-desc{font-size:11px;color:var(--ink4);margin-top:3px}
 
-/* ── TOAST ── */
-#toast{
-  position:fixed;bottom:24px;right:24px;background:var(--ink);color:#fff;
-  padding:10px 18px;border-radius:10px;font-size:13px;z-index:999;
-  display:none;box-shadow:var(--shadow-md);animation:toastIn .25s ease;
-  border-left:3px solid var(--success);
-}
-@keyframes toastIn{from{transform:translateX(16px);opacity:0}to{transform:translateX(0);opacity:1}}
-#toast.show{display:block}
-#toast.err{border-left-color:var(--danger)}
-#toast.warn-t{border-left-color:var(--warn)}
+/* SECTION TITLE */
+.section-head { display: flex; align-items: center; margin-bottom: 24px; gap: 12px; }
+.section-head h2 { font-size: 20px; font-weight: 600; color: var(--ink); }
+.section-line { height: 2px; flex: 1; background: var(--border); }
 
-/* ── MOBILE ── */
-#sidebar-toggle{display:none;background:transparent;border:none;font-size:22px;cursor:pointer;color:var(--ink);padding:4px}
-#sidebar-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.35);z-index:49}
-@media(max-width:768px){
-  #sidebar{transform:translateX(-100%)}
-  #sidebar.open{transform:translateX(0)}
-  #sidebar-overlay.open{display:block}
-  #wrapper{margin-left:0}
-  #sidebar-toggle{display:block}
-  .form-row{grid-template-columns:1fr}
-  .data-action-grid{grid-template-columns:1fr 1fr}
+/* TEAM GRID */
+.team-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; margin-bottom: 40px; }
+.team-card {
+  background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius);
+  padding: 30px 20px; text-align: center; box-shadow: var(--shadow-sm);
+  transition: var(--transition); display: flex; flex-direction: column; align-items: center;
 }
-@media(max-width:480px){
-  .data-action-grid{grid-template-columns:1fr}
+.team-card:hover { transform: translateY(-8px); box-shadow: var(--shadow-lg); border-color: var(--primary); }
+.team-avatar {
+  width: 80px; height: 80px; border-radius: 50%; background: var(--surface2);
+  display: flex; align-items: center; justify-content: center; font-size: 40px;
+  color: var(--primary); margin-bottom: 16px; border: 4px solid var(--bg);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+}
+.team-card.creator .team-avatar { background: rgba(249,115,22,0.1); color: var(--accent); }
+.team-name { font-size: 18px; font-weight: 600; color: var(--ink); margin-bottom: 4px; }
+.team-role { font-size: 13px; color: var(--ink3); font-weight: 500; background: var(--bg); padding: 4px 12px; border-radius: 12px; }
+
+/* TECH GRID */
+.tech-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; }
+.tech-card {
+  background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius);
+  padding: 20px; display: flex; align-items: center; justify-content: center; gap: 12px;
+  box-shadow: var(--shadow-sm); transition: var(--transition);
+}
+.tech-card:hover { background: var(--primary-light); border-color: var(--primary); transform: translateY(-4px); }
+.tech-icon { font-size: 28px; color: var(--ink2); transition: color 0.3s; }
+.tech-card:hover .tech-icon { color: var(--primary); }
+.tech-name { font-size: 15px; font-weight: 600; color: var(--ink); }
+
+/* ── RESPONSIVE ── */
+#sidebar-toggle { display: none; background: transparent; border: none; font-size: 28px; cursor: pointer; color: var(--ink); }
+#sidebar-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 49; backdrop-filter: blur(2px); }
+
+@media(max-width: 992px) {
+  #sidebar { transform: translateX(-100%); }
+  #sidebar.open { transform: translateX(0); }
+  #sidebar-overlay.open { display: block; }
+  #wrapper { margin-left: 0; }
+  #sidebar-toggle { display: block; }
+}
+@media(max-width: 768px) {
+  .search-box { display: none; }
+  .about-hero { padding: 30px 20px; }
+  .about-hero-title { font-size: 26px; }
 }
 </style>
 </head>
 <body>
 
-<!-- SIDEBAR -->
 <nav id="sidebar">
   <div class="sidebar-logo">
-    <div class="logo-icon">✦</div>
-    <div class="logo-text">Catatan<span>.</span></div>
+    <div class="logo-icon"><i class='bx bxs-graduation'></i></div>
+    <div class="logo-text">Academy<span>Eji.</span></div>
   </div>
-  <div class="sidebar-section">Menu</div>
-  <a class="nav-item" href="index.html">
-    <span class="nav-icon">⊞</span> Dashboard
-  </a>
-  <a class="nav-item" href="admin.html">
-    <span class="nav-icon">⚙</span> Admin Panel
-  </a>
-  <a class="nav-item active" href="config.html">
-    <span class="nav-icon">🔧</span> Konfigurasi
-  </a>
+  <div class="sidebar-scroll">
+    <div class="sidebar-section">Menu Utama</div>
+    <a class="nav-item" href="index.html"><i class='bx bx-grid-alt nav-icon'></i> Dashboard</a>
+    <a class="nav-item active" href="tentang-kami.html"><i class='bx bx-info-circle nav-icon'></i> Tentang Kami</a>
+    <div class="sidebar-section" style="margin-top: 15px;">Manajemen</div>
+    <a class="nav-item" href="admin.html"><i class='bx bx-user-pin nav-icon'></i> Admin Panel</a>
+    <a class="nav-item" href="config.html"><i class='bx bx-cog nav-icon'></i> Konfigurasi</a>
+    <div class="sidebar-section" style="margin-top: 15px;">Analitik</div>
+    <a class="nav-item" href="analytics.html"><i class='bx bx-bar-chart-alt-2 nav-icon'></i> Traffic Klik</a>
+  </div>
   <div class="sidebar-footer">
-    <a href="config.html">🔑 &nbsp;Pengaturan Akun</a>
+    <div class="user-profile">
+      <div class="user-avatar"><i class='bx bxs-user'></i></div>
+      <div class="user-info">
+        <span class="user-name">Enzo Fahrezi</span>
+        <span class="user-role">Creator</span>
+      </div>
+    </div>
   </div>
 </nav>
 <div id="sidebar-overlay"></div>
 
-<!-- WRAPPER -->
 <div id="wrapper">
-  <!-- TOPBAR -->
   <div id="topbar">
     <div class="topbar-left">
-      <button id="sidebar-toggle">☰</button>
+      <button id="sidebar-toggle"><i class='bx bx-menu'></i></button>
       <div>
-        <div class="page-title">Konfigurasi</div>
-        <div class="breadcrumb">Beranda › Konfigurasi</div>
+        <div class="page-title">Tentang Kami</div>
+        <div class="breadcrumb">Beranda <i class='bx bx-chevron-right'></i> Tentang Kami</div>
       </div>
     </div>
     <div class="topbar-right">
-      <span id="cfg-status-badge" class="status-badge status-warn">
-        <span class="status-dot"></span> Belum dikonfigurasi
-      </span>
+      <div class="search-box">
+        <i class='bx bx-search'></i>
+        <input type="text" id="search-input" placeholder="Cari...">
+      </div>
+      <button class="icon-btn" id="theme-toggle" title="Toggle Dark Mode">
+        <i class='bx bx-moon'></i>
+      </button>
+      <button class="icon-btn" title="Notifikasi">
+        <i class='bx bx-bell'></i>
+      </button>
     </div>
   </div>
 
-  <!-- MAIN -->
   <div id="main">
+    
+    <div class="about-hero animate-up">
+      <h1 class="about-hero-title">Academy Eji</h1>
+      <p class="about-hero-subtitle">Platform Kelas Online inovatif yang dirancang untuk memberikan pengalaman belajar terbaik dengan antarmuka modern dan interaktif.</p>
+      <span class="version-badge">VERSI 2.1.0 BETA</span>
+    </div>
 
-    <!-- GITHUB CONFIG -->
-    <div class="sec-title">🔗 Integrasi GitHub</div>
+    <div class="section-head animate-up delay-1">
+      <i class='bx bx-group' style="font-size: 24px; color: var(--primary);"></i>
+      <h2>Tim Kami</h2>
+      <div class="section-line"></div>
+    </div>
 
-    <div class="config-card">
-      <div class="config-card-header">
-        <div class="config-card-icon" style="background:#f0fdf4;color:var(--success)">🐙</div>
-        <div class="config-card-info">
-          <h3>Koneksi Repository GitHub</h3>
-          <p>Hubungkan aplikasi ke repository GitHub sebagai database JSON</p>
-        </div>
+    <div class="team-grid animate-up delay-2">
+      <div class="team-card creator">
+        <div class="team-avatar"><i class='bx bxs-face'></i></div>
+        <h3 class="team-name">Enzo Fahrezi</h3>
+        <span class="team-role">Creator & Developer</span>
       </div>
-      <div class="config-card-body">
-        <div class="form-row">
-          <div class="form-group">
-            <label class="form-label">GitHub Username / Org <span class="req">*</span></label>
-            <input type="text" class="form-control" id="cfg-owner" placeholder="username atau org-name">
-            <span class="form-hint">Nama pengguna atau organisasi GitHub kamu</span>
-          </div>
-          <div class="form-group">
-            <label class="form-label">Nama Repository <span class="req">*</span></label>
-            <input type="text" class="form-control" id="cfg-repo" placeholder="nama-repository">
-            <span class="form-hint">Repository tempat data disimpan</span>
-          </div>
-        </div>
-        <div class="form-group">
-          <label class="form-label">Path File Data</label>
-          <input type="text" class="form-control" id="cfg-path" placeholder="data.json">
-          <span class="form-hint">Lokasi file JSON di dalam repository. Default: <code style="font-size:11px;background:var(--bg);padding:1px 4px;border-radius:3px;border:1px solid var(--border)">data.json</code></span>
-        </div>
-        <div class="form-group">
-          <label class="form-label">Personal Access Token (PAT) <span class="req">*</span></label>
-          <div class="input-group">
-            <input type="password" class="form-control" id="cfg-pat" placeholder="ghp_xxxxxxxxxxxxxxxxxxxx">
-            <button class="ig-btn" id="pat-toggle" title="Tampilkan/sembunyikan token">👁</button>
-          </div>
-          <span class="form-hint">Token harus punya scope <strong>repo</strong> (read &amp; write). Disimpan hanya di browser kamu.</span>
-        </div>
-
-        <div class="info-box warn" style="margin-top:16px">
-          <span class="info-icon">⚠️</span>
-          <div>
-            <strong>Keamanan Token:</strong> PAT disimpan di <code style="background:rgba(0,0,0,.05);padding:1px 4px;border-radius:3px">localStorage</code> browser kamu dan tidak dikirim ke server mana pun selain GitHub API. Gunakan token dengan scope minimal.
-          </div>
-        </div>
+      <div class="team-card">
+        <div class="team-avatar"><i class='bx bx-user'></i></div>
+        <h3 class="team-name">Ilham</h3>
+        <span class="team-role">Anggota Tim</span>
       </div>
-      <div class="config-card-footer">
-        <div style="display:flex;gap:8px">
-          <button class="topbar-btn btn-primary" id="btn-save-cfg">💾 Simpan Konfigurasi</button>
-          <button class="topbar-btn btn-ghost" id="btn-test-cfg">🔌 Tes Koneksi</button>
-        </div>
-        <button class="topbar-btn btn-ghost" id="btn-clear-cfg" style="color:var(--danger);border-color:var(--danger)">🗑 Hapus Config</button>
+      <div class="team-card">
+        <div class="team-avatar"><i class='bx bx-user'></i></div>
+        <h3 class="team-name">Novia Savira</h3>
+        <span class="team-role">Anggota Tim</span>
       </div>
     </div>
 
-    <!-- TEST RESULT -->
-    <div id="test-result"></div>
-
-    <!-- CARA SETUP -->
-    <div class="sec-title" style="margin-top:8px">📖 Cara Setup</div>
-    <div class="config-card">
-      <div class="config-card-header">
-        <div class="config-card-icon" style="background:#eff6ff;color:var(--primary)">🚀</div>
-        <div class="config-card-info">
-          <h3>Panduan Konfigurasi</h3>
-          <p>Ikuti langkah berikut untuk menghubungkan ke GitHub</p>
-        </div>
-      </div>
-      <div class="config-card-body">
-        <div class="steps">
-          <div class="step">
-            <div class="step-num">1</div>
-            <div class="step-text">Buat repository baru di GitHub (boleh private atau public).</div>
-          </div>
-          <div class="step">
-            <div class="step-num">2</div>
-            <div class="step-text">Buat file <code>data.json</code> di root repo dengan isi minimal: <code>{"kategori":[],"artikel":[]}</code></div>
-          </div>
-          <div class="step">
-            <div class="step-num">3</div>
-            <div class="step-text">Pergi ke <strong>Settings → Developer Settings → Personal Access Tokens → Tokens (classic)</strong>, klik <em>Generate new token</em>.</div>
-          </div>
-          <div class="step">
-            <div class="step-num">4</div>
-            <div class="step-text">Centang scope <code>repo</code> (full control of private repositories), lalu generate dan salin token.</div>
-          </div>
-          <div class="step">
-            <div class="step-num">5</div>
-            <div class="step-text">Isi form di atas dengan username, nama repo, dan token kamu. Klik <strong>Simpan Konfigurasi</strong>, lalu <strong>Tes Koneksi</strong>.</div>
-          </div>
-        </div>
-      </div>
+    <div class="section-head animate-up delay-3">
+      <i class='bx bx-chip' style="font-size: 24px; color: var(--accent);"></i>
+      <h2>Didukung Oleh</h2>
+      <div class="section-line"></div>
     </div>
 
-    <!-- DATA MANAGEMENT -->
-    <div class="sec-title">🗄 Manajemen Data Lokal</div>
-    <div class="config-card">
-      <div class="config-card-header">
-        <div class="config-card-icon" style="background:#fff7ed;color:var(--accent)">💾</div>
-        <div class="config-card-info">
-          <h3>Data Cache Lokal</h3>
-          <p>Kelola data yang tersimpan di browser kamu</p>
-        </div>
+    <div class="tech-grid animate-up delay-4">
+      <div class="tech-card">
+        <i class='bx bx-bot tech-icon'></i>
+        <span class="tech-name">Gemini AI</span>
       </div>
-      <div class="config-card-body">
-        <div class="data-action-grid">
-          <div class="data-action-card" onclick="exportData()">
-            <div class="da-icon">📤</div>
-            <div class="da-label">Export JSON</div>
-            <div class="da-desc">Download data sebagai file .json</div>
-          </div>
-          <div class="data-action-card" onclick="document.getElementById('import-file').click()">
-            <div class="da-icon">📥</div>
-            <div class="da-label">Import JSON</div>
-            <div class="da-desc">Upload file .json ke cache lokal</div>
-          </div>
-          <div class="data-action-card" onclick="clearLocalData()">
-            <div class="da-icon">🗑</div>
-            <div class="da-label">Hapus Cache</div>
-            <div class="da-desc">Bersihkan semua data lokal</div>
-          </div>
-        </div>
-        <input type="file" id="import-file" accept=".json" style="display:none" onchange="importData(event)">
-
-        <div class="info-box info" style="margin-top:16px">
-          <span class="info-icon">ℹ️</span>
-          <div>Data cache tersimpan di <code style="background:rgba(0,0,0,.05);padding:1px 4px;border-radius:3px">localStorage</code> browser. Ini adalah salinan lokal; gunakan <strong>Simpan ke GitHub</strong> di Admin Panel untuk sinkronisasi ke cloud.</div>
-        </div>
+      <div class="tech-card">
+        <i class='bx bx-brain tech-icon'></i>
+        <span class="tech-name">Claude</span>
       </div>
-      <div class="config-card-footer">
-        <div id="cache-info" style="font-size:12px;color:var(--ink3)">Memuat info cache…</div>
-      </div>
-    </div>
-
-    <!-- TENTANG -->
-    <div class="sec-title">ℹ️ Tentang Aplikasi</div>
-    <div class="config-card">
-      <div class="config-card-header">
-        <div class="config-card-icon" style="background:var(--primary-light);color:var(--primary)">✦</div>
-        <div class="config-card-info">
-          <h3>Catatan. Dashboard</h3>
-          <p>Sistem manajemen artikel berbasis GitHub sebagai backend</p>
-        </div>
-      </div>
-      <div class="config-card-body">
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
-          <div style="padding:14px;background:var(--surface2);border-radius:8px;border:1px solid var(--border)">
-            <div style="font-size:11px;color:var(--ink4);font-weight:600;margin-bottom:4px">VERSI</div>
-            <div style="font-size:14px;font-weight:600;color:var(--ink)">1.0.0</div>
-          </div>
-          <div style="padding:14px;background:var(--surface2);border-radius:8px;border:1px solid var(--border)">
-            <div style="font-size:11px;color:var(--ink4);font-weight:600;margin-bottom:4px">FRAMEWORK</div>
-            <div style="font-size:14px;font-weight:600;color:var(--ink)">Vanilla JS</div>
-          </div>
-          <div style="padding:14px;background:var(--surface2);border-radius:8px;border:1px solid var(--border)">
-            <div style="font-size:11px;color:var(--ink4);font-weight:600;margin-bottom:4px">STORAGE</div>
-            <div style="font-size:14px;font-weight:600;color:var(--ink)">GitHub + LocalStorage</div>
-          </div>
-          <div style="padding:14px;background:var(--surface2);border-radius:8px;border:1px solid var(--border)">
-            <div style="font-size:11px;color:var(--ink4);font-weight:600;margin-bottom:4px">FONT</div>
-            <div style="font-size:14px;font-weight:600;color:var(--ink)">Sora + Lora</div>
-          </div>
-        </div>
+      <div class="tech-card">
+        <i class='bx bxs-palette tech-icon'></i>
+        <span class="tech-name">Canva</span>
       </div>
     </div>
 
   </div>
 </div>
 
-<!-- TOAST -->
-<div id="toast"></div>
-
 <script>
-const CFG_KEY = 'ctt_config';
-const DATA_KEY = 'ctt_data';
+// --- TEMA (DARK/LIGHT MODE) ---
+const themeToggle = document.getElementById('theme-toggle');
+const htmlEl = document.documentElement;
 
-function getConfig(){ try{ return JSON.parse(localStorage.getItem(CFG_KEY))||{} }catch(e){return{}} }
-function setConfig(c){ localStorage.setItem(CFG_KEY, JSON.stringify(c)) }
-function getCachedData(){ try{ return JSON.parse(localStorage.getItem(DATA_KEY))||null }catch(e){return null} }
-function setCachedData(d){ localStorage.setItem(DATA_KEY, JSON.stringify(d)) }
-
-/* ── LOAD CONFIG INTO FORM ── */
-function loadConfigForm(){
-  const cfg = getConfig();
-  document.getElementById('cfg-owner').value = cfg.owner||'';
-  document.getElementById('cfg-repo').value = cfg.repo||'';
-  document.getElementById('cfg-path').value = cfg.path||'';
-  document.getElementById('cfg-pat').value = cfg.pat||'';
-  updateStatusBadge(cfg);
-  updateCacheInfo();
+// Cek preferensi user di localStorage
+if (localStorage.getItem('theme') === 'dark') {
+  htmlEl.setAttribute('data-theme', 'dark');
+  themeToggle.innerHTML = "<i class='bx bx-sun'></i>";
 }
 
-function updateStatusBadge(cfg){
-  const badge = document.getElementById('cfg-status-badge');
-  const ok = cfg.owner && cfg.repo && cfg.pat && !cfg.pat.includes('XXXX');
-  badge.className = 'status-badge ' + (ok ? 'status-ok' : 'status-warn');
-  badge.innerHTML = `<span class="status-dot"></span> ${ok ? '✅ Terkonfigurasi' : '⚠️ Belum dikonfigurasi'}`;
-}
-
-function updateCacheInfo(){
-  const d = getCachedData();
-  const el = document.getElementById('cache-info');
-  if(d){
-    const arts = (d.artikel||[]).length;
-    const kats = (d.kategori||[]).length;
-    el.innerHTML = `📦 Cache berisi <strong>${arts} artikel</strong> dan <strong>${kats} kategori</strong>`;
+themeToggle.addEventListener('click', () => {
+  if (htmlEl.getAttribute('data-theme') === 'dark') {
+    htmlEl.setAttribute('data-theme', 'light');
+    themeToggle.innerHTML = "<i class='bx bx-moon'></i>";
+    localStorage.setItem('theme', 'light');
   } else {
-    el.textContent = '📭 Tidak ada data cache';
-  }
-}
-
-/* ── SAVE CONFIG ── */
-document.getElementById('btn-save-cfg').addEventListener('click', ()=>{
-  const owner = document.getElementById('cfg-owner').value.trim();
-  const repo = document.getElementById('cfg-repo').value.trim();
-  const path = document.getElementById('cfg-path').value.trim()||'data.json';
-  const pat = document.getElementById('cfg-pat').value.trim();
-  if(!owner||!repo){ showToast('Username dan nama repo wajib diisi!', 'err'); return; }
-  if(!pat){ showToast('Personal Access Token wajib diisi!', 'err'); return; }
-  setConfig({owner, repo, path, pat});
-  updateStatusBadge({owner,repo,pat});
-  showToast('Konfigurasi berhasil disimpan! ✅');
-});
-
-/* ── TEST CONNECTION ── */
-document.getElementById('btn-test-cfg').addEventListener('click', async()=>{
-  const cfg = getConfig();
-  const resultEl = document.getElementById('test-result');
-  resultEl.style.display='block';
-
-  if(!cfg.owner || !cfg.repo || !cfg.pat){
-    resultEl.innerHTML = `<div class="info-box danger" style="margin-bottom:16px"><span class="info-icon">❌</span><div>Simpan konfigurasi terlebih dahulu sebelum tes koneksi.</div></div>`;
-    return;
-  }
-
-  resultEl.innerHTML = `<div class="info-box info" style="margin-bottom:16px"><span class="info-icon">⏳</span><div>Sedang menguji koneksi ke GitHub…</div></div>`;
-
-  try{
-    const url = `https://api.github.com/repos/${cfg.owner}/${cfg.repo}/contents/${cfg.path||'data.json'}`;
-    const r = await fetch(url, {
-      headers:{'Authorization':'Bearer '+cfg.pat,'Accept':'application/vnd.github+json'}
-    });
-    if(r.ok){
-      const j = await r.json();
-      const size = j.size || 0;
-      resultEl.innerHTML = `<div class="info-box success" style="margin-bottom:16px"><span class="info-icon">✅</span><div><strong>Koneksi berhasil!</strong><br>Repository ditemukan. File <code style="background:rgba(0,0,0,.05);padding:1px 4px;border-radius:3px">${cfg.path||'data.json'}</code> berukuran <strong>${size} bytes</strong>. Kamu siap menggunakan GitHub sebagai backend.</div></div>`;
-      showToast('Koneksi GitHub berhasil! ✅');
-    } else if(r.status===404){
-      resultEl.innerHTML = `<div class="info-box warn" style="margin-bottom:16px"><span class="info-icon">⚠️</span><div><strong>File tidak ditemukan (404).</strong><br>Repository <em>${cfg.owner}/${cfg.repo}</em> dapat diakses, namun file <code style="background:rgba(0,0,0,.05);padding:1px 4px;border-radius:3px">${cfg.path||'data.json'}</code> tidak ada. Buat file tersebut terlebih dahulu.</div></div>`;
-    } else if(r.status===401){
-      resultEl.innerHTML = `<div class="info-box danger" style="margin-bottom:16px"><span class="info-icon">🔐</span><div><strong>Token tidak valid (401).</strong><br>Periksa kembali Personal Access Token kamu. Pastikan token belum expired dan punya scope <code style="background:rgba(0,0,0,.05);padding:1px 4px;border-radius:3px">repo</code>.</div></div>`;
-    } else {
-      resultEl.innerHTML = `<div class="info-box danger" style="margin-bottom:16px"><span class="info-icon">❌</span><div><strong>Error ${r.status}.</strong><br>Terjadi kesalahan. Periksa username dan nama repository kamu.</div></div>`;
-    }
-  } catch(e){
-    resultEl.innerHTML = `<div class="info-box danger" style="margin-bottom:16px"><span class="info-icon">🌐</span><div><strong>Gagal terhubung.</strong><br>Periksa koneksi internet kamu. Detail: ${e.message}</div></div>`;
+    htmlEl.setAttribute('data-theme', 'dark');
+    themeToggle.innerHTML = "<i class='bx bx-sun'></i>";
+    localStorage.setItem('theme', 'dark');
   }
 });
-
-/* ── CLEAR CONFIG ── */
-document.getElementById('btn-clear-cfg').addEventListener('click', ()=>{
-  if(!confirm('Hapus semua konfigurasi GitHub? Kamu harus mengisi ulang nanti.')) return;
-  localStorage.removeItem(CFG_KEY);
-  document.getElementById('cfg-owner').value='';
-  document.getElementById('cfg-repo').value='';
-  document.getElementById('cfg-path').value='';
-  document.getElementById('cfg-pat').value='';
-  document.getElementById('test-result').style.display='none';
-  updateStatusBadge({});
-  showToast('Konfigurasi berhasil dihapus.', 'warn');
-});
-
-/* ── PAT TOGGLE ── */
-document.getElementById('pat-toggle').addEventListener('click', ()=>{
-  const inp = document.getElementById('cfg-pat');
-  const isPass = inp.type === 'password';
-  inp.type = isPass ? 'text' : 'password';
-  document.getElementById('pat-toggle').textContent = isPass ? '🙈' : '👁';
-});
-
-/* ── EXPORT ── */
-function exportData(){
-  const d = getCachedData();
-  if(!d){ showToast('Tidak ada data untuk diexport!', 'err'); return; }
-  const blob = new Blob([JSON.stringify({kategori:d.kategori||[],artikel:d.artikel||[]},null,2)], {type:'application/json'});
-  const a = document.createElement('a');
-  a.href = URL.createObjectURL(blob);
-  a.download = 'catatan-data-'+new Date().toISOString().slice(0,10)+'.json';
-  a.click();
-  URL.revokeObjectURL(a.href);
-  showToast('Data berhasil diexport! 📤');
-}
-
-/* ── IMPORT ── */
-function importData(e){
-  const file = e.target.files[0];
-  if(!file) return;
-  const reader = new FileReader();
-  reader.onload = evt => {
-    try{
-      const data = JSON.parse(evt.target.result);
-      if(!data.kategori || !data.artikel) throw new Error('Format tidak valid');
-      setCachedData(data);
-      updateCacheInfo();
-      showToast('Data berhasil diimport! 📥');
-    } catch(err){
-      showToast('File JSON tidak valid: '+err.message, 'err');
-    }
-    e.target.value='';
-  };
-  reader.readAsText(file);
-}
-
-/* ── CLEAR CACHE ── */
-function clearLocalData(){
-  if(!confirm('Hapus semua data cache lokal? Data yang belum disimpan ke GitHub akan hilang.')) return;
-  localStorage.removeItem(DATA_KEY);
-  updateCacheInfo();
-  showToast('Cache lokal berhasil dihapus.', 'warn');
-}
-
-/* ── TOAST ── */
-let _tt;
-function showToast(msg, type=''){
-  const t=document.getElementById('toast');
-  t.textContent=msg;
-  t.className='show'+(type==='err'?' err':type==='warn'?' warn-t':'');
-  clearTimeout(_tt); _tt=setTimeout(()=>t.classList.remove('show'),3500);
-}
 
 /* ── SIDEBAR MOBILE ── */
-document.getElementById('sidebar-toggle').addEventListener('click',()=>{
+document.getElementById('sidebar-toggle').addEventListener('click', () => {
   document.getElementById('sidebar').classList.toggle('open');
   document.getElementById('sidebar-overlay').classList.toggle('open');
 });
-document.getElementById('sidebar-overlay').addEventListener('click',()=>{
+document.getElementById('sidebar-overlay').addEventListener('click', () => {
   document.getElementById('sidebar').classList.remove('open');
   document.getElementById('sidebar-overlay').classList.remove('open');
 });
-
-/* ── INIT ── */
-loadConfigForm();
 </script>
 </body>
 </html>
