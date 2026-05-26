@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="id" data-theme="light">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Academy Eji - Admin Panel Soal</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700&family=Lora:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root {
+  --primary:#2563eb;--primary-light:#eff6ff;--primary-dark:#1d4ed8;
+  --accent:#f97316;--success:#10b981;--warn:#f59e0b;--danger:#ef4444;
+  --sidebar-w:260px;--header-h:70px;--radius:12px;
+  --transition:all 0.3s cubic-bezier(0.4,0,0.2,1);
+  --bg:#f3f4f6;--surface:#ffffff;--surface2:#f8fafc;--border:#e2e8f0;
+  --ink:#0f172a;--ink2:#334155;--ink3:#64748b;--ink4:#94a3b8;
+  --shadow-sm:0 1px 3px rgba(0,0,0,0.05);
+  --shadow-md:0 4px 6px -1px rgba(0,0,0,0.05);
+  --shadow-lg:0 10px 25px -3px rgba(0,0,0,0.08);
+}
+[data-theme="dark"] {
+  --bg:#0f172a;--surface:#1e293b;--surface2:#334155;--border:#334155;
+  --ink:#f8fafc;--ink2:#cbd5e1;--ink3:#94a3b8;--ink4:#64748b;
+  --primary-light:#1e3a8a;
+  --shadow-sm:0 1px 3px rgba(0,0,0,0.3);
+  --shadow-md:0 4px 6px -1px rgba(0,0,0,0.4);
+  --shadow-lg:0 10px 25px -3px rgba(0,0,0,0.5);
+}
+body{font-family:'Sora',sans-serif;background:var(--bg);color:var(--ink);min-height:100vh;display:flex;font-size:14px;}
+
+/* SIDEBAR */
+#sidebar{width:var(--sidebar-w);min-height:100vh;background:var(--surface);border-right:1px solid var(--border);display:flex;flex-direction:column;position:fixed;top:0;left:0;z-index:50;transition:transform 0.3s;}
+.sidebar-logo{height:var(--header-h);display:flex;align-items:center;gap:12px;padding:0 24px;border-bottom:1px solid var(--border);}
+.logo-icon{width:36px;height:36px;background:linear-gradient(135deg,var(--primary),#60a5fa);border-radius:10px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:20px;flex-shrink:0;}
+.logo-text{font-size:18px;font-weight:700;color:var(--ink);}
+.logo-text span{color:var(--primary);}
+.sidebar-scroll{flex:1;overflow-y:auto;padding-top:10px;}
+.sidebar-section{padding:16px 24px 8px;font-size:11px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--ink4);}
+.nav-item{display:flex;align-items:center;gap:12px;padding:10px 16px;border-radius:10px;cursor:pointer;color:var(--ink2);font-size:14px;font-weight:500;transition:var(--transition);margin:4px 12px;text-decoration:none;}
+.nav-item:hover{background:var(--surface2);color:var(--ink);}
+.nav-item.active{background:var(--primary-light);color:var(--primary);font-weight:600;}
+.nav-item .nav-icon{font-size:20px;flex-shrink:0;}
+.sidebar-footer{padding:20px;border-top:1px solid var(--border);}
+.user-profile{display:flex;align-items:center;gap:12px;}
+.user-avatar{width:40px;height:40px;border-radius:50%;background:var(--surface2);display:flex;align-items:center;justify-content:center;font-size:20px;color:var(--primary);}
+.user-name{font-size:13px;font-weight:600;color:var(--ink);}
+.user-role{font-size:11px;color:var(--ink3);}
+
+/* WRAPPER */
+#wrapper{margin-left:var(--sidebar-w);flex:1;min-height:100vh;display:flex;flex-direction:column;transition:margin 0.3s;}
+#topbar{height:var(--header-h);background:rgba(255,255,255,0.8);backdrop-filter:blur(10px);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;padding:0 30px;position:sticky;top:0;z-index:40;}
+[data-theme="dark"] #topbar{background:rgba(30,41,59,0.8);}
+.topbar-left{display:flex;align-items:center;gap:16px;}
+.page-title{font-size:18px;font-weight:600;color:var(--ink);}
+.breadcrumb{font-size:13px;color:var(--ink4);display:flex;align-items:center;gap:6px;}
+.topbar-right{display:flex;align-items:center;gap:12px;}
+.icon-btn{width:40px;height:40px;border-radius:50%;border:1px solid var(--border);background:var(--surface);color:var(--ink2);display:flex;align-items:center;justify-content:center;font-size:20px;cursor:pointer;transition:var(--transition);}
+.icon-btn:hover{background:var(--bg);color:var(--primary);}
+#main{padding:28px;flex:1;}
+
+/* ADMIN LAYOUT */
+.admin-grid{display:grid;grid-template-columns:320px 1fr;gap:24px;align-items:start;}
+
+/* LEFT: Soal List */
+.soal-panel{background:var(--surface);border:1px solid var(--border);border-radius:16px;overflow:hidden;box-shadow:var(--shadow-sm);position:sticky;top:calc(var(--header-h)+20px);}
+.panel-header{padding:16px 20px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;background:var(--surface2);}
+.panel-header-title{font-size:14px;font-weight:700;color:var(--ink);}
+.tes-selector{padding:12px 20px;border-bottom:1px solid var(--border);}
+.tes-select{width:100%;padding:9px 12px;border:1.5px solid var(--border);border-radius:8px;background:var(--surface);color:var(--ink);font-family:'Sora',sans-serif;font-size:13px;outline:none;cursor:pointer;}
+.tes-select:focus{border-color:var(--primary);}
+.soal-list-wrap{max-height:420px;overflow-y:auto;}
+.soal-list-item{padding:12px 20px;border-bottom:1px solid var(--border);cursor:pointer;transition:background 0.2s;display:flex;align-items:center;gap:12px;}
+.soal-list-item:hover{background:var(--surface2);}
+.soal-list-item.active{background:var(--primary-light);border-left:3px solid var(--primary);}
+.sli-num{width:28px;height:28px;border-radius:7px;background:var(--border);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:var(--ink3);flex-shrink:0;}
+.soal-list-item.active .sli-num{background:var(--primary);color:#fff;}
+.sli-text{font-size:12px;color:var(--ink2);line-height:1.4;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;}
+.panel-footer{padding:14px 20px;border-top:1px solid var(--border);}
+
+/* RIGHT: Editor */
+.editor-wrap{}
+.editor-card{background:var(--surface);border:1px solid var(--border);border-radius:16px;overflow:hidden;box-shadow:var(--shadow-sm);margin-bottom:20px;}
+.editor-header{padding:18px 24px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;background:var(--surface2);}
+.editor-title{font-size:15px;font-weight:700;color:var(--ink);display:flex;align-items:center;gap:8px;}
+.editor-title i{color:var(--primary);}
+.editor-body{padding:24px;}
+
+.form-group{margin-bottom:20px;}
+.form-label{display:block;font-size:12px;font-weight:600;color:var(--ink2);margin-bottom:6px;text-transform:uppercase;letter-spacing:0.04em;}
+.form-input,.form-textarea,.form-select{
+  width:100%;padding:10px 14px;
+  border:1.5px solid var(--border);border-radius:9px;
+  background:var(--surface);color:var(--ink);
+  font-family:'Sora',sans-serif;font-size:13px;
+  transition:border-color 0.2s,box-shadow 0.2s;outline:none;
+}
+.form-input:focus,.form-textarea:focus,.form-select:focus{border-color:var(--primary);box-shadow:0 0 0 3px rgba(37,99,235,0.1);}
+.form-textarea{resize:vertical;min-height:100px;line-height:1.6;}
+.form-select{cursor:pointer;}
+
+.opsi-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+.opsi-item{display:flex;align-items:center;gap:10px;}
+.opsi-label{width:28px;height:28px;border-radius:7px;background:var(--primary);color:#fff;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.opsi-input{flex:1;padding:9px 12px;border:1.5px solid var(--border);border-radius:8px;background:var(--surface);color:var(--ink);font-family:'Sora',sans-serif;font-size:13px;outline:none;}
+.opsi-input:focus{border-color:var(--primary);}
+
+.jawaban-row{display:flex;gap:10px;flex-wrap:wrap;}
+.jawaban-opt{
+  padding:8px 16px;border-radius:8px;border:1.5px solid var(--border);
+  background:var(--surface);color:var(--ink2);
+  font-size:13px;font-weight:600;cursor:pointer;transition:var(--transition);
+}
+.jawaban-opt:hover{border-color:var(--success);color:var(--success);}
+.jawaban-opt.selected{background:var(--success);border-color:var(--success);color:#fff;}
+
+.editor-actions{display:flex;gap:10px;flex-wrap:wrap;padding:16px 24px;border-top:1px solid var(--border);background:var(--surface2);}
+
+/* BUTTONS */
+.btn{display:inline-flex;align-items:center;gap:7px;padding:9px 18px;border-radius:9px;font-family:'Sora',sans-serif;font-size:13px;font-weight:600;cursor:pointer;border:none;transition:var(--transition);}
+.btn-outline{background:transparent;border:1.5px solid var(--border);color:var(--ink2);}
+.btn-outline:hover{background:var(--border);color:var(--ink);}
+.btn-primary{background:var(--primary);color:#fff;}
+.btn-primary:hover{background:var(--primary-dark);transform:translateY(-1px);}
+.btn-success{background:var(--success);color:#fff;}
+.btn-success:hover{background:#059669;}
+.btn-danger{background:var(--danger);color:#fff;}
+.btn-danger:hover{background:#b91c1c;}
+.btn-warn{background:var(--warn);color:#fff;}
+.btn-warn:hover{background:#d97706;}
+.btn:disabled{opacity:0.5;cursor:not-allowed;transform:none!important;}
+
+/* TOAST */
+.toast-wrap{position:fixed;bottom:24px;right:24px;z-index:999;display:flex;flex-direction:column;gap:10px;pointer-events:none;}
+.toast{
+  padding:12px 20px;border-radius:10px;
+  font-size:13px;font-weight:600;color:#fff;
+  box-shadow:var(--shadow-lg);
+  animation:toastIn 0.3s ease;
+  pointer-events:all;
+  display:flex;align-items:center;gap:10px;
+  max-width:320px;
+}
+@keyframes toastIn{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+.toast-success{background:var(--success);}
+.toast-error{background:var(--danger);}
+.toast-info{background:var(--primary);}
+
+/* STATS BAR */
+.stats-bar{display:flex;gap:16px;margin-bottom:24px;flex-wrap:wrap;}
+.stat-chip{
+  display:flex;align-items:center;gap:10px;
+  padding:12px 18px;border-radius:12px;
+  background:var(--surface);border:1px solid var(--border);
+  box-shadow:var(--shadow-sm);
+}
+.stat-chip-val{font-size:20px;font-weight:700;color:var(--primary);}
+.stat-chip-label{font-size:12px;color:var(--ink3);}
+
+/* RESPONSIVE */
+#sidebar-toggle{display:none;background:transparent;border:none;font-size:28px;cursor:pointer;color:var(--ink);}
+#sidebar-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:49;}
+@media(max-width:992px){
+  #sidebar{transform:translateX(-100%);}
+  #sidebar.open{transform:translateX(0);}
+  #sidebar-overlay.open{display:block;}
+  #wrapper{margin-left:0;}
+  #sidebar-toggle{display:block;}
+  .admin-grid{grid-template-columns:1fr;}
+  .soal-panel{position:static;}
+}
+@media(max-width:600px){
+  .opsi-grid{grid-template-columns:1fr;}
+  #main{padding:16px;}
+}
+</style>
+</head>
+<body>
+
+<nav id="sidebar">
+  <div class="sidebar-logo">
+    <div class="logo-icon"><i class='bx bxs-graduation'></i></div>
+    <div class="logo-text">Academy<span>Eji.</span></div>
+  </div>
+  <div class="sidebar-scroll">
+    <div class="sidebar-section">Menu Utama</div>
+    <a class="nav-item" href="../index.html"><i class='bx bx-grid-alt nav-icon'></i> Dashboard</a>
+    <a class="nav-item" href="index.html"><i class='bx bx-trophy nav-icon'></i> Kelas Uji Coba</a>
+    <a class="nav-item active" href="admin-soal.html"><i class='bx bx-edit-alt nav-icon'></i> Kelola Soal</a>
+    <div class="sidebar-section" style="margin-top:15px;">Manajemen</div>
+    <a class="nav-item" href="../admin.html"><i class='bx bx-user-pin nav-icon'></i> Admin Panel</a>
+    <div class="sidebar-section" style="margin-top:15px;">Analitik</div>
+    <a class="nav-item" href="../analytics.html"><i class='bx bx-bar-chart-alt-2 nav-icon'></i> Traffic Klik</a>
+  </div>
+  <div class="sidebar-footer">
+    <div class="user-profile">
+      <div class="user-avatar"><i class='bx bxs-user'></i></div>
+      <div class="user-info">
+        <span class="user-name">Admin Eji</span>
+        <span class="user-role">Super Admin</span>
+      </div>
+    </div>
+  </div>
+</nav>
+<div id="sidebar-overlay"></div>
+
+<div id="wrapper">
+  <div id="topbar">
+    <div class="topbar-left">
+      <button id="sidebar-toggle"><i class='bx bx-menu'></i></button>
+      <div>
+        <div class="page-title">Admin Panel Soal</div>
+        <div class="breadcrumb">
+          <a href="index.html" style="color:var(--ink4);text-decoration:none;">Kelas Uji Coba</a>
+          <i class='bx bx-chevron-right'></i> Kelola Soal
+        </div>
+      </div>
+    </div>
+    <div class="topbar-right">
+      <button class="btn btn-success" onclick="simpanKeGitHub()" id="btn-save-all">
+        <i class='bx bx-cloud-upload'></i> Simpan ke GitHub
+      </button>
+      <button class="icon-btn" id="theme-toggle"><i class='bx bx-moon'></i></button>
+    </div>
+  </div>
+
+  <div id="main">
+    <!-- Stats -->
+    <div class="stats-bar" id="stats-bar">
+      <div class="stat-chip">
+        <div><div class="stat-chip-val" id="stat-total">—</div><div class="stat-chip-label">Total Soal</div></div>
+      </div>
+      <div class="stat-chip">
+        <div><div class="stat-chip-val" id="stat-tes" style="font-size:14px;color:var(--ink2);">—</div><div class="stat-chip-label">Jenis Tes</div></div>
+      </div>
+      <div class="stat-chip">
+        <div><div class="stat-chip-val" id="stat-durasi" style="font-size:16px;">—</div><div class="stat-chip-label">Durasi</div></div>
+      </div>
+    </div>
+
+    <div class="admin-grid">
+      <!-- LEFT: Daftar Soal -->
+      <div class="soal-panel">
+        <div class="panel-header">
+          <span class="panel-header-title"><i class='bx bx-list-ul'></i> Daftar Soal</span>
+          <button class="btn btn-primary" style="padding:6px 12px;font-size:12px;" onclick="tambahSoal()">
+            <i class='bx bx-plus'></i> Tambah
+          </button>
+        </div>
+        <div class="tes-selector">
+          <select class="tes-select" id="tes-select" onchange="loadSoal()">
+            <option value="toefl">TOEFL</option>
+            <option value="iq">Tes IQ</option>
+            <option value="ukbi">UKBI</option>
+            <option value="reading">Pemahaman Bacaan</option>
+          </select>
+        </div>
+        <div class="soal-list-wrap" id="soal-list">
+          <div style="padding:24px;text-align:center;color:var(--ink4);">
+            <i class='bx bx-loader-alt bx-spin' style="font-size:28px;display:block;margin-bottom:8px;"></i>Memuat...
+          </div>
+        </div>
+        <div class="panel-footer">
+          <button class="btn btn-outline" style="width:100%;justify-content:center;" onclick="tambahSoal()">
+            <i class='bx bx-plus-circle'></i> Tambah Soal Baru
+          </button>
+        </div>
+      </div>
+
+      <!-- RIGHT: Editor -->
+      <div class="editor-wrap">
+        <div class="editor-card" id="editor-card">
+          <div class="editor-header">
+            <div class="editor-title"><i class='bx bx-edit'></i> <span id="editor-title-text">Pilih soal untuk diedit</span></div>
+            <span id="editor-soal-num" style="font-size:12px;color:var(--ink4);"></span>
+          </div>
+          <div class="editor-body" id="editor-body">
+            <div style="text-align:center;padding:40px;color:var(--ink4);">
+              <i class='bx bx-mouse-alt' style="font-size:48px;display:block;margin-bottom:12px;"></i>
+              Pilih soal dari daftar di kiri untuk mulai mengedit,<br>atau klik <strong>"Tambah Soal Baru"</strong>.
+            </div>
+          </div>
+          <div class="editor-actions" id="editor-actions" style="display:none;">
+            <button class="btn btn-primary" onclick="simpanSoal()"><i class='bx bx-save'></i> Simpan Soal</button>
+            <button class="btn btn-danger" onclick="hapusSoal()" id="btn-hapus"><i class='bx bx-trash'></i> Hapus</button>
+            <button class="btn btn-outline" onclick="resetEditor()"><i class='bx bx-x'></i> Batal</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="toast-wrap" id="toast-wrap"></div>
+
+<script>
+// ── THEME ──
+const htmlEl = document.documentElement;
+const themeToggle = document.getElementById('theme-toggle');
+if (localStorage.getItem('theme') === 'dark') {
+  htmlEl.setAttribute('data-theme','dark');
+  themeToggle.innerHTML = "<i class='bx bx-sun'></i>";
+}
+themeToggle.addEventListener('click', () => {
+  if (htmlEl.getAttribute('data-theme') === 'dark') {
+    htmlEl.setAttribute('data-theme','light');
+    themeToggle.innerHTML = "<i class='bx bx-moon'></i>";
+    localStorage.setItem('theme','light');
+  } else {
+    htmlEl.setAttribute('data-theme','dark');
+    themeToggle.innerHTML = "<i class='bx bx-sun'></i>";
+    localStorage.setItem('theme','dark');
+  }
+});
+
+// ── SIDEBAR ──
+document.getElementById('sidebar-toggle').addEventListener('click', () => {
+  document.getElementById('sidebar').classList.toggle('open');
+  document.getElementById('sidebar-overlay').classList.toggle('open');
+});
+document.getElementById('sidebar-overlay').addEventListener('click', () => {
+  document.getElementById('sidebar').classList.remove('open');
+  document.getElementById('sidebar-overlay').classList.remove('open');
+});
+
+// ── STATE ──
+let currentTes = 'toefl';
+let soalList = [];
+let editingIdx = null; // null = tambah baru
+let isNew = false;
+
+// Metadata per tes
+const tesMeta = {
+  toefl:   { judul: 'TOEFL Simulation Test', durasiMenit: 60, skorMaksimal: 677 },
+  iq:      { judul: 'Tes IQ - Kecerdasan Intelektual', durasiMenit: 45, skorMaksimal: 160 },
+  ukbi:    { judul: 'UKBI - Uji Kemahiran Berbahasa Indonesia', durasiMenit: 75, skorMaksimal: 800 },
+  reading: { judul: 'Pemahaman Bacaan', durasiMenit: 30, skorMaksimal: 100 },
+};
+
+// ── TOAST ──
+function toast(msg, type='info', duration=3500) {
+  const wrap = document.getElementById('toast-wrap');
+  const el = document.createElement('div');
+  el.className = `toast toast-${type}`;
+  const icons = { success:'bx-check-circle', error:'bx-x-circle', info:'bx-info-circle' };
+  el.innerHTML = `<i class='bx ${icons[type] || icons.info}'></i> ${msg}`;
+  wrap.appendChild(el);
+  setTimeout(() => { el.style.opacity='0'; el.style.transform='translateY(20px)'; el.style.transition='0.3s'; setTimeout(()=>el.remove(),300); }, duration);
+}
+
+// ── LOAD SOAL dari API ──
+async function loadSoal() {
+  currentTes = document.getElementById('tes-select').value;
+  const listEl = document.getElementById('soal-list');
+  listEl.innerHTML = `<div style="padding:24px;text-align:center;color:var(--ink4);"><i class='bx bx-loader-alt bx-spin' style="font-size:28px;display:block;margin-bottom:8px;"></i>Memuat...</div>`;
+  resetEditor();
+
+  try {
+    const res = await fetch(`/api/ujicoba/get-soal?tes=${currentTes}`);
+    if (res.ok) {
+      const data = await res.json();
+      soalList = data.soal || [];
+    } else if (res.status === 404) {
+      soalList = [];
+    } else {
+      throw new Error('Error ' + res.status);
+    }
+  } catch(e) {
+    soalList = [];
+    toast('Gagal memuat dari API. Mode offline.', 'error');
+  }
+
+  updateStats();
+  renderList();
+}
+
+function updateStats() {
+  const meta = tesMeta[currentTes] || {};
+  document.getElementById('stat-total').textContent = soalList.length;
+  document.getElementById('stat-tes').textContent = currentTes.toUpperCase();
+  document.getElementById('stat-durasi').textContent = (meta.durasiMenit || '?') + ' menit';
+}
+
+function renderList() {
+  const listEl = document.getElementById('soal-list');
+  if (soalList.length === 0) {
+    listEl.innerHTML = `<div style="padding:28px;text-align:center;color:var(--ink4)"><i class='bx bx-inbox' style="font-size:36px;display:block;margin-bottom:8px"></i>Belum ada soal.<br>Klik "Tambah Soal Baru".</div>`;
+    return;
+  }
+  listEl.innerHTML = soalList.map((s, i) => {
+    const teks = s.pertanyaan || s.teks || s.soal || '(tanpa teks)';
+    const aktif = editingIdx === i ? 'active' : '';
+    return `<div class="soal-list-item ${aktif}" onclick="editSoal(${i})">
+      <div class="sli-num">${i + 1}</div>
+      <div class="sli-text">${escHtml(teks)}</div>
+    </div>`;
+  }).join('');
+}
+
+// ── EDITOR ──
+function resetEditor() {
+  editingIdx = null;
+  isNew = false;
+  document.getElementById('editor-title-text').textContent = 'Pilih soal untuk diedit';
+  document.getElementById('editor-soal-num').textContent = '';
+  document.getElementById('editor-body').innerHTML = `<div style="text-align:center;padding:40px;color:var(--ink4);"><i class='bx bx-mouse-alt' style="font-size:48px;display:block;margin-bottom:12px;"></i>Pilih soal dari daftar di kiri untuk mulai mengedit,<br>atau klik <strong>"Tambah Soal Baru"</strong>.</div>`;
+  document.getElementById('editor-actions').style.display = 'none';
+  renderList();
+}
+
+function renderEditor(soal, idx, isNewSoal) {
+  // Normalisasi opsi
+  let opsiA='', opsiB='', opsiC='', opsiD='', jawabanHuruf='A';
+  if (soal) {
+    if (Array.isArray(soal.opsi)) {
+      opsiA = soal.opsi[0]||''; opsiB = soal.opsi[1]||'';
+      opsiC = soal.opsi[2]||''; opsiD = soal.opsi[3]||'';
+    } else if (soal.opsi && typeof soal.opsi === 'object') {
+      opsiA = soal.opsi.A||''; opsiB = soal.opsi.B||'';
+      opsiC = soal.opsi.C||''; opsiD = soal.opsi.D||'';
+    }
+    const jw = soal.jawaban;
+    if (typeof jw === 'string' && jw.match(/^[A-D]$/)) jawabanHuruf = jw;
+    else if (typeof jw === 'number') jawabanHuruf = 'ABCD'[jw] || 'A';
+  }
+
+  document.getElementById('editor-title-text').textContent = isNewSoal ? 'Tambah Soal Baru' : `Edit Soal #${idx + 1}`;
+  document.getElementById('editor-soal-num').textContent = isNewSoal ? '' : `ID: ${soal?.id || '?'}`;
+  document.getElementById('editor-body').innerHTML = `
+    <div class="form-group">
+      <label class="form-label">Kategori / Section</label>
+      <input id="f-kategori" class="form-input" type="text" value="${escHtml(soal?.kategori || soal?.section || '')}" placeholder="e.g. Reading, Structure, Vocabulary..." />
+    </div>
+    <div class="form-group">
+      <label class="form-label">Pertanyaan / Soal</label>
+      <textarea id="f-pertanyaan" class="form-textarea" rows="4" placeholder="Tulis soal di sini...">${escHtml(soal?.pertanyaan || soal?.teks || soal?.soal || '')}</textarea>
+    </div>
+    <div class="form-group">
+      <label class="form-label">Pilihan Jawaban</label>
+      <div class="opsi-grid">
+        <div class="opsi-item">
+          <div class="opsi-label">A</div>
+          <input id="f-opsi-a" class="opsi-input" type="text" value="${escHtml(opsiA)}" placeholder="Opsi A..." />
+        </div>
+        <div class="opsi-item">
+          <div class="opsi-label">B</div>
+          <input id="f-opsi-b" class="opsi-input" type="text" value="${escHtml(opsiB)}" placeholder="Opsi B..." />
+        </div>
+        <div class="opsi-item">
+          <div class="opsi-label">C</div>
+          <input id="f-opsi-c" class="opsi-input" type="text" value="${escHtml(opsiC)}" placeholder="Opsi C..." />
+        </div>
+        <div class="opsi-item">
+          <div class="opsi-label">D</div>
+          <input id="f-opsi-d" class="opsi-input" type="text" value="${escHtml(opsiD)}" placeholder="Opsi D..." />
+        </div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="form-label">Jawaban Benar</label>
+      <div class="jawaban-row" id="jawaban-row">
+        ${['A','B','C','D'].map(h => `<button class="jawaban-opt ${jawabanHuruf===h?'selected':''}" onclick="pilihJawaban('${h}')">${h}</button>`).join('')}
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="form-label">Pembahasan (Opsional)</label>
+      <textarea id="f-pembahasan" class="form-textarea" rows="2" placeholder="Penjelasan jawaban yang benar...">${escHtml(soal?.pembahasan || soal?.hint || '')}</textarea>
+    </div>
+  `;
+  document.getElementById('editor-actions').style.display = 'flex';
+  document.getElementById('btn-hapus').style.display = isNewSoal ? 'none' : '';
+}
+
+function pilihJawaban(huruf) {
+  document.querySelectorAll('.jawaban-opt').forEach(b => b.classList.remove('selected'));
+  document.querySelectorAll('.jawaban-opt').forEach(b => {
+    if (b.textContent.trim() === huruf) b.classList.add('selected');
+  });
+}
+
+function editSoal(idx) {
+  editingIdx = idx;
+  isNew = false;
+  renderEditor(soalList[idx], idx, false);
+  renderList();
+}
+
+function tambahSoal() {
+  editingIdx = null;
+  isNew = true;
+  renderEditor(null, null, true);
+  renderList();
+}
+
+function simpanSoal() {
+  const pertanyaan = document.getElementById('f-pertanyaan')?.value.trim();
+  const kategori = document.getElementById('f-kategori')?.value.trim();
+  const opsiA = document.getElementById('f-opsi-a')?.value.trim();
+  const opsiB = document.getElementById('f-opsi-b')?.value.trim();
+  const opsiC = document.getElementById('f-opsi-c')?.value.trim();
+  const opsiD = document.getElementById('f-opsi-d')?.value.trim();
+  const pembahasan = document.getElementById('f-pembahasan')?.value.trim();
+  const jawabanEl = document.querySelector('.jawaban-opt.selected');
+  const jawaban = jawabanEl ? jawabanEl.textContent.trim() : 'A';
+
+  if (!pertanyaan) { toast('Pertanyaan wajib diisi!', 'error'); return; }
+  if (!opsiA || !opsiB || !opsiC || !opsiD) { toast('Semua opsi A, B, C, D wajib diisi!', 'error'); return; }
+
+  const newSoal = {
+    id: isNew ? (soalList.length > 0 ? Math.max(...soalList.map(s => s.id || 0)) + 1 : 1) : (soalList[editingIdx]?.id || editingIdx + 1),
+    kategori: kategori || 'Umum',
+    pertanyaan,
+    opsi: { A: opsiA, B: opsiB, C: opsiC, D: opsiD },
+    jawaban,
+    pembahasan: pembahasan || ''
+  };
+
+  if (isNew) {
+    soalList.push(newSoal);
+    editingIdx = soalList.length - 1;
+    isNew = false;
+  } else {
+    soalList[editingIdx] = newSoal;
+  }
+
+  updateStats();
+  renderList();
+  toast('Soal berhasil disimpan! Jangan lupa klik "Simpan ke GitHub".', 'success');
+}
+
+function hapusSoal() {
+  if (editingIdx === null) return;
+  if (!confirm(`Yakin hapus soal #${editingIdx + 1}? Tindakan ini tidak bisa dibatalkan.`)) return;
+  soalList.splice(editingIdx, 1);
+  // Re-assign ID
+  soalList.forEach((s, i) => s.id = i + 1);
+  resetEditor();
+  updateStats();
+  toast('Soal dihapus.', 'info');
+}
+
+// ── SIMPAN KE GITHUB via API ──
+async function simpanKeGitHub() {
+  const btn = document.getElementById('btn-save-all');
+  btn.disabled = true;
+  btn.innerHTML = "<i class='bx bx-loader-alt bx-spin'></i> Menyimpan...";
+
+  const meta = tesMeta[currentTes] || {};
+  const payload = {
+    tes: currentTes,
+    judul: meta.judul || currentTes.toUpperCase(),
+    durasiMenit: meta.durasiMenit || 60,
+    skorMaksimal: meta.skorMaksimal || 100,
+    soal: soalList
+  };
+
+  try {
+    const res = await fetch('/api/ujicoba/simpan-soal', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    });
+    if (res.ok) {
+      toast(`✅ ${soalList.length} soal ${currentTes.toUpperCase()} berhasil disimpan ke GitHub!`, 'success', 5000);
+    } else {
+      const err = await res.json();
+      toast('Gagal simpan: ' + (err.error || res.status), 'error');
+    }
+  } catch(e) {
+    toast('Error koneksi: ' + e.message, 'error');
+  }
+
+  btn.disabled = false;
+  btn.innerHTML = "<i class='bx bx-cloud-upload'></i> Simpan ke GitHub";
+}
+
+function escHtml(str) {
+  return String(str||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+// ── INIT ──
+loadSoal();
+</script>
+</body>
+</html>
