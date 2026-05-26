@@ -504,8 +504,9 @@ function mulaiTes() {
     return;
   }
   namaSection.classList.remove('error');
-  sessionStorage.setItem('peserta_nama', nama);
-  sessionStorage.setItem('peserta_tes', tesKey);
+  // Pakai localStorage agar tetap ada saat navigasi halaman
+  localStorage.setItem('peserta_nama', nama);
+  localStorage.setItem('peserta_tes', tesKey);
   window.location.href = `tes.html?tes=${tesKey}`;
 }
 document.getElementById('input-nama').addEventListener('keydown', (e) => {
@@ -516,7 +517,7 @@ document.getElementById('input-nama').addEventListener('input', () => {
 });
 
 // Pre-fill nama jika sudah pernah isi
-const savedNama = sessionStorage.getItem('peserta_nama');
+const savedNama = localStorage.getItem('peserta_nama') || sessionStorage.getItem('peserta_nama');
 if (savedNama) document.getElementById('input-nama').value = savedNama;
 </script>
 </body>
