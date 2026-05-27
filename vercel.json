@@ -1,0 +1,5 @@
+{
+  "rewrites": [
+    { "source": "/api/ujicoba/:action", "destination": "/api/ujicoba/[action]" }
+  ]
+}
