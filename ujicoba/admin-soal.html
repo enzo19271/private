@@ -501,7 +501,7 @@ async function loadSoal(tesKey) {
   </div>`;
 
   try {
-    const res = await fetch(`/api/ujicoba?action=get-soal?tes=${tesKey}`);
+    const res = await fetch(`/api/ujicoba?action=get-soal&tes=${tesKey}`);
     if (res.ok) {
       const data = await res.json();
       soalData[tesKey] = data.soal || [];
