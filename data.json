@@ -33,6 +33,15 @@
   ],
   "artikel": [
     {
+      "id": "id_gq6ydkb",
+      "judul": "Fotbar Ai",
+      "deskripsi": "Raw iPhone selfie, subjects from reference images standing close together, both leaning slightly into frame, casual shoulder-to-shoulder composition, direct gaze into camera with relaxed neutral expressions, handheld at arm's length with slight upward tilt, soft indoor lighting mixed with phone flash causing mild overexposure on highlights and shadow falloff, natural skin texture visible with pores and subtle nmakeup detail, stray hairs and fabric creases present, background loosely visible with everyday environment elements slightly out of focus, minor motion blur in edges, slight lens distortion from close proximity, off- center framing with imperfect crop, subtle ISO grain and uneven white balance, unpolished, Candid realism.",
+      "gambar": "https://raw.githubusercontent.com/enzo19271/private/main/images/135108-1779974380147.jpg",
+      "kategori_id": "id_0bdwwqs",
+      "tanggal": "2026-05-28",
+      "featured": false
+    },
+    {
       "id": "id_exyr4qw",
       "judul": "Minecraft",
       "deskripsi": "Keep the human subject 100 percent photorealistic and untouched. No pixel filter, no stylization, no lighting remap on skin. Preserve exact facial detail, pores, fabric weave, hair strands, natural shadows. Expression and posture remain identical. Rebuild the background as a structurally accurate Minecraft voxel replica of the original location. Do not reinterpret. Match the exact layout, spacing, depth, andi from the reference image. If there is are trees, match trunk positions, height ratios, canopy spread using appropriate log and leaf blocks. If there are buildings, recreate their silhouette, window placement, roof angle using Minecraft block geometry. If there are rocks, benches, fences, signs, convert them into block equivalents but maintain their exXact position and proportion relative to the subject. Perspective must match the original photo perfectly. Horizon line, camera height, focal distänce, framing, subject scale all identical. Any object physically touching the subject must convert into Minecraft logic.",
