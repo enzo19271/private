@@ -272,6 +272,7 @@ body {
     <div class="sidebar-section">Menu Utama</div>
     <a class="nav-item" href="index.html"><i class='bx bx-home-alt nav-icon'></i> Dashboard</a>
     <a class="nav-item active" href="article-landing.html"><i class='bx bx-news nav-icon'></i> Artikel & Wawasan</a>
+    <a class="nav-item" href="prompt/index.html"><i class='bx bx-bot nav-icon'></i> Tools & Prompt AI</a>
     <a class="nav-item" href="ujicoba/index.html"><i class='bx bx-trophy nav-icon'></i> Kelas Uji Coba</a>
     <a class="nav-item" href="config.html"><i class='bx bx-info-circle nav-icon'></i> Tentang Kami</a>
     <div class="sidebar-section" style="margin-top: 15px;">Manajemen</div>
@@ -334,9 +335,6 @@ body {
         <div><div class="stat-val" id="s-last" style="font-size:18px; margin-top:4px;">-</div><div class="stat-label">Terakhir Update</div></div>
       </div>
     </div>
-
-    <div class="filter-bar" id="filter-bar">
-      </div>
 
     <div class="section-head">
       <h2 id="section-label">Memuat Artikel...</h2>
@@ -455,32 +453,23 @@ function esc(s) { return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;'
 
 function render() {
   // Stats
-  document.getElementById('s-total').textContent = DB.artikel.length;
-  document.getElementById('s-feat').textContent = DB.artikel.filter(a=>a.featured).length;
-  document.getElementById('s-kat').textContent = DB.kategori.length;
   const dates = DB.artikel.map(a=>a.tanggal).filter(Boolean).sort().reverse();
   document.getElementById('s-last').textContent = dates[0] ? fmtDate(dates[0]) : '-';
 
-  // Filters
-  const fb = document.getElementById('filter-bar');
-  fb.innerHTML = `<button class="filter-chip ${activeKat==='all'?'active':''}" data-kat="all">Semua Artikel</button>`;
-  DB.kategori.forEach(k => {
-    fb.innerHTML += `<button class="filter-chip ${activeKat===k.id?'active':''}" data-kat="${esc(k.id)}" 
-      style="${activeKat===k.id ? `background:${k.warna}; border-color:${k.warna}; color:#fff` : ''}">${esc(k.nama)}</button>`;
-  });
+  // Hanya tampilkan kategori "Artikel"
+  const katArtikel = DB.kategori.find(k => k.nama === 'Artikel');
 
-  fb.querySelectorAll('.filter-chip').forEach(btn => {
-    btn.addEventListener('click', () => { activeKat = btn.dataset.kat; render(); });
-  });
-
-  // Filter Data
+  // Filter Data: hanya artikel berkategori "Artikel"
   let arts = DB.artikel.slice();
-  if(activeKat !== 'all') arts = arts.filter(a => a.kategori_id === activeKat);
+  if(katArtikel) arts = arts.filter(a => a.kategori_id === katArtikel.id);
   if(searchQ) arts = arts.filter(a => (a.judul+a.deskripsi).toLowerCase().includes(searchQ));
 
+  // Update Stats khusus artikel
+  document.getElementById('s-total').textContent = arts.length;
+  document.getElementById('s-feat').textContent = arts.filter(a=>a.featured).length;
+
   // Update Title
-  const kn = activeKat==='all' ? 'Semua Artikel' : getKat(activeKat).nama;
-  document.getElementById('section-label').textContent = `${kn} (${arts.length})`;
+  document.getElementById('section-label').textContent = `Artikel (${arts.length})`;
 
   // Render Grid
   const grid = document.getElementById('articles-grid');
