@@ -410,36 +410,18 @@ footer {
     <div class="logo-icon"><i class='bx bxs-graduation'></i></div>
     <div class="logo-text">Academy<span>Eji.</span></div>
   </div>
-
   <div class="sidebar-scroll">
     <div class="sidebar-section">Menu Utama</div>
-    <a class="nav-item active" href="index.html">
-      <i class='bx bx-home-alt nav-icon'></i> Dashboard
-    </a>
-    <a class="nav-item" href="article-landing.html">
-      <i class='bx bx-news nav-icon'></i> Artikel & Wawasan
-    </a>
-    <a class="nav-item" href="ujicoba/index.html">
-      <i class='bx bx-trophy nav-icon'></i> Kelas Uji Coba
-    </a>
-    <a class="nav-item" href="config.html">
-      <i class='bx bx-info-circle nav-icon'></i> Tentang Kami
-    </a>
-
-    <div class="sidebar-section" style="margin-top:10px;">Manajemen</div>
-    <a class="nav-item" href="admin.html">
-      <i class='bx bx-user-pin nav-icon'></i> Admin Panel
-    </a>
-    <a class="nav-item" href="ujicoba/admin-soal.html">
-      <i class='bx bx-edit nav-icon'></i> Kelola Soal
-    </a>
-
-    <div class="sidebar-section" style="margin-top:10px;">Analitik</div>
-    <a class="nav-item" href="analytics.html">
-      <i class='bx bx-bar-chart-alt-2 nav-icon'></i> Traffic Klik
-    </a>
+    <a class="nav-item" href="index.html"><i class='bx bx-home-alt nav-icon'></i> Dashboard</a>
+    <a class="nav-item active" href="article-landing.html"><i class='bx bx-news nav-icon'></i> Artikel & Wawasan</a>
+    <a class="nav-item" href="ujicoba/index.html"><i class='bx bx-trophy nav-icon'></i> Kelas Uji Coba</a>
+    <a class="nav-item" href="config.html"><i class='bx bx-info-circle nav-icon'></i> Tentang Kami</a>
+    <div class="sidebar-section" style="margin-top: 15px;">Manajemen</div>
+    <a class="nav-item" href="admin.html"><i class='bx bx-user-pin nav-icon'></i> Admin Panel</a>
+    <a class="nav-item" href="ujicoba/admin-soal.html"><i class='bx bx-edit nav-icon'></i> Kelola Soal</a>
+    <div class="sidebar-section" style="margin-top: 15px;">Analitik</div>
+    <a class="nav-item" href="analytics.html"><i class='bx bx-bar-chart-alt-2 nav-icon'></i> Traffic Klik</a>
   </div>
-
   <div class="sidebar-footer">
     <div class="user-profile">
       <div class="user-avatar"><i class='bx bxs-user'></i></div>
@@ -452,30 +434,64 @@ footer {
 </nav>
 <div id="sidebar-overlay"></div>
 
-<!-- ── WRAPPER ── -->
 <div id="wrapper">
-
-  <!-- Topbar -->
   <div id="topbar">
     <div class="topbar-left">
-      <button id="sidebar-toggle" aria-label="Buka menu">
-        <i class='bx bx-menu'></i>
-      </button>
+      <button id="sidebar-toggle"><i class='bx bx-menu'></i></button>
       <div>
-        <div class="page-title">Dashboard</div>
-        <div class="breadcrumb">Beranda</div>
+        <div class="page-title">Dashboard Academy Eji</div>
+        <div class="breadcrumb">Beranda <i class='bx bx-chevron-right'></i> Artikel</div>
       </div>
     </div>
     <div class="topbar-right">
-      <button class="icon-btn" id="theme-toggle" title="Ganti Tema" aria-label="Ganti tema">
+      <div class="search-box">
+        <i class='bx bx-search'></i>
+        <input type="text" id="search-input" placeholder="Cari artikel...">
+      </div>
+      <button class="icon-btn" id="theme-toggle" title="Toggle Dark Mode">
         <i class='bx bx-moon'></i>
       </button>
-      <button class="icon-btn" title="Notifikasi" aria-label="Notifikasi">
+      <button class="icon-btn" title="Notifikasi">
         <i class='bx bx-bell'></i>
       </button>
     </div>
   </div>
 
+  <div id="main">
+    <div class="stats-row" id="stats-row">
+      <div class="stat-card">
+        <div class="stat-icon" style="background: rgba(37,99,235,0.1); color: var(--primary)"><i class='bx bx-file'></i></div>
+        <div><div class="stat-val" id="s-total">0</div><div class="stat-label">Total Artikel</div></div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon" style="background: rgba(249,115,22,0.1); color: var(--accent)"><i class='bx bx-star'></i></div>
+        <div><div class="stat-val" id="s-feat">0</div><div class="stat-label">Artikel Unggulan</div></div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon" style="background: rgba(16,185,129,0.1); color: var(--success)"><i class='bx bx-purchase-tag-alt'></i></div>
+        <div><div class="stat-val" id="s-kat">0</div><div class="stat-label">Total Kategori</div></div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon" style="background: rgba(245,158,11,0.1); color: var(--warn)"><i class='bx bx-calendar-edit'></i></div>
+        <div><div class="stat-val" id="s-last" style="font-size:18px; margin-top:4px;">-</div><div class="stat-label">Terakhir Update</div></div>
+      </div>
+    </div>
+
+    <div class="filter-bar" id="filter-bar">
+      </div>
+
+    <div class="section-head">
+      <h2 id="section-label">Memuat Artikel...</h2>
+      <div class="view-toggle">
+        <button class="vt-btn active" id="vt-grid" title="Grid View"><i class='bx bx-grid-alt'></i></button>
+        <button class="vt-btn" id="vt-list" title="List View"><i class='bx bx-list-ul'></i></button>
+      </div>
+    </div>
+
+    <div id="articles-grid">
+      </div>
+  </div>
+</div>
   <!-- Main -->
   <div id="main">
 
