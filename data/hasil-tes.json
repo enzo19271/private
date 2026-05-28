@@ -43,5 +43,14 @@
     "totalSoal": 25,
     "waktuDipakai": 1441,
     "timestamp": "2026-05-28T05:19:38.513Z"
+  },
+  {
+    "tesKey": "iq",
+    "tesNama": "Tes IQ",
+    "pesertaNama": "Dims",
+    "skor": 15,
+    "totalSoal": 25,
+    "waktuDipakai": 1731,
+    "timestamp": "2026-05-28T05:24:46.361Z"
   }
 ]
