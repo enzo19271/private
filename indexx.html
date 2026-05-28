@@ -1,0 +1,1532 @@
+<!DOCTYPE html>
+<html lang="id" data-theme="light">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
+<title>Academy Eji — Platform Belajar Bahasa & Sertifikasi</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;0,9..40,800;1,9..40,400&family=Cormorant+Garamond:ital,wght@0,600;0,700;1,500;1,600&display=swap" rel="stylesheet">
+<link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
+:root{
+  --navy:#0a1628;
+  --navy-mid:#0f2040;
+  --primary:#1a56db;
+  --primary-light:#ebf2ff;
+  --primary-glow:rgba(26,86,219,0.18);
+  --gold:#e8a020;
+  --gold-light:#fff8eb;
+  --success:#059669;
+  --success-light:#ecfdf5;
+  --danger:#dc2626;
+  --danger-light:#fef2f2;
+  --warn:#d97706;
+  --warn-light:#fffbeb;
+  --purple:#6d28d9;
+  --purple-light:#f5f3ff;
+  --teal:#0d9488;
+  --teal-light:#f0fdfa;
+
+  --nav-h:68px;
+  --radius:16px;
+  --radius-sm:10px;
+  --tr:all 0.28s cubic-bezier(0.4,0,0.2,1);
+
+  --bg:#f4f6fb;
+  --surface:#ffffff;
+  --surface2:#f8fafd;
+  --surface3:#eef2f9;
+  --border:#dde3ef;
+  --border-light:#edf1f8;
+
+  --ink:#0a1628;
+  --ink2:#253554;
+  --ink3:#5a6e8c;
+  --ink4:#8fa3be;
+  --ink5:#c4d0e0;
+
+  --sh-xs:0 1px 3px rgba(10,22,40,0.05);
+  --sh-sm:0 2px 10px rgba(10,22,40,0.07),0 1px 2px rgba(10,22,40,0.04);
+  --sh-md:0 8px 28px rgba(10,22,40,0.09),0 2px 6px rgba(10,22,40,0.05);
+  --sh-lg:0 20px 50px rgba(10,22,40,0.12),0 4px 10px rgba(10,22,40,0.06);
+  --sh-nav:0 2px 20px rgba(10,22,40,0.08);
+  --sh-primary:0 8px 28px rgba(26,86,219,0.30);
+}
+[data-theme="dark"]{
+  --bg:#080f1e;
+  --surface:#0d1830;
+  --surface2:#111e38;
+  --surface3:#162240;
+  --border:#1c2e50;
+  --border-light:#162240;
+  --ink:#e8f0ff;
+  --ink2:#a8bdd8;
+  --ink3:#5c7a9e;
+  --ink4:#3a5070;
+  --ink5:#213050;
+  --primary-light:rgba(26,86,219,0.14);
+  --gold-light:rgba(232,160,32,0.10);
+  --success-light:rgba(5,150,105,0.12);
+  --danger-light:rgba(220,38,38,0.12);
+  --warn-light:rgba(217,119,6,0.12);
+  --purple-light:rgba(109,40,217,0.12);
+  --teal-light:rgba(13,148,136,0.12);
+  --sh-sm:0 2px 10px rgba(0,0,0,0.35);
+  --sh-md:0 8px 28px rgba(0,0,0,0.45);
+  --sh-lg:0 20px 50px rgba(0,0,0,0.55);
+  --sh-nav:0 2px 20px rgba(0,0,0,0.5);
+}
+
+::-webkit-scrollbar{width:5px;height:5px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:var(--border);border-radius:10px}
+
+html{scroll-behavior:smooth}
+body{
+  font-family:'DM Sans',sans-serif;
+  background:var(--bg);
+  color:var(--ink);
+  min-height:100vh;
+  font-size:14px;
+  line-height:1.6;
+  transition:background 0.3s,color 0.3s;
+  -webkit-tap-highlight-color:transparent;
+}
+
+/* ══════════════════════════════════════════
+   NAVBAR
+══════════════════════════════════════════ */
+#navbar{
+  height:var(--nav-h);
+  background:var(--surface);
+  border-bottom:1px solid var(--border);
+  display:flex;align-items:center;
+  justify-content:space-between;
+  padding:0 36px;
+  position:sticky;top:0;z-index:100;
+  box-shadow:var(--sh-nav);
+}
+.nav-logo{display:flex;align-items:center;gap:11px;text-decoration:none}
+.nav-logo-icon{
+  width:40px;height:40px;border-radius:11px;
+  background:linear-gradient(135deg,var(--primary) 0%,#3b82f6 100%);
+  display:flex;align-items:center;justify-content:center;
+  font-size:21px;color:#fff;flex-shrink:0;
+  box-shadow:0 4px 12px rgba(26,86,219,0.35);
+}
+.nav-logo-text{font-size:19px;font-weight:800;color:var(--ink);letter-spacing:-0.5px}
+.nav-logo-text span{color:var(--primary)}
+
+.nav-links{display:flex;align-items:center;gap:4px}
+.nav-link{
+  display:flex;align-items:center;gap:6px;
+  padding:8px 14px;border-radius:10px;
+  text-decoration:none;font-size:13.5px;font-weight:500;
+  color:var(--ink3);transition:var(--tr);
+}
+.nav-link:hover{background:var(--surface2);color:var(--ink)}
+.nav-link.active{color:var(--primary);font-weight:700;background:var(--primary-light)}
+
+.nav-right{display:flex;align-items:center;gap:10px}
+.nav-icon-btn{
+  width:38px;height:38px;border-radius:10px;
+  border:1.5px solid var(--border);
+  background:var(--surface);color:var(--ink3);
+  display:flex;align-items:center;justify-content:center;
+  font-size:19px;cursor:pointer;transition:var(--tr);position:relative;
+}
+.nav-icon-btn:hover{background:var(--surface2);color:var(--primary);transform:translateY(-2px)}
+.notif-dot{
+  position:absolute;top:7px;right:7px;
+  width:7px;height:7px;border-radius:50%;
+  background:var(--danger);border:1.5px solid var(--surface);
+}
+.btn-login{
+  display:inline-flex;align-items:center;gap:7px;
+  padding:9px 18px;border-radius:10px;
+  border:1.5px solid var(--border);
+  background:var(--surface);
+  font-family:'DM Sans',sans-serif;font-size:13px;font-weight:600;
+  color:var(--ink2);cursor:pointer;transition:var(--tr);text-decoration:none;
+}
+.btn-login:hover{border-color:var(--primary);color:var(--primary);transform:translateY(-2px)}
+.btn-daftar{
+  display:inline-flex;align-items:center;gap:7px;
+  padding:9px 20px;border-radius:10px;border:none;
+  background:var(--primary);color:#fff;
+  font-family:'DM Sans',sans-serif;font-size:13px;font-weight:700;
+  cursor:pointer;transition:var(--tr);text-decoration:none;
+  box-shadow:var(--sh-primary);
+}
+.btn-daftar:hover{background:var(--navy-mid);transform:translateY(-2px);box-shadow:0 12px 32px rgba(26,86,219,0.35)}
+
+#mob-menu-btn{
+  display:none;background:transparent;border:none;
+  font-size:26px;cursor:pointer;color:var(--ink);padding:4px;
+}
+
+/* ══════════════════════════════════════════
+   HERO SECTION
+══════════════════════════════════════════ */
+.hero{
+  background:var(--navy);
+  padding:72px 36px 80px;
+  position:relative;overflow:hidden;
+}
+/* decorative circles */
+.hero::before{
+  content:'';position:absolute;
+  top:-120px;right:-120px;
+  width:500px;height:500px;border-radius:50%;
+  background:radial-gradient(circle,rgba(26,86,219,0.25) 0%,transparent 70%);
+  pointer-events:none;
+}
+.hero::after{
+  content:'';position:absolute;
+  bottom:-80px;left:-60px;
+  width:360px;height:360px;border-radius:50%;
+  background:radial-gradient(circle,rgba(109,40,217,0.18) 0%,transparent 70%);
+  pointer-events:none;
+}
+/* grid overlay */
+.hero-grid{
+  position:absolute;inset:0;
+  background-image:linear-gradient(rgba(255,255,255,0.025) 1px,transparent 1px),
+                   linear-gradient(90deg,rgba(255,255,255,0.025) 1px,transparent 1px);
+  background-size:48px 48px;
+  pointer-events:none;
+}
+
+.hero-inner{
+  max-width:1100px;margin:0 auto;
+  display:flex;align-items:center;gap:56px;
+  position:relative;z-index:1;
+}
+.hero-left{flex:1}
+.hero-eyebrow{
+  display:inline-flex;align-items:center;gap:8px;
+  background:rgba(26,86,219,0.2);
+  border:1px solid rgba(26,86,219,0.4);
+  border-radius:20px;padding:5px 14px;
+  font-size:12px;font-weight:700;color:#93c5fd;
+  text-transform:uppercase;letter-spacing:0.08em;
+  margin-bottom:20px;
+}
+.hero-title{
+  font-family:'Cormorant Garamond',serif;
+  font-size:54px;font-weight:700;
+  color:#fff;line-height:1.1;
+  margin-bottom:18px;
+}
+.hero-title em{font-style:italic;color:#93c5fd}
+.hero-title .accent{color:var(--gold)}
+.hero-sub{
+  font-size:16px;color:rgba(255,255,255,0.65);
+  line-height:1.75;max-width:500px;margin-bottom:32px;
+}
+.hero-actions{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.btn-cta-primary{
+  display:inline-flex;align-items:center;gap:9px;
+  padding:14px 28px;border-radius:12px;border:none;
+  background:var(--primary);color:#fff;
+  font-family:'DM Sans',sans-serif;font-size:14px;font-weight:700;
+  cursor:pointer;transition:var(--tr);text-decoration:none;
+  box-shadow:0 8px 28px rgba(26,86,219,0.45);
+}
+.btn-cta-primary:hover{background:#1e40af;transform:translateY(-3px);box-shadow:0 14px 36px rgba(26,86,219,0.5)}
+.btn-cta-ghost{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:13px 24px;border-radius:12px;
+  background:rgba(255,255,255,0.08);
+  border:1.5px solid rgba(255,255,255,0.2);
+  color:rgba(255,255,255,0.85);
+  font-family:'DM Sans',sans-serif;font-size:14px;font-weight:600;
+  cursor:pointer;transition:var(--tr);text-decoration:none;
+  backdrop-filter:blur(4px);
+}
+.btn-cta-ghost:hover{background:rgba(255,255,255,0.14);transform:translateY(-3px)}
+
+.hero-trust{display:flex;align-items:center;gap:14px;margin-top:26px}
+.hero-trust-avatars{display:flex}
+.hero-trust-avatars img{
+  width:30px;height:30px;border-radius:50%;
+  border:2px solid rgba(255,255,255,0.3);
+  margin-left:-8px;object-fit:cover;
+}
+.hero-trust-avatars img:first-child{margin-left:0}
+.hero-trust-text{font-size:12.5px;color:rgba(255,255,255,0.6)}
+.hero-trust-text strong{color:#fff}
+
+.hero-right{
+  flex-shrink:0;
+  display:grid;grid-template-columns:1fr 1fr;gap:12px;
+  position:relative;z-index:1;
+}
+.hero-stat-card{
+  background:rgba(255,255,255,0.07);
+  border:1px solid rgba(255,255,255,0.12);
+  border-radius:16px;padding:20px 22px;
+  backdrop-filter:blur(12px);
+}
+.hsc-icon{font-size:26px;margin-bottom:10px}
+.hsc-val{
+  font-size:28px;font-weight:800;color:#fff;
+  line-height:1;font-family:'DM Sans',sans-serif;
+}
+.hsc-lbl{font-size:11px;color:rgba(255,255,255,0.55);margin-top:4px;font-weight:500}
+.hero-stat-card.wide{grid-column:1/-1;display:flex;align-items:center;gap:18px}
+.hsc-wide-content{flex:1}
+.hsc-progress-bar{height:6px;background:rgba(255,255,255,0.12);border-radius:20px;margin-top:8px;overflow:hidden}
+.hsc-progress-fill{height:100%;border-radius:20px;background:linear-gradient(90deg,#3b82f6,#6d28d9)}
+
+/* ══════════════════════════════════════════
+   TICKER (RUNNING TEXT)
+══════════════════════════════════════════ */
+.ticker-wrap{
+  background:var(--primary);
+  padding:10px 0;overflow:hidden;
+  position:relative;
+}
+.ticker-wrap::before,.ticker-wrap::after{
+  content:'';position:absolute;top:0;bottom:0;width:80px;z-index:2;
+}
+.ticker-wrap::before{left:0;background:linear-gradient(90deg,var(--primary),transparent)}
+.ticker-wrap::after{right:0;background:linear-gradient(270deg,var(--primary),transparent)}
+.ticker-track{
+  display:flex;gap:0;
+  animation:ticker 32s linear infinite;
+  white-space:nowrap;width:max-content;
+}
+.ticker-track:hover{animation-play-state:paused}
+.ticker-item{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:0 32px;
+  font-size:12.5px;font-weight:600;color:rgba(255,255,255,0.9);
+}
+.ticker-item::after{content:'•';opacity:0.4;padding-left:32px}
+.ticker-item:last-child::after{content:''}
+.ticker-dot{width:6px;height:6px;border-radius:50%;background:#fff;opacity:0.6;flex-shrink:0}
+@keyframes ticker{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+/* ══════════════════════════════════════════
+   MAIN CONTENT
+══════════════════════════════════════════ */
+main{max-width:1140px;margin:0 auto;padding:48px 28px 64px}
+
+.section-label{
+  display:inline-flex;align-items:center;gap:7px;
+  font-size:11px;font-weight:800;text-transform:uppercase;
+  letter-spacing:0.1em;color:var(--primary);
+  background:var(--primary-light);
+  padding:4px 12px;border-radius:20px;
+  margin-bottom:10px;
+}
+.section-title{
+  font-family:'Cormorant Garamond',serif;
+  font-size:30px;font-weight:700;color:var(--ink);
+  line-height:1.2;margin-bottom:6px;
+}
+.section-sub{font-size:14px;color:var(--ink3);line-height:1.65;max-width:520px}
+.section-head-row{
+  display:flex;align-items:flex-end;justify-content:space-between;
+  margin-bottom:28px;flex-wrap:wrap;gap:14px;
+}
+.see-all{
+  display:inline-flex;align-items:center;gap:4px;
+  font-size:13px;font-weight:700;color:var(--primary);
+  text-decoration:none;transition:gap 0.2s;flex-shrink:0;
+}
+.see-all:hover{gap:8px}
+
+/* ── PENGUMUMAN ── */
+.announce-grid{display:grid;grid-template-columns:2fr 1fr;gap:20px;margin-bottom:52px}
+
+.announce-featured{
+  background:var(--surface);border:1.5px solid var(--border);
+  border-radius:var(--radius);overflow:hidden;
+  box-shadow:var(--sh-sm);transition:var(--tr);cursor:pointer;
+  text-decoration:none;display:block;
+}
+.announce-featured:hover{box-shadow:var(--sh-md);border-color:var(--primary);transform:translateY(-4px)}
+.announce-img{
+  width:100%;height:180px;object-fit:cover;
+  background:linear-gradient(135deg,var(--navy) 0%,#1e3a8a 100%);
+  display:flex;align-items:center;justify-content:center;
+  font-size:60px;position:relative;overflow:hidden;
+}
+.announce-img::after{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(to top,rgba(10,22,40,0.6) 0%,transparent 60%);
+}
+.announce-img-badge{
+  position:absolute;top:14px;left:14px;z-index:1;
+  background:var(--danger);color:#fff;
+  font-size:10px;font-weight:800;text-transform:uppercase;
+  letter-spacing:0.08em;padding:4px 10px;border-radius:8px;
+}
+.announce-body{padding:22px 24px 24px}
+.announce-cat{
+  font-size:11px;font-weight:800;text-transform:uppercase;
+  letter-spacing:0.07em;color:var(--primary);margin-bottom:7px;
+  display:flex;align-items:center;gap:5px;
+}
+.announce-title{
+  font-size:17px;font-weight:700;color:var(--ink);
+  line-height:1.4;margin-bottom:8px;
+}
+.announce-excerpt{font-size:13px;color:var(--ink3);line-height:1.6;margin-bottom:14px}
+.announce-meta{
+  display:flex;align-items:center;gap:10px;
+  font-size:11.5px;color:var(--ink4);flex-wrap:wrap;
+}
+.announce-meta i{font-size:14px}
+
+.announce-list{display:flex;flex-direction:column;gap:11px}
+.announce-item{
+  background:var(--surface);border:1.5px solid var(--border);
+  border-radius:13px;padding:15px 16px;
+  text-decoration:none;transition:var(--tr);display:block;
+}
+.announce-item:hover{border-color:var(--primary);background:var(--primary-light);transform:translateX(4px)}
+.ai-tag{
+  display:inline-flex;align-items:center;gap:5px;
+  font-size:10px;font-weight:800;text-transform:uppercase;
+  letter-spacing:0.06em;padding:2px 8px;border-radius:8px;
+  margin-bottom:6px;
+}
+.ai-title{font-size:13.5px;font-weight:700;color:var(--ink);line-height:1.35;margin-bottom:5px}
+.ai-meta{font-size:11px;color:var(--ink4);display:flex;align-items:center;gap:6px}
+
+/* ── STATS BAR ── */
+.stats-bar{
+  background:var(--navy);border-radius:var(--radius);
+  padding:32px 40px;margin-bottom:52px;
+  display:grid;grid-template-columns:repeat(4,1fr);
+  gap:0;
+  position:relative;overflow:hidden;
+}
+.stats-bar::before{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse at 80% 50%,rgba(26,86,219,0.2) 0%,transparent 60%);
+  pointer-events:none;
+}
+.stats-bar-item{
+  padding:0 32px;
+  border-right:1px solid rgba(255,255,255,0.1);
+  position:relative;z-index:1;
+}
+.stats-bar-item:first-child{padding-left:0}
+.stats-bar-item:last-child{border-right:none}
+.sbi-val{
+  font-size:36px;font-weight:800;color:#fff;
+  line-height:1;font-family:'DM Sans',sans-serif;
+}
+.sbi-val span{font-size:20px;color:rgba(255,255,255,0.5)}
+.sbi-label{font-size:12.5px;color:rgba(255,255,255,0.5);margin-top:6px;font-weight:500}
+.sbi-trend{
+  display:inline-flex;align-items:center;gap:3px;
+  font-size:11px;font-weight:700;color:#4ade80;
+  background:rgba(74,222,128,0.12);
+  padding:2px 7px;border-radius:8px;margin-top:7px;
+}
+
+/* ── UJIAN GRID ── */
+.exam-section{margin-bottom:52px}
+.exam-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:18px}
+.exam-card{
+  background:var(--surface);border:1.5px solid var(--border);
+  border-radius:var(--radius);overflow:hidden;
+  transition:var(--tr);text-decoration:none;display:block;
+  box-shadow:var(--sh-xs);
+}
+.exam-card:hover{transform:translateY(-6px);box-shadow:var(--sh-md);border-color:transparent}
+.exam-card-header{
+  padding:24px 22px 18px;
+  position:relative;
+}
+.ec-emoji{font-size:36px;margin-bottom:12px;display:block}
+.ec-badges{display:flex;align-items:center;gap:7px;margin-bottom:10px;flex-wrap:wrap}
+.ec-badge{
+  font-size:10px;font-weight:800;text-transform:uppercase;
+  letter-spacing:0.06em;padding:3px 9px;border-radius:8px;
+}
+.ec-title{font-size:16px;font-weight:800;color:var(--ink);line-height:1.3;margin-bottom:5px}
+.ec-sub{font-size:12.5px;color:var(--ink3);line-height:1.5}
+.exam-card-footer{
+  padding:14px 22px 18px;
+  border-top:1px solid var(--border-light);
+  display:flex;align-items:center;justify-content:space-between;
+  gap:10px;
+}
+.ec-info{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.ec-info-item{
+  display:flex;align-items:center;gap:4px;
+  font-size:11.5px;color:var(--ink4);font-weight:500;
+}
+.ec-info-item i{font-size:14px}
+.btn-exam{
+  display:inline-flex;align-items:center;gap:6px;
+  padding:8px 16px;border-radius:9px;border:none;
+  font-family:'DM Sans',sans-serif;font-size:12px;font-weight:700;
+  cursor:pointer;transition:var(--tr);text-decoration:none;white-space:nowrap;
+}
+
+/* ── LEADERBOARD ── */
+.lb-section{margin-bottom:52px}
+.lb-wrap{
+  background:var(--surface);border:1.5px solid var(--border);
+  border-radius:var(--radius);overflow:hidden;box-shadow:var(--sh-sm);
+}
+.lb-header{
+  background:linear-gradient(135deg,var(--navy) 0%,#1e3a8a 100%);
+  padding:20px 26px;
+  display:flex;align-items:center;justify-content:space-between;
+}
+.lb-title{font-size:15px;font-weight:700;color:#fff;display:flex;align-items:center;gap:9px}
+.lb-period{font-size:12px;color:rgba(255,255,255,0.55);background:rgba(255,255,255,0.1);padding:4px 12px;border-radius:20px}
+.lb-podium{
+  display:grid;grid-template-columns:1fr 1fr 1fr;
+  background:linear-gradient(180deg,#0f2040 0%,var(--surface) 100%);
+  padding:24px 20px 28px;gap:10px;
+}
+.lb-pod-item{
+  display:flex;flex-direction:column;align-items:center;
+  text-align:center;
+}
+.lb-pod-avatar{
+  width:52px;height:52px;border-radius:14px;
+  object-fit:cover;border:3px solid rgba(255,255,255,0.3);
+  margin-bottom:8px;
+}
+.lb-pod-item.first .lb-pod-avatar{width:62px;height:62px;border-color:var(--gold);box-shadow:0 0 20px rgba(232,160,32,0.4)}
+.lb-pod-rank{
+  font-size:18px;margin-bottom:4px;
+}
+.lb-pod-name{font-size:12px;font-weight:700;color:#fff;margin-bottom:2px;line-height:1.2}
+.lb-pod-score{font-size:11px;color:rgba(255,255,255,0.55);font-weight:500}
+.lb-list{padding:0 20px 16px}
+.lb-row{
+  display:flex;align-items:center;gap:13px;
+  padding:12px 14px;border-radius:11px;
+  margin-bottom:6px;transition:var(--tr);
+  border:1.5px solid transparent;
+}
+.lb-row:hover{background:var(--surface2);border-color:var(--border)}
+.lb-num{font-size:13px;font-weight:800;color:var(--ink4);min-width:22px;text-align:center}
+.lb-avatar{width:36px;height:36px;border-radius:10px;object-fit:cover;flex-shrink:0}
+.lb-name{flex:1;font-size:13px;font-weight:600;color:var(--ink);min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.lb-school{font-size:11px;color:var(--ink4);margin-top:1px}
+.lb-xp{font-size:13px;font-weight:800;color:var(--ink2)}
+.lb-badge-rank{
+  font-size:10px;font-weight:700;text-transform:uppercase;
+  padding:2px 8px;border-radius:8px;flex-shrink:0;
+}
+.lb-footer-note{
+  text-align:center;padding:14px;
+  font-size:12px;color:var(--ink4);
+  border-top:1px solid var(--border-light);
+}
+
+/* ── EVENT CARDS ── */
+.event-section{margin-bottom:52px}
+.event-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:20px}
+.event-card{
+  background:var(--surface);border:1.5px solid var(--border);
+  border-radius:var(--radius);overflow:hidden;
+  transition:var(--tr);box-shadow:var(--sh-xs);
+}
+.event-card:hover{transform:translateY(-5px);box-shadow:var(--sh-md);border-color:transparent}
+.event-banner{
+  height:120px;display:flex;align-items:center;justify-content:center;
+  font-size:44px;position:relative;overflow:hidden;
+}
+.event-banner::after{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(to top,rgba(0,0,0,0.3),transparent);
+}
+.event-banner-date{
+  position:absolute;bottom:10px;left:14px;z-index:1;
+  background:rgba(255,255,255,0.15);backdrop-filter:blur(8px);
+  border:1px solid rgba(255,255,255,0.25);border-radius:8px;
+  padding:4px 10px;font-size:11px;font-weight:700;color:#fff;
+}
+.event-body{padding:18px 20px 20px}
+.event-type{
+  display:inline-flex;align-items:center;gap:5px;
+  font-size:10px;font-weight:800;text-transform:uppercase;
+  letter-spacing:0.07em;padding:3px 9px;border-radius:8px;
+  margin-bottom:9px;
+}
+.event-title{font-size:15px;font-weight:800;color:var(--ink);line-height:1.35;margin-bottom:7px}
+.event-meta{display:flex;flex-direction:column;gap:5px;margin-bottom:14px}
+.event-meta-row{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--ink3)}
+.event-meta-row i{font-size:15px;color:var(--ink4)}
+.event-footer{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.event-seats{font-size:12px;color:var(--ink4);display:flex;align-items:center;gap:4px}
+.btn-event{
+  display:inline-flex;align-items:center;gap:5px;
+  padding:8px 16px;border-radius:9px;border:none;
+  font-family:'DM Sans',sans-serif;font-size:12px;font-weight:700;
+  cursor:pointer;transition:var(--tr);text-decoration:none;
+}
+
+/* ── ARTIKEL ── */
+.article-section{margin-bottom:52px}
+.article-masonry{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:20px}
+.article-card{
+  background:var(--surface);border:1.5px solid var(--border);
+  border-radius:var(--radius);overflow:hidden;
+  transition:var(--tr);text-decoration:none;display:block;
+  box-shadow:var(--sh-xs);
+}
+.article-card:hover{transform:translateY(-5px);box-shadow:var(--sh-md);border-color:transparent}
+.ac-img{
+  width:100%;height:150px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:48px;position:relative;overflow:hidden;
+}
+.article-card.featured .ac-img{height:210px;font-size:64px}
+.ac-body{padding:18px 20px 20px}
+.ac-cat{
+  font-size:10px;font-weight:800;text-transform:uppercase;
+  letter-spacing:0.07em;margin-bottom:8px;
+  display:flex;align-items:center;gap:5px;
+}
+.ac-title{font-size:14px;font-weight:700;color:var(--ink);line-height:1.4;margin-bottom:7px}
+.article-card.featured .ac-title{font-size:17px}
+.ac-excerpt{font-size:12.5px;color:var(--ink3);line-height:1.6;margin-bottom:12px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.ac-meta{display:flex;align-items:center;gap:8px;font-size:11px;color:var(--ink4)}
+.ac-meta i{font-size:13px}
+.ac-read-badge{
+  margin-left:auto;
+  font-size:10px;font-weight:700;color:var(--primary);
+  background:var(--primary-light);padding:2px 8px;border-radius:8px;
+}
+
+/* ── FAQ / PENGUMUMAN PENTING ── */
+.notice-section{margin-bottom:52px}
+.notice-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.notice-item{
+  background:var(--surface);border:1.5px solid var(--border);
+  border-radius:13px;padding:18px 20px;
+  display:flex;gap:14px;transition:var(--tr);
+}
+.notice-item:hover{border-color:var(--primary);box-shadow:var(--sh-sm)}
+.ni-icon{
+  width:44px;height:44px;border-radius:12px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:22px;flex-shrink:0;
+}
+.ni-title{font-size:14px;font-weight:700;color:var(--ink);margin-bottom:5px}
+.ni-text{font-size:12.5px;color:var(--ink3);line-height:1.6}
+
+/* ── CTA BANNER ── */
+.cta-banner{
+  background:linear-gradient(130deg,var(--primary) 0%,#1e40af 50%,var(--purple) 100%);
+  border-radius:var(--radius);padding:52px 48px;
+  display:flex;align-items:center;justify-content:space-between;gap:40px;
+  position:relative;overflow:hidden;margin-bottom:52px;
+  box-shadow:var(--sh-primary);
+}
+.cta-banner::before{
+  content:'';position:absolute;top:-80px;right:-80px;
+  width:300px;height:300px;border-radius:50%;
+  background:rgba(255,255,255,0.06);pointer-events:none;
+}
+.cta-left{position:relative;z-index:1}
+.cta-eyebrow{
+  display:inline-flex;align-items:center;gap:6px;
+  font-size:11px;font-weight:800;text-transform:uppercase;
+  letter-spacing:0.08em;color:rgba(255,255,255,0.7);
+  background:rgba(255,255,255,0.1);border-radius:20px;
+  padding:4px 12px;margin-bottom:14px;
+}
+.cta-title{
+  font-family:'Cormorant Garamond',serif;
+  font-size:34px;font-weight:700;color:#fff;
+  line-height:1.2;margin-bottom:10px;
+}
+.cta-sub{font-size:14px;color:rgba(255,255,255,0.65);line-height:1.65;max-width:460px}
+.cta-right{display:flex;flex-direction:column;align-items:flex-end;gap:14px;position:relative;z-index:1;flex-shrink:0}
+.btn-cta-lg{
+  display:inline-flex;align-items:center;gap:9px;
+  padding:15px 32px;border-radius:12px;border:none;
+  background:#fff;color:var(--primary);
+  font-family:'DM Sans',sans-serif;font-size:14px;font-weight:800;
+  cursor:pointer;transition:var(--tr);text-decoration:none;
+  box-shadow:0 8px 28px rgba(0,0,0,0.2);
+}
+.btn-cta-lg:hover{transform:translateY(-3px);box-shadow:0 14px 36px rgba(0,0,0,0.28)}
+.cta-note{font-size:11.5px;color:rgba(255,255,255,0.55);text-align:right}
+
+/* ── FOOTER ── */
+footer{
+  background:var(--navy);
+  padding:48px 36px 28px;
+  border-top:1px solid rgba(255,255,255,0.06);
+}
+.footer-inner{max-width:1140px;margin:0 auto}
+.footer-top{
+  display:grid;grid-template-columns:2fr 1fr 1fr 1fr;
+  gap:40px;margin-bottom:36px;
+}
+.footer-brand p{
+  font-size:13px;color:rgba(255,255,255,0.45);
+  line-height:1.7;margin-top:12px;max-width:280px;
+}
+.footer-socials{display:flex;gap:8px;margin-top:16px}
+.fsoc{
+  width:34px;height:34px;border-radius:9px;
+  background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.1);
+  display:flex;align-items:center;justify-content:center;
+  font-size:17px;color:rgba(255,255,255,0.6);
+  transition:var(--tr);cursor:pointer;text-decoration:none;
+}
+.fsoc:hover{background:var(--primary);color:#fff;border-color:var(--primary);transform:translateY(-2px)}
+.footer-col h4{font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:0.1em;color:rgba(255,255,255,0.4);margin-bottom:14px}
+.footer-col a{
+  display:block;font-size:13px;color:rgba(255,255,255,0.55);
+  text-decoration:none;margin-bottom:9px;transition:var(--tr);
+}
+.footer-col a:hover{color:#fff;transform:translateX(3px)}
+.footer-bottom{
+  border-top:1px solid rgba(255,255,255,0.07);
+  padding-top:22px;
+  display:flex;align-items:center;justify-content:space-between;
+  gap:14px;flex-wrap:wrap;
+}
+.footer-bottom p{font-size:12px;color:rgba(255,255,255,0.3)}
+.footer-bottom-links{display:flex;gap:16px}
+.footer-bottom-links a{font-size:12px;color:rgba(255,255,255,0.35);text-decoration:none;transition:var(--tr)}
+.footer-bottom-links a:hover{color:rgba(255,255,255,0.7)}
+
+/* ══════════════════════════════════════════
+   ANIMATIONS
+══════════════════════════════════════════ */
+@keyframes fadeUp{from{opacity:0;transform:translateY(26px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+.fu{animation:fadeUp 0.55s ease forwards;opacity:0}
+.d1{animation-delay:0.05s}.d2{animation-delay:0.13s}.d3{animation-delay:0.21s}
+.d4{animation-delay:0.29s}.d5{animation-delay:0.37s}.d6{animation-delay:0.45s}
+
+/* ══════════════════════════════════════════
+   RESPONSIVE
+══════════════════════════════════════════ */
+@media(max-width:1080px){
+  .hero-inner{gap:36px}
+  .hero-title{font-size:44px}
+  .stats-bar{grid-template-columns:repeat(2,1fr);gap:24px 0}
+  .stats-bar-item{padding:0 24px}
+  .stats-bar-item:nth-child(2){border-right:none}
+  .stats-bar-item:nth-child(3){border-right:1px solid rgba(255,255,255,0.1)}
+  .article-masonry{grid-template-columns:1fr 1fr}
+  .footer-top{grid-template-columns:1.5fr 1fr 1fr}
+  .footer-top .footer-col:last-child{display:none}
+}
+@media(max-width:900px){
+  .hero-right{display:none}
+  .announce-grid{grid-template-columns:1fr}
+  .nav-links{display:none}
+  #mob-menu-btn{display:block}
+  #navbar{padding:0 20px}
+  .hero{padding:52px 20px 60px}
+  .hero-title{font-size:38px}
+}
+@media(max-width:768px){
+  main{padding:36px 18px 52px}
+  .stats-bar{padding:24px 24px;grid-template-columns:repeat(2,1fr)}
+  .stats-bar-item{padding:12px 0;border-right:none;border-bottom:1px solid rgba(255,255,255,0.08)}
+  .stats-bar-item:nth-last-child(-n+2){border-bottom:none}
+  .lb-podium{grid-template-columns:1fr 1fr 1fr;padding:18px 12px 22px}
+  .article-masonry{grid-template-columns:1fr}
+  .notice-grid{grid-template-columns:1fr}
+  .cta-banner{flex-direction:column;padding:36px 24px;align-items:flex-start}
+  .cta-right{align-items:flex-start}
+  .cta-note{text-align:left}
+  .footer-top{grid-template-columns:1fr 1fr}
+  .exam-grid{grid-template-columns:1fr}
+  .event-grid{grid-template-columns:1fr}
+  .btn-login{display:none}
+}
+@media(max-width:480px){
+  .hero-title{font-size:30px}
+  .hero-actions{flex-direction:column;width:100%}
+  .btn-cta-primary,.btn-cta-ghost{justify-content:center;width:100%}
+  .stats-bar{grid-template-columns:1fr}
+  .lb-podium{gap:6px}
+  .lb-pod-avatar{width:40px;height:40px}
+  .lb-pod-item.first .lb-pod-avatar{width:50px;height:50px}
+  .cta-title{font-size:26px}
+  .footer-top{grid-template-columns:1fr}
+}
+
+/* ── MOBILE MENU ── */
+#mob-menu{
+  position:fixed;inset:0;z-index:200;
+  background:var(--surface);transform:translateX(-100%);
+  transition:transform 0.3s cubic-bezier(0.4,0,0.2,1);
+  display:flex;flex-direction:column;padding:0;overflow-y:auto;
+}
+#mob-menu.open{transform:translateX(0)}
+.mob-menu-top{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:16px 20px;border-bottom:1px solid var(--border);
+}
+.mob-menu-close{
+  width:36px;height:36px;border-radius:9px;border:1.5px solid var(--border);
+  background:var(--surface);display:flex;align-items:center;justify-content:center;
+  font-size:20px;cursor:pointer;color:var(--ink3);
+}
+.mob-menu-links{padding:16px 14px;flex:1}
+.mob-link{
+  display:flex;align-items:center;gap:12px;
+  padding:13px 16px;border-radius:11px;
+  text-decoration:none;font-size:15px;font-weight:500;
+  color:var(--ink2);transition:var(--tr);margin-bottom:4px;
+}
+.mob-link:hover,.mob-link.active{background:var(--primary-light);color:var(--primary);font-weight:700}
+.mob-link i{font-size:20px}
+.mob-menu-footer{padding:16px 14px;border-top:1px solid var(--border);display:flex;gap:10px}
+.mob-menu-footer .btn-login{flex:1;justify-content:center}
+.mob-menu-footer .btn-daftar{flex:1;justify-content:center}
+#mob-overlay{
+  display:none;position:fixed;inset:0;
+  background:rgba(0,0,0,0.5);z-index:199;backdrop-filter:blur(3px);
+}
+#mob-overlay.open{display:block}
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════
+     NAVBAR
+═══════════════════════════ -->
+<nav id="navbar">
+  <a href="#" class="nav-logo">
+    <div class="nav-logo-icon"><i class='bx bxs-graduation'></i></div>
+    <div class="nav-logo-text">Academy<span>Eji.</span></div>
+  </a>
+
+  <div class="nav-links">
+    <a href="#" class="nav-link active"><i class='bx bx-home-alt'></i> Beranda</a>
+    <a href="#pengumuman" class="nav-link">Pengumuman</a>
+    <a href="#ujian" class="nav-link">Ujian</a>
+    <a href="#event" class="nav-link">Event</a>
+    <a href="#artikel" class="nav-link">Artikel</a>
+    <a href="#leaderboard" class="nav-link"><i class='bx bx-trophy'></i> Leaderboard</a>
+  </div>
+
+  <div class="nav-right">
+    <button class="nav-icon-btn" id="theme-toggle" title="Toggle Tema">
+      <i class='bx bx-moon'></i>
+    </button>
+    <button class="nav-icon-btn" title="Notifikasi">
+      <i class='bx bx-bell'></i>
+      <span class="notif-dot"></span>
+    </button>
+    <a href="#" class="btn-login"><i class='bx bx-log-in'></i> Masuk</a>
+    <a href="#" class="btn-daftar"><i class='bx bx-user-plus'></i> Daftar Gratis</a>
+    <button id="mob-menu-btn"><i class='bx bx-menu'></i></button>
+  </div>
+</nav>
+
+<!-- MOBILE MENU -->
+<div id="mob-overlay"></div>
+<div id="mob-menu">
+  <div class="mob-menu-top">
+    <a href="#" class="nav-logo">
+      <div class="nav-logo-icon"><i class='bx bxs-graduation'></i></div>
+      <div class="nav-logo-text">Academy<span>Eji.</span></div>
+    </a>
+    <button class="mob-menu-close" id="mob-menu-close"><i class='bx bx-x'></i></button>
+  </div>
+  <div class="mob-menu-links">
+    <a href="#" class="mob-link active"><i class='bx bx-home-alt'></i> Beranda</a>
+    <a href="#pengumuman" class="mob-link"><i class='bx bx-megaphone'></i> Pengumuman</a>
+    <a href="#ujian" class="mob-link"><i class='bx bx-task'></i> Ujian Tersedia</a>
+    <a href="#event" class="mob-link"><i class='bx bx-calendar-event'></i> Event</a>
+    <a href="#artikel" class="mob-link"><i class='bx bx-news'></i> Artikel</a>
+    <a href="#leaderboard" class="mob-link"><i class='bx bx-trophy'></i> Leaderboard</a>
+  </div>
+  <div class="mob-menu-footer">
+    <a href="#" class="btn-login" style="flex:1;justify-content:center"><i class='bx bx-log-in'></i> Masuk</a>
+    <a href="#" class="btn-daftar" style="flex:1;justify-content:center"><i class='bx bx-user-plus'></i> Daftar</a>
+  </div>
+</div>
+
+<!-- ═══════════════════════════
+     HERO
+═══════════════════════════ -->
+<section class="hero">
+  <div class="hero-grid"></div>
+  <div class="hero-inner">
+    <div class="hero-left fu d1">
+      <div class="hero-eyebrow">
+        <i class='bx bx-broadcast' style="font-size:13px"></i>
+        Platform Belajar &amp; Sertifikasi Bahasa #1
+      </div>
+      <h1 class="hero-title">
+        Raih <em>sertifikasi</em><br>bahasa dengan<br>
+        cara yang <span class="accent">menyenangkan.</span>
+      </h1>
+      <p class="hero-sub">
+        Academy Eji menyediakan simulasi ujian TOEFL, UKBI, dan sertifikasi bahasa lainnya. Belajar bareng ribuan siswa, pantau progresmu, dan raih nilai terbaikmu.
+      </p>
+      <div class="hero-actions">
+        <a href="#" class="btn-cta-primary">
+          <i class='bx bx-rocket'></i> Mulai Belajar Gratis
+        </a>
+        <a href="#ujian" class="btn-cta-ghost">
+          <i class='bx bx-play-circle'></i> Lihat Ujian Tersedia
+        </a>
+      </div>
+      <div class="hero-trust">
+        <div class="hero-trust-avatars">
+          <img src="https://ui-avatars.com/api/?name=A&background=4f46e5&color=fff&bold=true" alt="">
+          <img src="https://ui-avatars.com/api/?name=B&background=059669&color=fff&bold=true" alt="">
+          <img src="https://ui-avatars.com/api/?name=C&background=dc2626&color=fff&bold=true" alt="">
+          <img src="https://ui-avatars.com/api/?name=D&background=d97706&color=fff&bold=true" alt="">
+          <img src="https://ui-avatars.com/api/?name=E&background=0891b2&color=fff&bold=true" alt="">
+        </div>
+        <div class="hero-trust-text">Bergabung dengan <strong>1.245+ siswa aktif</strong> di seluruh Indonesia</div>
+      </div>
+    </div>
+    <div class="hero-right fu d3">
+      <div class="hero-stat-card">
+        <div class="hsc-icon">🎓</div>
+        <div class="hsc-val">1,245</div>
+        <div class="hsc-lbl">Siswa Aktif</div>
+      </div>
+      <div class="hero-stat-card">
+        <div class="hsc-icon">📝</div>
+        <div class="hsc-val">8,590</div>
+        <div class="hsc-lbl">Ujian Diselesaikan</div>
+      </div>
+      <div class="hero-stat-card wide">
+        <div style="font-size:36px">🏆</div>
+        <div class="hsc-wide-content">
+          <div class="hsc-val">342 <span style="font-size:14px">artikel</span></div>
+          <div class="hsc-lbl">Konten belajar terpublikasi</div>
+          <div class="hsc-progress-bar">
+            <div class="hsc-progress-fill" style="width:68%"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TICKER -->
+<div class="ticker-wrap">
+  <div class="ticker-track" id="ticker">
+    <div class="ticker-item"><span class="ticker-dot"></span> 🔔 Pendaftaran ujian TOEFL simulasi Batch 12 dibuka — 15 Juni 2025</div>
+    <div class="ticker-item"><span class="ticker-dot"></span> 🏆 Selamat kepada Dewi Sari yang meraih #1 Leaderboard bulan Mei</div>
+    <div class="ticker-item"><span class="ticker-dot"></span> 📢 Modul UKBI Level Lanjut kini tersedia — Yuk mulai sekarang!</div>
+    <div class="ticker-item"><span class="ticker-dot"></span> 🎉 Academy Eji resmi mencapai 1.000+ siswa terdaftar</div>
+    <div class="ticker-item"><span class="ticker-dot"></span> 📅 Webinar "Strategi TOEFL ITP 2025" — Sabtu, 14 Juni, jam 09.00 WIB</div>
+    <div class="ticker-item"><span class="ticker-dot"></span> ✅ Pembaruan bank soal Reading Test — 20 soal baru ditambahkan</div>
+    <!-- Duplikat untuk efek seamless loop -->
+    <div class="ticker-item"><span class="ticker-dot"></span> 🔔 Pendaftaran ujian TOEFL simulasi Batch 12 dibuka — 15 Juni 2025</div>
+    <div class="ticker-item"><span class="ticker-dot"></span> 🏆 Selamat kepada Dewi Sari yang meraih #1 Leaderboard bulan Mei</div>
+    <div class="ticker-item"><span class="ticker-dot"></span> 📢 Modul UKBI Level Lanjut kini tersedia — Yuk mulai sekarang!</div>
+    <div class="ticker-item"><span class="ticker-dot"></span> 🎉 Academy Eji resmi mencapai 1.000+ siswa terdaftar</div>
+    <div class="ticker-item"><span class="ticker-dot"></span> 📅 Webinar "Strategi TOEFL ITP 2025" — Sabtu, 14 Juni, jam 09.00 WIB</div>
+    <div class="ticker-item"><span class="ticker-dot"></span> ✅ Pembaruan bank soal Reading Test — 20 soal baru ditambahkan</div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════
+     MAIN
+═══════════════════════════ -->
+<main>
+
+  <!-- STATS BAR -->
+  <div class="stats-bar fu d1" style="margin-bottom:52px">
+    <div class="stats-bar-item">
+      <div class="sbi-val"><span id="c1">1,245</span></div>
+      <div class="sbi-label">Siswa Terdaftar</div>
+      <div class="sbi-trend"><i class='bx bx-up-arrow-alt'></i> +12% bulan ini</div>
+    </div>
+    <div class="stats-bar-item">
+      <div class="sbi-val"><span id="c2">8,590</span></div>
+      <div class="sbi-label">Ujian Diselesaikan</div>
+      <div class="sbi-trend"><i class='bx bx-up-arrow-alt'></i> +24% bulan ini</div>
+    </div>
+    <div class="stats-bar-item">
+      <div class="sbi-val"><span id="c3">342</span></div>
+      <div class="sbi-label">Artikel Terpublikasi</div>
+      <div class="sbi-trend"><i class='bx bx-up-arrow-alt'></i> 5 minggu ini</div>
+    </div>
+    <div class="stats-bar-item">
+      <div class="sbi-val">99<span>%</span></div>
+      <div class="sbi-label">Server Uptime</div>
+      <div class="sbi-trend"><i class='bx bx-check'></i> Sistem Normal</div>
+    </div>
+  </div>
+
+  <!-- ── PAPAN PENGUMUMAN ── -->
+  <section id="pengumuman" style="margin-bottom:52px">
+    <div class="section-head-row fu d1">
+      <div>
+        <div class="section-label"><i class='bx bx-megaphone'></i> Pengumuman Resmi</div>
+        <h2 class="section-title">Papan Pengumuman</h2>
+        <p class="section-sub">Informasi terbaru, kebijakan, dan pemberitahuan penting dari tim Academy Eji.</p>
+      </div>
+      <a href="#" class="see-all">Semua Pengumuman <i class='bx bx-chevron-right'></i></a>
+    </div>
+    <div class="announce-grid fu d2">
+
+      <!-- FEATURED -->
+      <a href="#" class="announce-featured">
+        <div class="announce-img" style="background:linear-gradient(135deg,#0f2040 0%,#1e3a8a 60%,#4f46e5 100%)">
+          <span style="position:relative;z-index:1;font-size:64px">📋</span>
+          <div class="announce-img-badge">📌 PENTING</div>
+        </div>
+        <div class="announce-body">
+          <div class="announce-cat"><i class='bx bx-pin'></i> Kebijakan Platform</div>
+          <div class="announce-title">Pembaruan Sistem Penilaian & Format Ujian TOEFL Simulasi Batch 12</div>
+          <div class="announce-excerpt">Tim Academy Eji mengumumkan pembaruan besar pada sistem penilaian ujian simulasi TOEFL. Format soal kini disesuaikan dengan standar ETS terbaru 2025. Pendaftaran batch 12 resmi dibuka mulai 1 Juni hingga 14 Juni 2025.</div>
+          <div class="announce-meta">
+            <i class='bx bx-user-circle'></i> Admin Eji
+            <span>•</span>
+            <i class='bx bx-calendar'></i> 2 Juni 2025
+            <span>•</span>
+            <i class='bx bx-time-five'></i> 5 mnt baca
+          </div>
+        </div>
+      </a>
+
+      <!-- LIST PENGUMUMAN -->
+      <div class="announce-list">
+        <a href="#" class="announce-item">
+          <div class="ai-tag" style="background:var(--danger-light);color:var(--danger)"><i class='bx bx-bell-ring'></i> Deadline</div>
+          <div class="ai-title">Batas Akhir Pendaftaran Ujian UKBI Level Madya — 10 Juni 2025</div>
+          <div class="ai-meta"><i class='bx bx-calendar'></i> 1 Juni 2025 &bull; Admin Eji</div>
+        </a>
+        <a href="#" class="announce-item">
+          <div class="ai-tag" style="background:var(--success-light);color:var(--success)"><i class='bx bx-check-circle'></i> Rilis</div>
+          <div class="ai-title">Bank Soal Reading Test Diperbarui — 20 Soal Baru Tersedia</div>
+          <div class="ai-meta"><i class='bx bx-calendar'></i> 30 Mei 2025 &bull; Tim Konten</div>
+        </a>
+        <a href="#" class="announce-item">
+          <div class="ai-tag" style="background:var(--warn-light);color:var(--warn)"><i class='bx bx-wrench'></i> Maintenance</div>
+          <div class="ai-title">Pemeliharaan Server Terjadwal — Minggu, 8 Juni pukul 00.00–02.00 WIB</div>
+          <div class="ai-meta"><i class='bx bx-calendar'></i> 29 Mei 2025 &bull; Tim Teknis</div>
+        </a>
+        <a href="#" class="announce-item">
+          <div class="ai-tag" style="background:var(--primary-light);color:var(--primary)"><i class='bx bx-star'></i> Update</div>
+          <div class="ai-title">Fitur Leaderboard Mingguan Kini Tampilkan Top 50 Siswa Nasional</div>
+          <div class="ai-meta"><i class='bx bx-calendar'></i> 27 Mei 2025 &bull; Admin Eji</div>
+        </a>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ── UJIAN TERSEDIA ── -->
+  <section id="ujian" class="exam-section">
+    <div class="section-head-row fu d1">
+      <div>
+        <div class="section-label"><i class='bx bx-task'></i> Mulai Sekarang</div>
+        <h2 class="section-title">Ujian Tersedia</h2>
+        <p class="section-sub">Pilih ujian yang sesuai kebutuhanmu. Simulasi penuh sesuai standar resmi.</p>
+      </div>
+      <a href="#" class="see-all">Lihat Semua Ujian <i class='bx bx-chevron-right'></i></a>
+    </div>
+    <div class="exam-grid fu d2">
+
+      <div class="exam-card">
+        <div class="exam-card-header" style="background:linear-gradient(135deg,#eff6ff 0%,#dbeafe 100%)">
+          <span class="ec-emoji">🎓</span>
+          <div class="ec-badges">
+            <span class="ec-badge" style="background:var(--success-light);color:var(--success)">Buka</span>
+            <span class="ec-badge" style="background:var(--primary-light);color:var(--primary)">Paling Populer</span>
+          </div>
+          <div class="ec-title">Simulasi TOEFL ITP</div>
+          <div class="ec-sub">Listening, Structure, Reading. Sesuai format ETS terbaru 2025.</div>
+        </div>
+        <div class="exam-card-footer">
+          <div class="ec-info">
+            <div class="ec-info-item"><i class='bx bx-time-five'></i> 90 Menit</div>
+            <div class="ec-info-item"><i class='bx bx-list-ul'></i> 120 Soal</div>
+            <div class="ec-info-item"><i class='bx bx-group'></i> 843 Peserta</div>
+          </div>
+          <a href="#" class="btn-exam" style="background:var(--primary);color:#fff">
+            <i class='bx bx-play-circle'></i> Ikuti
+          </a>
+        </div>
+      </div>
+
+      <div class="exam-card">
+        <div class="exam-card-header" style="background:linear-gradient(135deg,#fff7ed 0%,#ffedd5 100%)">
+          <span class="ec-emoji">🇮🇩</span>
+          <div class="ec-badges">
+            <span class="ec-badge" style="background:var(--success-light);color:var(--success)">Buka</span>
+            <span class="ec-badge" style="background:var(--warn-light);color:var(--warn)">Baru Diperbarui</span>
+          </div>
+          <div class="ec-title">Sertifikasi UKBI</div>
+          <div class="ec-sub">Uji Kemahiran Berbahasa Indonesia — Level Semenjana hingga Unggul.</div>
+        </div>
+        <div class="exam-card-footer">
+          <div class="ec-info">
+            <div class="ec-info-item"><i class='bx bx-time-five'></i> 60 Menit</div>
+            <div class="ec-info-item"><i class='bx bx-list-ul'></i> 85 Soal</div>
+            <div class="ec-info-item"><i class='bx bx-group'></i> 392 Peserta</div>
+          </div>
+          <a href="#" class="btn-exam" style="background:var(--accent);color:#fff">
+            <i class='bx bx-play-circle'></i> Ikuti
+          </a>
+        </div>
+      </div>
+
+      <div class="exam-card">
+        <div class="exam-card-header" style="background:linear-gradient(135deg,#ecfdf5 0%,#d1fae5 100%)">
+          <span class="ec-emoji">📖</span>
+          <div class="ec-badges">
+            <span class="ec-badge" style="background:var(--success-light);color:var(--success)">Buka</span>
+          </div>
+          <div class="ec-title">Reading Comprehension Test</div>
+          <div class="ec-sub">Latihan pemahaman bacaan bahasa Inggris & Indonesia mendalam.</div>
+        </div>
+        <div class="exam-card-footer">
+          <div class="ec-info">
+            <div class="ec-info-item"><i class='bx bx-time-five'></i> 45 Menit</div>
+            <div class="ec-info-item"><i class='bx bx-list-ul'></i> 45 Soal</div>
+            <div class="ec-info-item"><i class='bx bx-group'></i> 220 Peserta</div>
+          </div>
+          <a href="#" class="btn-exam" style="background:var(--success);color:#fff">
+            <i class='bx bx-play-circle'></i> Ikuti
+          </a>
+        </div>
+      </div>
+
+      <div class="exam-card" style="opacity:0.75">
+        <div class="exam-card-header" style="background:linear-gradient(135deg,var(--surface2) 0%,var(--surface3) 100%)">
+          <span class="ec-emoji">🧠</span>
+          <div class="ec-badges">
+            <span class="ec-badge" style="background:var(--warn-light);color:var(--warn)">Segera Hadir</span>
+          </div>
+          <div class="ec-title">Tes Psikologi & IQ</div>
+          <div class="ec-sub">Tes kemampuan kognitif & penalaran logis. Dalam pengembangan.</div>
+        </div>
+        <div class="exam-card-footer">
+          <div class="ec-info">
+            <div class="ec-info-item"><i class='bx bx-time-five'></i> 50 Menit</div>
+            <div class="ec-info-item"><i class='bx bx-list-ul'></i> ~60 Soal</div>
+          </div>
+          <a href="#" class="btn-exam" style="background:var(--surface3);color:var(--ink4);cursor:not-allowed">
+            <i class='bx bx-lock'></i> Terkunci
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ── LEADERBOARD PUBLIK ── -->
+  <section id="leaderboard" class="lb-section fu d2">
+    <div class="section-head-row">
+      <div>
+        <div class="section-label"><i class='bx bx-trophy'></i> Kompetisi</div>
+        <h2 class="section-title">Leaderboard Nasional</h2>
+        <p class="section-sub">Siapa yang ada di puncak minggu ini? Belajar lebih giat, raih posisi teratasmu!</p>
+      </div>
+      <a href="#" class="see-all">Lihat Top 100 <i class='bx bx-chevron-right'></i></a>
+    </div>
+    <div class="lb-wrap">
+      <div class="lb-header">
+        <div class="lb-title"><i class='bx bx-trophy' style="color:var(--gold)"></i> Leaderboard Mingguan — Pekan 1 Juni 2025</div>
+        <span class="lb-period">🔄 Update tiap jam</span>
+      </div>
+
+      <!-- PODIUM TOP 3 -->
+      <div class="lb-podium">
+        <!-- 2nd -->
+        <div class="lb-pod-item" style="padding-top:24px">
+          <div class="lb-pod-rank">🥈</div>
+          <img src="https://ui-avatars.com/api/?name=Budi+P&background=f1f5f9&color=334155&bold=true" class="lb-pod-avatar" alt="">
+          <div class="lb-pod-name">Budi Prasetyo</div>
+          <div class="lb-pod-score">2,440 XP</div>
+        </div>
+        <!-- 1st -->
+        <div class="lb-pod-item first">
+          <div class="lb-pod-rank">🥇</div>
+          <img src="https://ui-avatars.com/api/?name=Dewi+S&background=fef3c7&color=d97706&bold=true" class="lb-pod-avatar" alt="">
+          <div class="lb-pod-name">Dewi Sari</div>
+          <div class="lb-pod-score" style="color:var(--gold)">2,850 XP</div>
+        </div>
+        <!-- 3rd -->
+        <div class="lb-pod-item" style="padding-top:36px">
+          <div class="lb-pod-rank">🥉</div>
+          <img src="https://ui-avatars.com/api/?name=Siti+R&background=fef9ee&color=b45309&bold=true" class="lb-pod-avatar" alt="">
+          <div class="lb-pod-name">Siti Rahma</div>
+          <div class="lb-pod-score">2,100 XP</div>
+        </div>
+      </div>
+
+      <!-- LIST -->
+      <div class="lb-list">
+        <div class="lb-row">
+          <div class="lb-num">4</div>
+          <img src="https://ui-avatars.com/api/?name=Reza+F&background=ecfdf5&color=059669&bold=true" class="lb-avatar" alt="">
+          <div><div class="lb-name">Reza Firmansyah</div><div class="lb-school">SMA Negeri 3 Surabaya</div></div>
+          <span class="lb-badge-rank" style="background:var(--success-light);color:var(--success)">Pemula Lanjut</span>
+          <div class="lb-xp">1,870 XP</div>
+        </div>
+        <div class="lb-row">
+          <div class="lb-num">5</div>
+          <img src="https://ui-avatars.com/api/?name=Nur+A&background=f5f3ff&color=6d28d9&bold=true" class="lb-avatar" alt="">
+          <div><div class="lb-name">Nurul Aini</div><div class="lb-school">Universitas Gadjah Mada</div></div>
+          <span class="lb-badge-rank" style="background:var(--purple-light);color:var(--purple)">Menengah</span>
+          <div class="lb-xp">1,750 XP</div>
+        </div>
+        <div class="lb-row">
+          <div class="lb-num">6</div>
+          <img src="https://ui-avatars.com/api/?name=Andi+K&background=eff6ff&color=1a56db&bold=true" class="lb-avatar" alt="">
+          <div><div class="lb-name">Andi Kurniawan</div><div class="lb-school">SMK TI Makassar</div></div>
+          <span class="lb-badge-rank" style="background:var(--primary-light);color:var(--primary)">Pemula</span>
+          <div class="lb-xp">1,610 XP</div>
+        </div>
+        <div class="lb-row">
+          <div class="lb-num">7</div>
+          <img src="https://ui-avatars.com/api/?name=Maya+D&background=fdf2f8&color=be185d&bold=true" class="lb-avatar" alt="">
+          <div><div class="lb-name">Maya Devita</div><div class="lb-school">Institut Teknologi Bandung</div></div>
+          <span class="lb-badge-rank" style="background:var(--warn-light);color:var(--warn)">Menengah</span>
+          <div class="lb-xp">1,490 XP</div>
+        </div>
+      </div>
+
+      <div class="lb-footer-note">
+        <i class='bx bx-info-circle'></i> Daftarkan akun untuk tampil di leaderboard dan bersaing dengan siswa se-Indonesia
+        &nbsp;<a href="#" style="color:var(--primary);font-weight:700;text-decoration:none">Daftar Sekarang →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── EVENT & WEBINAR ── -->
+  <section id="event" class="event-section fu d3">
+    <div class="section-head-row">
+      <div>
+        <div class="section-label"><i class='bx bx-calendar-event'></i> Segera Hadir</div>
+        <h2 class="section-title">Event & Webinar</h2>
+        <p class="section-sub">Ikuti kegiatan eksklusif bersama pengajar berpengalaman dan sesama pelajar.</p>
+      </div>
+      <a href="#" class="see-all">Semua Event <i class='bx bx-chevron-right'></i></a>
+    </div>
+    <div class="event-grid">
+
+      <div class="event-card">
+        <div class="event-banner" style="background:linear-gradient(135deg,#0f2040,#1e40af)">
+          <span>🎙️</span>
+          <div class="event-banner-date">📅 Sabtu, 14 Jun 2025</div>
+        </div>
+        <div class="event-body">
+          <span class="event-type" style="background:var(--primary-light);color:var(--primary)"><i class='bx bx-video'></i> Webinar Online</span>
+          <div class="event-title">Strategi Jitu Menembus Skor TOEFL 550+ di 2025</div>
+          <div class="event-meta">
+            <div class="event-meta-row"><i class='bx bx-time'></i> 09.00 – 11.30 WIB</div>
+            <div class="event-meta-row"><i class='bx bx-map-pin'></i> Zoom Meeting (Link dikirim via email)</div>
+            <div class="event-meta-row"><i class='bx bx-user'></i> Pembicara: Eka Prasetya, M.TESOL</div>
+          </div>
+          <div class="event-footer">
+            <div class="event-seats"><i class='bx bx-group'></i> 87/150 kursi tersisa</div>
+            <a href="#" class="btn-event" style="background:var(--primary);color:#fff"><i class='bx bx-calendar-plus'></i> Daftar</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="event-card">
+        <div class="event-banner" style="background:linear-gradient(135deg,#065f46,#059669)">
+          <span>🏅</span>
+          <div class="event-banner-date">📅 Minggu, 22 Jun 2025</div>
+        </div>
+        <div class="event-body">
+          <span class="event-type" style="background:var(--success-light);color:var(--success)"><i class='bx bx-trophy'></i> Kompetisi</span>
+          <div class="event-title">Olimpiade UKBI Nasional Academy Eji 2025</div>
+          <div class="event-meta">
+            <div class="event-meta-row"><i class='bx bx-time'></i> 08.00 – 16.00 WIB</div>
+            <div class="event-meta-row"><i class='bx bx-map-pin'></i> Online — Platform Academy Eji</div>
+            <div class="event-meta-row"><i class='bx bx-gift'></i> Hadiah total Rp 10.000.000</div>
+          </div>
+          <div class="event-footer">
+            <div class="event-seats"><i class='bx bx-group'></i> 214/500 peserta</div>
+            <a href="#" class="btn-event" style="background:var(--success);color:#fff"><i class='bx bx-calendar-plus'></i> Daftar</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="event-card">
+        <div class="event-banner" style="background:linear-gradient(135deg,#4c1d95,#7c3aed)">
+          <span>📚</span>
+          <div class="event-banner-date">📅 Jumat, 27 Jun 2025</div>
+        </div>
+        <div class="event-body">
+          <span class="event-type" style="background:var(--purple-light);color:var(--purple)"><i class='bx bx-book'></i> Workshop</span>
+          <div class="event-title">Workshop: Menulis Essay Bahasa Inggris Akademik</div>
+          <div class="event-meta">
+            <div class="event-meta-row"><i class='bx bx-time'></i> 13.00 – 16.00 WIB</div>
+            <div class="event-meta-row"><i class='bx bx-map-pin'></i> Google Meet (Terbatas)</div>
+            <div class="event-meta-row"><i class='bx bx-user'></i> Pembicara: Dr. Ratna Dewi, M.Hum.</div>
+          </div>
+          <div class="event-footer">
+            <div class="event-seats"><i class='bx bx-group'></i> 42/60 kursi tersisa</div>
+            <a href="#" class="btn-event" style="background:var(--purple);color:#fff"><i class='bx bx-calendar-plus'></i> Daftar</a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ── ARTIKEL TERBARU ── -->
+  <section id="artikel" class="article-section fu d4">
+    <div class="section-head-row">
+      <div>
+        <div class="section-label"><i class='bx bx-news'></i> Konten Belajar</div>
+        <h2 class="section-title">Artikel Terbaru</h2>
+        <p class="section-sub">Tips, strategi, dan wawasan dari pengajar berpengalaman untuk membantumu sukses.</p>
+      </div>
+      <a href="#" class="see-all">Semua Artikel <i class='bx bx-chevron-right'></i></a>
+    </div>
+    <div class="article-masonry">
+
+      <a href="#" class="article-card featured">
+        <div class="ac-img" style="background:linear-gradient(135deg,#0f2040 0%,#1e40af 60%,#4f46e5 100%)">
+          <span style="position:relative;z-index:1">🎧</span>
+        </div>
+        <div class="ac-body">
+          <div class="ac-cat" style="color:var(--primary)"><i class='bx bx-microphone'></i> TOEFL Tips</div>
+          <div class="ac-title">5 Strategi Jitu Meningkatkan Skor TOEFL Listening Hingga Lulus Batas Minimum Kampus Impian</div>
+          <div class="ac-excerpt">Listening adalah bagian yang sering dianggap remeh, padahal berkontribusi besar terhadap total skor. Artikel ini membahas teknik aktif yang digunakan test-takers terbaik.</div>
+          <div class="ac-meta">
+            <i class='bx bx-time-five'></i> 8 mnt baca
+            <span>•</span>
+            2 jam lalu
+            <span class="ac-read-badge">Populer</span>
+          </div>
+        </div>
+      </a>
+
+      <div style="display:flex;flex-direction:column;gap:18px">
+        <a href="#" class="article-card">
+          <div class="ac-img" style="background:linear-gradient(135deg,#ecfdf5,#d1fae5);font-size:40px">📝</div>
+          <div class="ac-body">
+            <div class="ac-cat" style="color:var(--success)"><i class='bx bx-edit-alt'></i> Writing</div>
+            <div class="ac-title">Panduan Struktur Essay TOEFL Writing yang Selalu Dapat Skor Tinggi</div>
+            <div class="ac-meta"><i class='bx bx-time-five'></i> 6 mnt &bull; 1 hari lalu</div>
+          </div>
+        </a>
+        <a href="#" class="article-card">
+          <div class="ac-img" style="background:linear-gradient(135deg,#fff7ed,#ffedd5);font-size:40px">🇮🇩</div>
+          <div class="ac-body">
+            <div class="ac-cat" style="color:var(--warn)"><i class='bx bx-book'></i> UKBI</div>
+            <div class="ac-title">Mengenal Tingkatan Level UKBI: Dari Terbatas hingga Sangat Unggul</div>
+            <div class="ac-meta"><i class='bx bx-time-five'></i> 5 mnt &bull; 2 hari lalu</div>
+          </div>
+        </a>
+      </div>
+
+      <div style="display:flex;flex-direction:column;gap:18px">
+        <a href="#" class="article-card">
+          <div class="ac-img" style="background:linear-gradient(135deg,#f5f3ff,#ede9fe);font-size:40px">🧠</div>
+          <div class="ac-body">
+            <div class="ac-cat" style="color:var(--purple)"><i class='bx bx-bulb'></i> Tips Belajar</div>
+            <div class="ac-title">Teknik Pomodoro untuk Hafalan Kosa Kata: Efisien dan Terbukti</div>
+            <div class="ac-meta"><i class='bx bx-time-five'></i> 4 mnt &bull; 3 hari lalu</div>
+          </div>
+        </a>
+        <a href="#" class="article-card">
+          <div class="ac-img" style="background:linear-gradient(135deg,#f0fdfa,#ccfbf1);font-size:40px">🗣️</div>
+          <div class="ac-body">
+            <div class="ac-cat" style="color:var(--teal)"><i class='bx bx-conversation'></i> Speaking</div>
+            <div class="ac-title">Cara Latihan Speaking TOEFL Sendiri di Rumah Tanpa Guru</div>
+            <div class="ac-meta"><i class='bx bx-time-five'></i> 7 mnt &bull; 4 hari lalu</div>
+          </div>
+        </a>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ── INFORMASI PENTING ── -->
+  <section class="notice-section fu d5">
+    <div class="section-head-row">
+      <div>
+        <div class="section-label"><i class='bx bx-info-circle'></i> Perlu Diketahui</div>
+        <h2 class="section-title">Informasi Penting</h2>
+      </div>
+    </div>
+    <div class="notice-grid">
+      <div class="notice-item">
+        <div class="ni-icon" style="background:var(--primary-light);color:var(--primary)"><i class='bx bx-user-plus'></i></div>
+        <div>
+          <div class="ni-title">Cara Mendaftar Ujian</div>
+          <div class="ni-text">Buat akun gratis, pilih ujian yang diinginkan, dan langsung mulai. Hasil nilai tersedia instan setelah ujian selesai.</div>
+        </div>
+      </div>
+      <div class="notice-item">
+        <div class="ni-icon" style="background:var(--success-light);color:var(--success)"><i class='bx bx-check-shield'></i></div>
+        <div>
+          <div class="ni-title">Standar Soal Terjamin</div>
+          <div class="ni-text">Seluruh soal dikurasi oleh tim pengajar bersertifikasi dan disesuaikan dengan standar ujian resmi internasional dan nasional.</div>
+        </div>
+      </div>
+      <div class="notice-item">
+        <div class="ni-icon" style="background:var(--warn-light);color:var(--warn)"><i class='bx bx-devices'></i></div>
+        <div>
+          <div class="ni-title">Akses dari Mana Saja</div>
+          <div class="ni-text">Platform Academy Eji dapat diakses dari smartphone, tablet, maupun laptop. Belajar kapan saja dan di mana saja tanpa batas.</div>
+        </div>
+      </div>
+      <div class="notice-item">
+        <div class="ni-icon" style="background:var(--purple-light);color:var(--purple)"><i class='bx bx-support'></i></div>
+        <div>
+          <div class="ni-title">Butuh Bantuan?</div>
+          <div class="ni-text">Tim support kami siap membantu setiap hari kerja pukul 08.00–17.00 WIB. Hubungi melalui WhatsApp atau email resmi kami.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── CTA DAFTAR ── -->
+  <div class="cta-banner fu d6">
+    <div class="cta-left">
+      <div class="cta-eyebrow"><i class='bx bx-rocket'></i> Gratis Selamanya untuk Paket Dasar</div>
+      <div class="cta-title">Siap memulai perjalanan<br>belajarmu hari ini?</div>
+      <div class="cta-sub">Bergabunglah dengan lebih dari 1.200 siswa aktif yang sudah meningkatkan kemampuan bahasa mereka bersama Academy Eji.</div>
+    </div>
+    <div class="cta-right">
+      <a href="#" class="btn-cta-lg"><i class='bx bx-user-plus'></i> Daftar Akun Gratis</a>
+      <div class="cta-note">Tidak perlu kartu kredit. Langsung aktif dalam hitungan menit.</div>
+    </div>
+  </div>
+
+</main>
+
+<!-- ═══════════════════════════
+     FOOTER
+═══════════════════════════ -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <a href="#" class="nav-logo" style="text-decoration:none">
+          <div class="nav-logo-icon"><i class='bx bxs-graduation'></i></div>
+          <div class="nav-logo-text">Academy<span>Eji.</span></div>
+        </a>
+        <p>Platform belajar dan simulasi ujian sertifikasi bahasa terpercaya untuk siswa dan mahasiswa di seluruh Indonesia.</p>
+        <div class="footer-socials">
+          <a href="#" class="fsoc"><i class='bx bxl-instagram'></i></a>
+          <a href="#" class="fsoc"><i class='bx bxl-youtube'></i></a>
+          <a href="#" class="fsoc"><i class='bx bxl-twitter'></i></a>
+          <a href="#" class="fsoc"><i class='bx bxl-whatsapp'></i></a>
+          <a href="#" class="fsoc"><i class='bx bxl-telegram'></i></a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4>Platform</h4>
+        <a href="#">Beranda</a>
+        <a href="#">Ujian Tersedia</a>
+        <a href="#">Materi Belajar</a>
+        <a href="#">Leaderboard</a>
+        <a href="#">Event & Webinar</a>
+      </div>
+      <div class="footer-col">
+        <h4>Informasi</h4>
+        <a href="#">Tentang Kami</a>
+        <a href="#">Pengumuman</a>
+        <a href="#">Artikel & Tips</a>
+        <a href="#">FAQ</a>
+        <a href="#">Hubungi Kami</a>
+      </div>
+      <div class="footer-col">
+        <h4>Legal</h4>
+        <a href="#">Kebijakan Privasi</a>
+        <a href="#">Syarat & Ketentuan</a>
+        <a href="#">Kebijakan Cookie</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2025 Academy Eji. Dibuat dengan ❤️ untuk pelajar Indonesia.</p>
+      <div class="footer-bottom-links">
+        <a href="#">Privasi</a>
+        <a href="#">Ketentuan</a>
+        <a href="#">Sitemap</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+// ─── THEME ───────────────────────────────────────────────
+const themeBtn = document.getElementById('theme-toggle');
+const html = document.documentElement;
+if(localStorage.getItem('theme')==='dark'){
+  html.setAttribute('data-theme','dark');
+  themeBtn.innerHTML="<i class='bx bx-sun'></i>";
+}
+themeBtn.addEventListener('click',()=>{
+  const isDark = html.getAttribute('data-theme')==='dark';
+  html.setAttribute('data-theme', isDark ? 'light' : 'dark');
+  themeBtn.innerHTML = isDark ? "<i class='bx bx-moon'></i>" : "<i class='bx bx-sun'></i>";
+  localStorage.setItem('theme', isDark ? 'light' : 'dark');
+});
+
+// ─── MOBILE MENU ─────────────────────────────────────────
+const mobBtn = document.getElementById('mob-menu-btn');
+const mobMenu = document.getElementById('mob-menu');
+const mobOverlay = document.getElementById('mob-overlay');
+const mobClose = document.getElementById('mob-menu-close');
+function openMenu(){mobMenu.classList.add('open');mobOverlay.classList.add('open')}
+function closeMenu(){mobMenu.classList.remove('open');mobOverlay.classList.remove('open')}
+mobBtn.addEventListener('click', openMenu);
+mobClose.addEventListener('click', closeMenu);
+mobOverlay.addEventListener('click', closeMenu);
+document.querySelectorAll('.mob-link').forEach(l=>l.addEventListener('click', closeMenu));
+
+// ─── SMOOTH ACTIVE NAV ───────────────────────────────────
+const navLinks = document.querySelectorAll('.nav-link');
+navLinks.forEach(link=>{
+  link.addEventListener('click', function(){
+    navLinks.forEach(l=>l.classList.remove('active'));
+    this.classList.add('active');
+  });
+});
+
+// ─── COUNTER ANIMATION ───────────────────────────────────
+function animateCounter(el, target, suffix=''){
+  if(!el) return;
+  const raw = parseInt(target.toString().replace(/,/g,''));
+  let n = 0;
+  const step = Math.ceil(raw / 40);
+  const t = setInterval(()=>{
+    n = Math.min(n + step, raw);
+    el.textContent = n.toLocaleString('id-ID') + suffix;
+    if(n >= raw) clearInterval(t);
+  }, 22);
+}
+setTimeout(()=>{
+  animateCounter(document.getElementById('c1'), 1245);
+  animateCounter(document.getElementById('c2'), 8590);
+  animateCounter(document.getElementById('c3'), 342);
+}, 500);
+
+// ─── INTERSECTION OBSERVER (Scroll Reveal) ───────────────
+const observer = new IntersectionObserver((entries)=>{
+  entries.forEach(entry=>{
+    if(entry.isIntersecting){
+      entry.target.style.animationPlayState = 'running';
+    }
+  });
+},{threshold:0.1});
+document.querySelectorAll('.fu').forEach(el=>{
+  el.style.animationPlayState = 'paused';
+  observer.observe(el);
+});
+</script>
+</body>
+</html>
