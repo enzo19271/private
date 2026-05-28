@@ -33,6 +33,15 @@
   ],
   "artikel": [
     {
+      "id": "id_exyr4qw",
+      "judul": "Minecraft",
+      "deskripsi": "Keep the human subject 100 percent photorealistic and untouched. No pixel filter, no stylization, no lighting remap on skin. Preserve exact facial detail, pores, fabric weave, hair strands, natural shadows. Expression and posture remain identical. Rebuild the background as a structurally accurate Minecraft voxel replica of the original location. Do not reinterpret. Match the exact layout, spacing, depth, andi from the reference image. If there is are trees, match trunk positions, height ratios, canopy spread using appropriate log and leaf blocks. If there are buildings, recreate their silhouette, window placement, roof angle using Minecraft block geometry. If there are rocks, benches, fences, signs, convert them into block equivalents but maintain their exXact position and proportion relative to the subject. Perspective must match the original photo perfectly. Horizon line, camera height, focal distänce, framing, subject scale all identical. Any object physically touching the subject must convert into Minecraft logic.",
+      "gambar": "https://raw.githubusercontent.com/enzo19271/private/main/images/135098-1779974073091.jpg",
+      "kategori_id": "id_0bdwwqs",
+      "tanggal": "2026-05-28",
+      "featured": false
+    },
+    {
       "id": "id_7c2omci",
       "judul": "Skin Enhancer",
       "deskripsi": "Skin enhancement retouch, preserve original identity and structure, refine skin texture without smoothing, maintain pores, freckles, and natural variation, reduce temporary highlights and shadow transitions, keep under-eye detail intact with slight softening not removal, avoid plastic or airbrushed finish, maintain original lighting and color balance, enhance micro-contrast for realistic texture, lips and eyes untouched except for natural clarity, no reshaping of facial features, no artificial glow, no over-sharpening, seamless integration with original imnage, invisible edit with high realism.",
