@@ -316,61 +316,41 @@ body {
   </div>
 
   <div id="main">
-    <div class="stats-row" id="stats-row">
-      <div class="stat-card">
-        <div class="stat-icon" style="background: rgba(37,99,235,0.1); color: var(--primary)"><i class='bx bx-file'></i></div>
-        <div><div class="stat-val" id="s-total">0</div><div class="stat-label">Total Artikel</div></div>
+
+    <div class="hero-banner fade-up">
+      <div class="hero-text">
+        <div class="hero-greeting">
+          <i class='bx bxs-zap' style="font-size:16px; color:var(--warn);"></i>
+          <span id="greeting-text">Selamat Belajar,</span>
+          <strong style="color:#fff;">Eji 👋</strong>
+        </div>
+        <div class="hero-title">Raih Target Skormu Hari Ini!</div>
+        <div class="hero-sub">Lanjutkan modul materi terakhir yang kamu baca, atau uji pemahamanmu dengan mengikuti tryout simulasi yang telah disediakan.</div>
+        <div class="hero-actions">
+          <a href="#" class="hero-btn hero-btn-white">
+            <i class='bx bx-play-circle'></i> Lanjut Belajar Terakhir
+          </a>
+          <a href="#" class="hero-btn hero-btn-ghost">
+            <i class='bx bx-question-mark'></i> Ikut Tryout Baru
+          </a>
+        </div>
       </div>
-      <div class="stat-card">
-        <div class="stat-icon" style="background: rgba(249,115,22,0.1); color: var(--accent)"><i class='bx bx-star'></i></div>
-        <div><div class="stat-val" id="s-feat">0</div><div class="stat-label">Artikel Unggulan</div></div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-icon" style="background: rgba(16,185,129,0.1); color: var(--success)"><i class='bx bx-purchase-tag-alt'></i></div>
-        <div><div class="stat-val" id="s-kat">0</div><div class="stat-label">Total Kategori</div></div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-icon" style="background: rgba(245,158,11,0.1); color: var(--warn)"><i class='bx bx-calendar-edit'></i></div>
-        <div><div class="stat-val" id="s-last" style="font-size:18px; margin-top:4px;">-</div><div class="stat-label">Terakhir Update</div></div>
+      <div class="hero-visual">
+        <div class="hero-visual-cards">
+          <div class="hero-visual-card">
+            <div class="hero-visual-num">85%</div>
+            <div class="hero-visual-lbl">Progres Pro</div>
+          </div>
+          <div class="hero-visual-divider"></div>
+          <div class="hero-visual-card">
+            <div class="hero-visual-num">2</div>
+            <div class="hero-visual-lbl">Kelas Aktif</div>
+          </div>
+        </div>
       </div>
     </div>
 
-    <div class="filter-bar" id="filter-bar">
-      </div>
-
-    <div class="section-head">
-      <h2 id="section-label">Memuat Artikel...</h2>
-      <div class="view-toggle">
-        <button class="vt-btn active" id="vt-grid" title="Grid View"><i class='bx bx-grid-alt'></i></button>
-        <button class="vt-btn" id="vt-list" title="List View"><i class='bx bx-list-ul'></i></button>
-      </div>
-    </div>
-
-    <div id="articles-grid">
-      </div>
-  </div>
-</div>
-
-<div id="modal-overlay">
-  <div id="modal">
-    <div class="modal-header-img">
-      <img id="modal-img" src="" alt="Thumbnail">
-      <button id="modal-x" onclick="closeModal()"><i class='bx bx-x'></i></button>
-    </div>
-    <div id="modal-content">
-      <div id="modal-meta">
-        <span id="modal-kat" class="kat-badge"></span>
-        <span id="modal-date" style="font-size:13px; color:var(--ink4)"><i class='bx bx-time-five'></i> <span id="m-date-text"></span></span>
-        <span id="modal-featured" class="featured-ribbon" style="position:static; display:none;"><i class='bx bxs-star'></i> Unggulan</span>
-      </div>
-      <div id="modal-title"></div>
-      <div id="modal-desc"></div>
-    </div>
-    <div id="modal-footer">
-      <button class="btn btn-outline" onclick="closeModal()">Tutup</button>
-      <button class="btn btn-primary" id="modal-copy-btn" onclick="copyDesc()"><i class='bx bx-copy'></i> Salin Konten</button>
-    </div>
-  </div>
+    
 </div>
 
 <script>
