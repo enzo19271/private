@@ -52,5 +52,14 @@
     "totalSoal": 30,
     "waktuDipakai": 189,
     "timestamp": "2026-05-29T11:04:05.404Z"
+  },
+  {
+    "tesKey": "iq",
+    "tesNama": "Tes IQ",
+    "pesertaNama": "Firmansyah",
+    "skor": 21,
+    "totalSoal": 25,
+    "waktuDipakai": 574,
+    "timestamp": "2026-05-29T15:08:46.109Z"
   }
 ]
