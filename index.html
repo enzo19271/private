@@ -451,6 +451,9 @@
       <a class="nav-item" href="config.html">
         <i class='bx bx-info-circle nav-icon'></i> Tentang Kami
       </a>
+      <a class="nav-item" id="nav-upgrade-vip" href="premium/index.html" style="color:#d97706;display:none;">
+        <i class='bx bxs-crown nav-icon' style="color:#f59e0b;"></i> Upgrade VIP
+      </a>
 
       <div class="sidebar-section" style="margin-top:15px;">Manajemen</div>
       <a class="nav-item" href="admin.html">
@@ -470,8 +473,8 @@
       <div class="user-profile">
         <div class="user-avatar"><i class='bx bxs-user'></i></div>
         <div class="user-info">
-          <span class="user-name">Admin Eji</span>
-          <span class="user-role">Super Admin</span>
+          <span class="user-name" id="sidebar-username">Memuat...</span>
+          <span class="user-role" id="sidebar-role">—</span>
         </div>
       </div>
     </div>
@@ -708,5 +711,8 @@
       });
     });
   </script>
+  <!-- ── AUTH SCRIPTS ── -->
+  <script src="auth.js"></script>
+  <script src="auth-gate.js"></script>
 </body>
 </html>
